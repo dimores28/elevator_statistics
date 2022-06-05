@@ -1,14 +1,11 @@
 import { createStore } from 'vuex'
 
+import navigationData from './navigationData'
+import routList from './routslist'
+
 export default createStore({
-  state: {
-  },
-  getters: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
   modules: {
+    navigationData,
+    routList
   }
 })
