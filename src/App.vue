@@ -1,5 +1,5 @@
 <template>
-   <h1>Hello</h1>
+   <h1>Hello new priject</h1>
 </template>
 
 <style lang="less">
