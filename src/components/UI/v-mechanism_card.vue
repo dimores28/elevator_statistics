@@ -26,7 +26,6 @@ export default {
    computed:{
       mechanismState(){
          let retClass = '';
-         console.log(this.mechanismData.state);
          switch (this.mechanismData.state) {
 				case 1: retClass = "card__led_ok"; break;
 				case 2: retClass = "card__led_repair"; break;
@@ -34,7 +33,6 @@ export default {
 				case 4: retClass = "card__led_alarm"; break;
 				default: retClass = "card__led_ok"; break;
 			}
-         console.log(retClass);
          return retClass;
       },
       showSubline(){

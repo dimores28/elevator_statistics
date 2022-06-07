@@ -3,13 +3,18 @@
      <h2>Header</h2>
    </header>
    <aside class="nav">
-     <h2>Logo and nav</h2>
+     <div class="logo">
+       <img :src="require('@/assets/img/'+ 'logo_dark.svg')" alt="logo"/>
+     </div>
+     
+     <v-nav></v-nav>
+
    </aside>
    <main class="main">
      <h1>Hello new priject</h1>
     <div class="container">
       <h2>Content</h2>
-      <!-- <router-view></router-view> -->
+      <router-view></router-view>
     </div>
     <footer class="footer">
       <h2>Footer</h2>
@@ -22,10 +27,12 @@
 
 <script>
 import vCard from '@/components/UI/v-mechanism_card'
+import vNav from './views/NavigationView'
 
 export default {
   components:{
-    vCard
+    vCard,
+    vNav,
   },
   data:()=>({
     cardProps: {id:1, title:'H2', errorsNum: 2, state: 4}
@@ -50,8 +57,8 @@ export default {
 --clr_state_repair       : #2D4EC4;
 }
 
-// @import url('@/assets/style/normalize.min.css');
-// @import url('@/assets/style/fonts.css');
+ @import (css) '../src/assets/css/normalize.min';
+ @import (css) '../src/assets/css/fonts';
 
 .container{
   max-width: 920px;
@@ -78,6 +85,7 @@ body{
   grid-template-areas:  "nav header"
                         "nav main"
                         "footer footer";
+  grid-template-columns: minmax(200px, 264px) auto;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -85,20 +93,31 @@ body{
 
 .header{
   grid-area: header;
+  border: 1px solid red;
 
 }
 
 .main{
   grid-area: main;
+  border: 1px solid green;
 }
 
 .nav{
   grid-area: nav;
   background: #000000;
+  // max-width: 264px;
+  padding-top: 28px;
+
+  .logo img{
+    display: flex;
+    margin-left: 28px;
+    margin-bottom: 38px;
+  }
 }
 
 .footer{
   grid-area: footer;
+  border: 1px solid tan;
 }
 
 </style>
