@@ -1,10 +1,10 @@
 <template>
-   <div class="v-mechanism-card card">
-      <div class="card__led"></div>
+   <div class="v-mechanism-card card" >
+      <iv class="card__led"  :class="mechanismState"></iv>
 
       <div class="card__content">
          <p class="card__lable">{{mechanismData.title}}</p>
-         <p class="card__subline">Ошибок: {{mechanismData.errorsNum}}</p>
+         <p class="card__subline" :class="showSubline">Ошибок: {{mechanismData.errorsNum}}</p>
       </div>
 
    </div>
@@ -16,7 +16,7 @@ export default {
    props:{
       mechanismData:{
          type: Object,
-         default: {id:0, title:'H1', errorsNum: 0, state: 0}
+         default: {id:0, title:'H1', errorsNum: 0, state: 3}
       }
       
    },
@@ -24,7 +24,27 @@ export default {
 
    }),
    computed:{
-
+      mechanismState(){
+         let retClass = '';
+         console.log(this.mechanismData.state);
+         switch (this.mechanismData.state) {
+				case 1: retClass = "card__led_ok"; break;
+				case 2: retClass = "card__led_repair"; break;
+				case 3: retClass = "card__led_waqrning"; break;
+				case 4: retClass = "card__led_alarm"; break;
+				default: retClass = "card__led_ok"; break;
+			}
+         console.log(retClass);
+         return retClass;
+      },
+      showSubline(){
+         if(!this.mechanismData.errorsNum){
+            return 'card__subline_hide';
+         }
+         else{
+            return '';
+         }
+      }
    },
    methods:{
 
@@ -34,8 +54,8 @@ export default {
 </script>
 
 <style lang="less">
+
    .card{
-      width: 190px;
       background: var(--clr_menu);
       border-radius: 8px;
       color: #fff;
@@ -50,7 +70,22 @@ export default {
          width: 10px;
          border-top-left-radius: 8px;
          border-bottom-left-radius: 8px;
-         background: var(--clr_state_warning);
+
+         &_ok{
+            background: var(--clr_state_ok);
+         }
+
+         &_repair{
+            background: var(--clr_state_repair);
+         }
+
+         &_waqrning{
+            background: var(--clr_state_warning);
+         }
+
+         &_alarm{
+            background: var(--clr_state_alarm);
+         }
       }
 
       &__lable{
@@ -66,7 +101,13 @@ export default {
          line-height: 24px;
          letter-spacing: 0.5px;
          margin: 7px;
+         // visibility: hidden;
+
+         &_hide{
+            visibility: hidden;
+         }
       }
+
    }
 
    .card:hover{
