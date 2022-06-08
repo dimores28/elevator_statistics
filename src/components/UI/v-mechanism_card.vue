@@ -16,7 +16,7 @@ export default {
    props:{
       mechanismData:{
          type: Object,
-         default: {id:0, title:'H1', errorsNum: 0, state: 3}
+         default: {id:0, title:'H1', errorsNum: 3, state: 1}
       }
       
    },
@@ -59,6 +59,7 @@ export default {
       color: #fff;
       padding: 8px;
       position: relative;
+      transition: all 0.5s ease-out;
 
       &__led{
          position: absolute;
@@ -99,7 +100,7 @@ export default {
          line-height: 24px;
          letter-spacing: 0.5px;
          margin: 7px;
-         // visibility: hidden;
+
 
          &_hide{
             visibility: hidden;
@@ -109,7 +110,8 @@ export default {
    }
 
    .card:hover{
-         background: var(--clr_bg);
+         background: var(--clr_gray3);
+         cursor: pointer;
    }
 
 

@@ -11,16 +11,13 @@
 
    </aside>
    <main class="main">
-     <h1>Hello new priject</h1>
     <div class="container">
-      <h2>Content</h2>
       <router-view></router-view>
     </div>
+   </main>
     <footer class="footer">
       <h2>Footer</h2>
     </footer>
-   </main>
-
 
    
 </template>
@@ -65,13 +62,6 @@ export default {
   margin: 0 auto;
 }
 
-.card-wrapper{
-  display: grid;
-  grid-gap: 15px;
-  grid-template-columns: repeat(auto-fit, minmax(154px, 1fr));
-  padding: 20px;
-}
-
 html,
 body{
   background: var(--clr_bg);
@@ -86,6 +76,7 @@ body{
                         "nav main"
                         "footer footer";
   grid-template-columns: minmax(200px, 264px) auto;
+  grid-template-rows: 82px auto 80px;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -94,7 +85,6 @@ body{
 .header{
   grid-area: header;
   border: 1px solid red;
-
 }
 
 .main{
@@ -105,8 +95,8 @@ body{
 .nav{
   grid-area: nav;
   background: #000000;
-  // max-width: 264px;
   padding-top: 28px;
+  padding-bottom: 100px;
 
   .logo img{
     display: flex;

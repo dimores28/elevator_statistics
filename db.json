@@ -1,0 +1,20 @@
+{
+    "states":[
+        {"id":1, "title": "Транспортер Т1", "errorsNum": 3, "state": 3, "type": 1},
+        {"id":2, "title": "Транспортер Т2", "errorsNum": 0, "state": 1, "type": 1},
+        {"id":3, "title": "Транспортер Т3", "errorsNum": 0, "state": 2, "type": 1},
+        {"id":4, "title": "Транспортер Т23", "errorsNum": 6, "state": 4, "type": 2},
+        {"id":5, "title": "Транспортер Т26", "errorsNum": 0, "state": 1, "type": 2},
+        {"id":6, "title": "Т28", "errorsNum": 0, "state": 1, "type": 2},
+        {"id":7, "title": "V5", "errorsNum": 0, "state": 1, "type": 7},
+        {"id":8, "title": "V6", "errorsNum": 11, "state": 4, "type": 7},
+        {"id":9, "title": "V13", "errorsNum": 0, "state": 1, "type": 7},
+        {"id":10, "title": "V15", "errorsNum": 0, "state": 1, "type": 7},
+        {"id":11, "title": "Задвижка G3", "errorsNum": 7, "state": 2, "type": 8},
+        {"id":12, "title": "H1", "errorsNum": 0, "state": 1, "type": 9},
+        {"id":13, "title": "H2", "errorsNum": 3, "state": 2, "type": 9},
+        {"id":14, "title": "H3", "errorsNum": 5, "state": 3, "type": 9},
+        {"id":15, "title": "H4", "errorsNum": 1, "state": 4, "type": 9},
+        {"id":16, "title": "H5", "errorsNum": 0, "state": 1, "type": 9}
+    ]
+}

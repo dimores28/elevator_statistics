@@ -12,7 +12,7 @@ const routes = [
     component: () => import( '../views/RoutsViews')
   },
   {
-    path: '/card',
+    path: '/card/:type',
     name: 'card',
     component: () => import( '../views/CardViews')
   },
