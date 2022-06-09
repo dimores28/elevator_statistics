@@ -8,9 +8,13 @@
    <div class="info">
       <div class="info__message info__preset">
          <h3>События механизма</h3>
-         <message-line></message-line>
-         <message-line></message-line>
-         <message-line></message-line>
+         <message-line
+            v-for="(mess, i) in MESSAGES_BY_ID($route.params.id)"
+            :key="i"
+            :message="mess"
+         >
+
+         </message-line>
       </div>
       <div class="info__charts info__preset">
          <h3>Время работы/простоя/в ремонте</h3>
@@ -18,7 +22,7 @@
       </div>
       <div class="info__rout-message info__preset">
          <h3>Запуски в маршруте</h3>
-
+         <rout-line></rout-line>
       </div>
    </div>
 
@@ -27,18 +31,25 @@
 </template>
 
 <script>
+import routLine from '@/components/UI/v-rout_line'
+
+import { mapGetters, mapActions } from 'vuex'
 export default {
+   components:{
+      routLine
+   },
    data:()=>({
 
    }),
    computed:{
-
+      ...mapGetters('device',['MESSAGES_BY_ID']),
    },
    methods:{
+      ...mapActions('device',['LOAD']),
 
    },
    created(){
-
+      this.LOAD();
    }
    
 }
@@ -57,6 +68,7 @@ export default {
 
    &__preset{
       background: var(--clr_gray3);
+      padding: 8px;
    }
 
    &__message{

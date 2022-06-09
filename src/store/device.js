@@ -9,7 +9,7 @@ export default {
    getters: {
       MESSAGES: state => state.messages,
       MESSAGES_BY_ID: (state) => (id) => {
-         let messages = state.messages.filter(item => item.id === id);
+         let messages = state.messages.filter(item => item.dev_id == id);
          return messages;
       },
    },

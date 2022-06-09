@@ -36,5 +36,10 @@
         {"dev_id": 12, "message": "Механизм снят с ремонта", "DateTime": "20.06.2021 12:10:23", "MessageClass": "Repeir"},
         {"dev_id": 16, "message": "Сработал подпор", "DateTime": "20.06.2021 12:10:23", "MessageClass": "Errors"},
         {"dev_id": 16, "message": "Превышен первый порог нагрузки", "DateTime": "20.06.2021 12:10:23", "MessageClass": "Warning"}
+    ],
+    "presence":[
+        {"source": "Силос СБ-3", "reciver": "Морская отгрузка", "culture": "Кукуруза"},
+        {"source": "СРА 1", "reciver": "Силос СБ-14", "culture": "Кукуруза"},
+        {"source": "СРВ 2", "reciver": "Силос СБ-23", "culture": "Пшеница 1кл"}
     ]
 }

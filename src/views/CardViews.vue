@@ -2,10 +2,10 @@
    <!-- <div>User {{ $route.params.type }}</div> -->
    <div class="card-wrapper">
          <v-card
-         v-for="card in CARDS_BY_TYPE($route.params.type)"
-         :key="card.id"
-         :mechanismData="card"
-         @details="seeMore"
+            v-for="(card, i) in CARDS_BY_TYPE($route.params.type)"
+            :key="i"
+            :mechanismData="card"
+            @details="seeMore"
          >
          </v-card>
    </div>

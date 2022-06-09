@@ -16,11 +16,10 @@ export default {
    props:{
       mechanismData:{
          type: Object,
-         default: {id:0, title:'H1', errorsNum: 3, state: 1}
       }
-      
    },
    data: ()=>({
+
 
    }),
    computed:{

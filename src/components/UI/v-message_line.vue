@@ -1,9 +1,9 @@
 <template>
    <div class="v-message-line">
       <div class="message">
-         <div class="message__led"></div>
-         <p class="message__text">Пуск</p>
-         <p class="message__date">20.06.2021 12:10:23</p>
+         <div class="message__led" :class="classLight"></div>
+         <p class="message__text">{{message.message}}</p>
+         <p class="message__date">{{message.DateTime}}</p>
       </div>
 
    </div>
@@ -11,7 +11,27 @@
 
 <script>
 export default {
-   
+   props:{
+      message:{
+         type: Object
+      }
+   },
+   computed:{
+      classLight(){
+         if(this.message.MessageClass == 'Log'){
+            return 'log';
+         }
+         else if(this.message.MessageClass == 'Repeir')
+         {
+            return 'repeir';
+         }
+         else if(this.message.MessageClass == 'Warning'){
+            return 'warning';
+         }else{
+            return 'errors';
+         }
+      }
+   }
 }
 </script>
 
@@ -42,6 +62,24 @@ export default {
       &__date{
          text-align: right;
          margin: 0;
+         margin-left: 10px;
+         min-width: 146px;
       }
+   }
+
+   .log{
+      background: var(--clr_state_ok);
+   }
+
+   .repeir{
+      background: var(--clr_state_repair);
+   }
+
+   .errors{
+      background: var(--clr_state_alarm);
+   }
+
+   .warning{
+      background: var(--clr_state_warning);
    }
 </style>
