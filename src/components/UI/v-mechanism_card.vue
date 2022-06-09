@@ -1,5 +1,5 @@
 <template>
-   <div class="v-mechanism-card card" >
+   <div class="v-mechanism-card card" @click="openCard(mechanismData.id)">
       <iv class="card__led"  :class="mechanismState"></iv>
 
       <div class="card__content">
@@ -45,7 +45,9 @@ export default {
       }
    },
    methods:{
-
+      openCard(id){
+         this.$emit('details', id);
+      }
    }
    
 }

@@ -16,6 +16,11 @@ const routes = [
     name: 'card',
     component: () => import( '../views/CardViews')
   },
+  {
+    path: '/details/:id',
+    name: 'details',
+    component: () => import( '../views/DeviceStatusView')
+  },
 ]
 
 const router = createRouter({

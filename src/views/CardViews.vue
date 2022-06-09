@@ -1,13 +1,13 @@
 <template>
-   <div>User {{ $route.params.type }}</div>
+   <!-- <div>User {{ $route.params.type }}</div> -->
    <div class="card-wrapper">
-         <v-card></v-card>
-         <v-card></v-card>
-         <v-card></v-card>
-         <v-card></v-card>
-         <v-card></v-card>
-         <v-card></v-card>
-         <v-card></v-card>
+         <v-card
+         v-for="card in CARDS_BY_TYPE($route.params.type)"
+         :key="card.id"
+         :mechanismData="card"
+         @details="seeMore"
+         >
+         </v-card>
    </div>
 </template>
 
@@ -22,20 +22,17 @@ export default {
       cards: [],
    }),
    computed:{
-      ...mapGetters('card',['CARDS_BY_TYPE'])
+       ...mapGetters('card',['CARDS_BY_TYPE'])
    },
    methods:{
       ...mapActions('card',['CARD_LOAD']),
-      getMechanismsByType(){
-         
+      seeMore(id){
+         this.$router.push({ name: 'details', params: { id: id } });
       }
    },
    mounted(){
-      this.CARD_LOAD()
-      .then(()=>{
-         this.CARDS_BY_TYPE(this.$route.params.type);
-      })
-     
+      this.CARD_LOAD();
+       
    }
    
 }

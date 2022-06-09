@@ -8,7 +8,11 @@ export default {
    },
    getters: {
        CARDS: state=> state.cards,
-       CARDS_BY_TYPE: state => type => state.products.some(pr => pr.type === type),
+       HAS: state => id => state.cards.some(card => card.id === id),
+       CARDS_BY_TYPE: (state) => (type) => {
+           let cardsFilteres = state.cards.filter(item => item.type == type);
+        return cardsFilteres;
+      }
    },
    mutations: {
     SET_CARDS(state, data){
@@ -24,4 +28,3 @@ export default {
        }
    },
 }
-//has: state => id => state.products.some(pr => pr.id === id)

@@ -3,7 +3,11 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+import vMessageline from '@/components/UI/v-message_line'
+
 let app = createApp(App);
+
+app.component('message-line', vMessageline);
 
 app.use(store);
 app.use(router);
