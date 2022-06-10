@@ -18,6 +18,9 @@
       </div>
       <div class="info__charts info__preset">
          <h3>Время работы/простоя/в ремонте</h3>
+         <div class="charts">
+            <apexchart type="pie" width="280" :options="chartOptions" :series="series"></apexchart>
+         </div>
 
       </div>
       <div class="info__rout-message info__preset">
@@ -32,15 +35,21 @@
 
 <script>
 import routLine from '@/components/UI/v-rout_line'
+import VueApexCharts from "vue3-apexcharts";
+import chartPreset from '@/core/presetApexchart'
 
 import { mapGetters, mapActions } from 'vuex'
 export default {
    components:{
-      routLine
+      routLine,
+      apexchart: VueApexCharts,
    },
-   data:()=>({
-
-   }),
+   data(){
+      return {
+         series: [44, 55, 23],
+         chartOptions: chartPreset,
+      }
+   },
    computed:{
       ...mapGetters('device',['MESSAGES_BY_ID']),
    },
