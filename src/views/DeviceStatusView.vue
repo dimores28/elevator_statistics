@@ -18,10 +18,30 @@
       </div>
       <div class="info__charts info__preset">
          <h3>Время работы/простоя/в ремонте</h3>
-         <div class="charts">
-            <apexchart type="pie" width="280" :options="chartOptions" :series="series"></apexchart>
+         <div class="charts-wrap">
+            <div class="charts">
+               <apexchart type="pie" width="132" :options="chartOptions" :series="series"></apexchart>
+            </div>
+            <div class="charts__legend">
+               <v-legend
+                  text="Время в работе"
+                  precent="55"
+                  time="03:37:14"
+               />
+               <v-legend
+                  text="Время в ремонте"
+                  precent="36"
+                  time="02:03:14"
+                  activeColor="#2D4EC4"
+               />
+               <v-legend
+                  text="Время простоя"
+                  precent="19"
+                  time="00:57:14"
+                  activeColor="#000"
+               />
+            </div> 
          </div>
-
       </div>
       <div class="info__rout-message info__preset">
          <h3>Запуски в маршруте</h3>
@@ -37,12 +57,15 @@
 import routLine from '@/components/UI/v-rout_line'
 import VueApexCharts from "vue3-apexcharts";
 import chartPreset from '@/core/presetApexchart'
+import vLegend from '@/components/UI/v-legend';
 
 import { mapGetters, mapActions } from 'vuex'
 export default {
    components:{
       routLine,
+      vLegend,
       apexchart: VueApexCharts,
+      
    },
    data(){
       return {
@@ -84,6 +107,10 @@ export default {
       grid-column: 1;
       grid-row: 1 / 3;
    }
+}
+
+.charts-wrap{
+   display: flex;
 }
 
 </style>

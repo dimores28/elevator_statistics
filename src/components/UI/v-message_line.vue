@@ -27,8 +27,14 @@ export default {
          }
          else if(this.message.MessageClass == 'Warning'){
             return 'warning';
-         }else{
+         }
+         else if(this.message.MessageClass == 'Errors')
+         {
             return 'errors';
+         }
+         else if(this.message.MessageClass == 'Operator')
+         {
+            return 'operator';
          }
       }
    }
@@ -81,5 +87,8 @@ export default {
 
    .warning{
       background: var(--clr_state_warning);
+   }
+   .operator{
+      background: rgb(233, 95, 199);
    }
 </style>
