@@ -10,7 +10,7 @@ export default {
        CARDS: state=> state.cards,
        HAS: state => id => state.cards.some(card => card.id === id),
        CARDS_BY_TYPE: (state) => (type) => {
-           let cardsFilteres = state.cards.filter(item => item.type == type);
+           let cardsFilteres = state.cards.filter(item => item.UAType == type);
         return cardsFilteres;
       }
    },
@@ -21,9 +21,16 @@ export default {
    },
    actions: {
        async CARD_LOAD({commit}){
-        await axios.get(API_URL + 'states')
+        
+        await axios.get(API_URL + 'settings')
         .then(response=>{
-            commit('SET_CARDS', response.data);
+            let arr = []
+            for(let i = 0; i < response.data.length; i++){
+                arr.push(response.data[i]);
+            }
+
+            console.log(arr);
+            commit('SET_CARDS', arr);
         });
        }
    },

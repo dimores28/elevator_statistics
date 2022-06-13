@@ -1,9 +1,9 @@
 <template>
-   <div class="v-mechanism-card card" @click="openCard(mechanismData.id)">
+   <div class="v-mechanism-card card" @click="openCard(mechanismData.ID)">
       <iv class="card__led"  :class="mechanismState"></iv>
 
       <div class="card__content">
-         <p class="card__lable">{{mechanismData.title}}</p>
+         <p class="card__lable">{{mechanismData.UAName}}</p>
          <p class="card__subline" :class="showSubline">Ошибок: {{mechanismData.errorsNum}}</p>
       </div>
 
@@ -16,6 +16,7 @@ export default {
    props:{
       mechanismData:{
          type: Object,
+         defaut: {ID: 8, UAIndex :1, UAName: "Нория H1", UAType :9, errorsNum: 3, state: 3}
       }
    },
    data: ()=>({
