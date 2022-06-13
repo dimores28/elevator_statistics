@@ -23,13 +23,14 @@
 </template>
 
 <script>
-import vCard from '@/components/UI/v-mechanism_card'
 import vNav from './views/NavigationView'
+
+
 
 export default {
   components:{
-    vCard,
     vNav,
+
   },
   data:()=>({
     cardProps: {id:1, title:'H2', errorsNum: 2, state: 4}
@@ -64,7 +65,7 @@ export default {
 
 html,
 body{
-  background: var(--clr_bg);
+  background: var(--clr_bg) !important;
 }
 
 #app {

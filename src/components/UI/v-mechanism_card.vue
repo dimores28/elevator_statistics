@@ -1,6 +1,6 @@
 <template>
    <div class="v-mechanism-card card" @click="openCard(mechanismData.ID)">
-      <iv class="card__led"  :class="mechanismState"></iv>
+      <div class="card__led"  :class="mechanismState"></div>
 
       <div class="card__content">
          <p class="card__lable">{{mechanismData.UAName}}</p>
@@ -16,8 +16,7 @@ export default {
    props:{
       mechanismData:{
          type: Object,
-         defaut: {ID: 8, UAIndex :1, UAName: "Нория H1", UAType :9, errorsNum: 3, state: 3}
-      }
+      },
    },
    data: ()=>({
 
@@ -92,14 +91,16 @@ export default {
       &__lable{
          font-family: 'Roboto';
          font-weight: 400;
-         font-size: 36px;
+         font-size: 28px;
          line-height: 42px;
          margin: 7px;
+         text-align: center;
+         word-spacing: 9999px;
       }
 
       &__subline{
          font-size: 16px;
-         line-height: 24px;
+         line-height: 18px;
          letter-spacing: 0.5px;
          margin: 7px;
 
