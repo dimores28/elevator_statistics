@@ -3,18 +3,25 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import VueApexCharts from "vue3-apexcharts";
-import Antd from 'ant-design-vue';
+import PrimeVue from 'primevue/config';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
 
+import "primevue/resources/themes/mdc-dark-deeppurple/theme.css"
+import "primevue/resources/primevue.min.css";
+import "primeicons/primeicons.css";
 
 import vMessageline from '@/components/UI/v-message_line'
 
 let app = createApp(App);
 
 app.component('message-line', vMessageline);
+app.component('DataTable', DataTable);
+app.component('Column', Column);
 
 app.use(store);
 app.use(router);
-app.use(Antd);
+app.use(PrimeVue);
 app.use(VueApexCharts);
 app.mount('#app');
 
