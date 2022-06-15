@@ -36,13 +36,17 @@ export default {
     },
     methods:{
       ...mapActions('routList',['LOAD_ROUT_LOGS']),
+      ...mapActions('navigationData',['SET_TITLE', 'SET_TEXT']),
       more(){
          if(this.selected){
+            this.SET_TEXT('Маршруты  > ' + this.selected.Source)
             this.$router.push({ name: 'rout', params: { id: this.selected.id } });
          }
       }
     },
     mounted(){
+      this.SET_TITLE('Маршруты');
+      this.SET_TEXT('');
       this.LOAD_ROUT_LOGS();
     }
 }

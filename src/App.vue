@@ -1,6 +1,29 @@
 <template>
    <header class="header">
-     <h2>Header</h2>
+     <div class="bread-crumbs">
+        <span class="bread-crumbs__text">
+            {{TEXT}}
+        </span>
+        <p class="bread-crumbs__title">
+            {{TITLE}}
+        </p>
+     </div>
+     <div class="datapicker-wrap">
+        <Datepicker 
+          v-model="date"
+          :enableTimePicker="false"
+          position="right" 
+          dark range multiCalendars 
+          locale="ru"
+          :format="format"
+        >
+        	<template #calendar-header="{ index, day }">
+            <div :class="index === 5 || index === 6 ? 'red-color' : ''">
+              {{ day }}
+            </div>
+          </template>
+        </Datepicker>
+     </div>
    </header>
    <aside class="nav">
      <div class="logo">
@@ -24,17 +47,50 @@
 
 <script>
 import vNav from './views/NavigationView'
+import { ru } from 'date-fns/locale';
+import { ref, onMounted } from 'vue';
 
-
-
+import { mapGetters } from 'vuex';
 export default {
+  setup(){
+    const date = ref(new Date());
+
+		onMounted(() => {
+            const startDate = new Date();
+            const endDate = new Date(new Date().setDate(startDate.getDate() + 7));
+            date.value = [startDate, endDate];
+        })
+
+        const format = (date) => {
+          const day = date[0].getDate();
+          const month = date[0].getMonth() + 1;
+          const year = date[0].getFullYear();
+          const day2 = date[1].getDate();
+          const month2 = date[1].getMonth() + 1;
+          const year2 = date[1].getFullYear();
+          return `${day}/${month}/${year} - ${day2}/${month2}/${year2}`;
+        }
+
+    return {
+            date,
+            format,
+            ru,
+        }
+  },
   components:{
     vNav,
-
   },
-  data:()=>({
-    cardProps: {id:1, title:'H2', errorsNum: 2, state: 4}
-  })
+  data(){
+    return{
+      date: null,
+    }
+  },
+  computed:{
+    ...mapGetters('navigationData',['TITLE', 'TEXT']),
+  },
+  methods:{
+
+  }
 }
 </script>
 
@@ -65,7 +121,10 @@ export default {
 
 html,
 body{
-  background: var(--clr_bg) !important;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  color: #fff;
+  background: E5E5E5;
 }
 
 #app {
@@ -77,16 +136,46 @@ body{
                         "nav main"
                         "footer footer";
   grid-template-columns: minmax(200px, 264px) auto;
-  grid-template-rows: 82px auto 80px;
+  grid-template-rows: 90px auto 80px;
   max-width: 1200px;
   margin: 0 auto;
+  background: var(--clr_bg);
+  box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.1);
 }
 
 
 .header{
   grid-area: header;
-  border: 1px solid red;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 65px 20px 65px;
 }
+
+  .bread-crumbs{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 24px;
+    letter-spacing: 0.18px;
+    text-align: left;
+
+    &__text{
+      font-style: normal;
+      font-weight: 400;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+      letter-spacing: 0.25px;
+      color: rgba(255, 255, 255, 0.54);
+      display: inline-block;
+    }
+
+    &__title{
+      text-align: left;
+      margin: 0;
+    }
+  }
 
 .main{
   grid-area: main;

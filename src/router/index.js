@@ -17,7 +17,7 @@ const routes = [
     component: () => import( '../views/detail/MoreSensorView')
   },
   {
-    path: '/card/:type',
+    path: '/card/:type/:title',
     name: 'card',
     component: () => import( '../views/CardViews')
   },

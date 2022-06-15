@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
    props:{
 
@@ -36,11 +37,17 @@ export default {
 
    },
    methods:{
+      ...mapActions('navigationData',['SET_TITLE', 'SET_TEXT']),
       more(){
           if(this.selected){
+            this.SET_TEXT('Датчики > ' + this.selected.device + ' > ' + this.selected.name);
             this.$router.push({ name: 'more-sensor', params: { id: this.selected.id } });
           }
       }
+   },
+   mounted(){
+      this.SET_TITLE('Датчики');
+      this.SET_TEXT('');
    }
 }
 </script>

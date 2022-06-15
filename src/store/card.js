@@ -8,10 +8,14 @@ export default {
    },
    getters: {
        CARDS: state=> state.cards,
-       HAS: state => id => state.cards.some(card => card.id === id),
+       HAS: state => id => state.cards.some(card => card.ID === id),
        CARDS_BY_TYPE: (state) => (type) => {
            let cardsFilteres = state.cards.filter(item => item.UAType == type);
         return cardsFilteres;
+      },
+      CARD_BY_ID: (state) => (id) =>{
+        let card = state.cards.find(card => card.ID === id);
+        return card;
       }
    },
    mutations: {
