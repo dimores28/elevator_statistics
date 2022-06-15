@@ -28,8 +28,6 @@ export default {
             for(let i = 0; i < response.data.length; i++){
                 arr.push(response.data[i]);
             }
-
-            console.log(arr);
             commit('SET_CARDS', arr);
         });
        }

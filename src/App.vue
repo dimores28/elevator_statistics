@@ -90,7 +90,6 @@ body{
 
 .main{
   grid-area: main;
-  border: 1px solid green;
 }
 
 .nav{

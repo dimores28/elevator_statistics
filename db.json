@@ -54,8 +54,8 @@
         {"id":9,"MesIDRout":3,"Source":"Конвейер Т9.1","Recive":"Неизвестный элемент","RouteCulture":"Кукуруза","RouteMessage":"Промежуточный эл-т","User":"","LastAccess":"2022-02-22 15:13:54"},
         {"id":21,"MesIDRout":3,"Source":"Автоприемка 3","Recive":"Силос 3.4","RouteCulture":"Кукуруза","RouteMessage":"Остановлен","User":"","LastAccess":"2022-02-22 15:16:49"},
         {"id":22,"MesIDRout":3,"Source":"Автоприемка 3","Recive":"Силос 3.4","RouteCulture":"Кукуруза","RouteMessage":"Остановлен","User":"","LastAccess":"2022-02-22 15:16:49"},
-        {"id":24,"MesIDRout":3,"Source":"Автоприемка 3","Recive":"Силос 3.4","RouteCulture":"Кукуруза","RouteMessage":"Развален","User":"","LastAccess":"2022-02-22T15:17:26"},
-        {"id":25,"MesIDRout":3,"Source":"Автоприемка 3","Recive":"Силос 3.4","RouteCulture":"Кукуруза","RouteMessage":"Развален","User":"","LastAccess":"2022-02-22T15:17:26"}
+        {"id":24,"MesIDRout":3,"Source":"Автоприемка 3","Recive":"Силос 3.4","RouteCulture":"Кукуруза","RouteMessage":"Развален","User":"","LastAccess":"2022-02-22 15:17:26"},
+        {"id":25,"MesIDRout":3,"Source":"Автоприемка 3","Recive":"Силос 3.4","RouteCulture":"Кукуруза","RouteMessage":"Развален","User":"","LastAccess":"2022-02-22 15:17:26"}
     ],
     "settings": [
         {"ID":8,"UAIndex":1,"UAName":"Нория H1","UAType":9, "errorsNum": 3, "state": 3},
@@ -208,5 +208,11 @@
         {"ID":158,"UAIndex":148,"UAName":"-","UAType":0},
         {"ID":159,"UAIndex":149,"UAName":"-","UAType":0},
         {"ID":160,"UAIndex":150,"UAName":"Звонок","UAType":101}
+    ],
+    "sensors":[
+        {"name": "Подпор нижний", "device": "Нория Н1", "numberAlarm": 5, "dynamics": "down"},
+        {"name": "Подпор нижний", "device": "Нория Н2", "numberAlarm": 3, "dynamics": "down"},
+        {"name": "Подпор верхний", "device": "Нория Н6", "numberAlarm": 4, "dynamics": "down"},
+        {"name": "Контроль скорости", "device": "Нория Н3", "numberAlarm": 2, "dynamics": "up"}
     ]
 }

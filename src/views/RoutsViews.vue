@@ -8,6 +8,8 @@
                v-model:selection="selected" 
                selectionMode="single"
                dataKey="id"
+               :lazy="true"
+               @click="more"
             >
                 <Column field="Source" header="Начало маршрута" :sortable="true"></Column>
                 <Column field="Recive" header="Конец маршрута" :sortable="true"></Column>
@@ -33,7 +35,12 @@ export default {
 
     },
     methods:{
-      ...mapActions('routList',['LOAD_ROUT_LOGS'])
+      ...mapActions('routList',['LOAD_ROUT_LOGS']),
+      more(){
+         if(this.selected){
+            this.$router.push({ name: 'rout', params: { id: this.selected.id } });
+         }
+      }
     },
     mounted(){
       this.LOAD_ROUT_LOGS();
@@ -42,5 +49,22 @@ export default {
 </script>
 
 <style lang="less">
+.p-selectable-row td{
+   font-style: normal;
+   font-weight: 400;
+   font-size: 16px;
+   line-height: 24px;
+   letter-spacing: 0.5px;
+   color: #FFFFFF;
+   border-bottom: 1px solid white !important;
+}
 
+.p-column-header-content{
+   font-weight: 500;
+   font-size: 14px;
+   line-height: 16px;
+   letter-spacing: 1.25px;
+   text-transform: uppercase;
+   color: rgba(255, 255, 255, 0.56);
+}
 </style>

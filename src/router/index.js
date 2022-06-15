@@ -9,7 +9,12 @@ const routes = [
   {
     path: '/sensors',
     name: 'sensors',
-    component: () => import( '../views/RoutsViews')
+    component: () => import( '../views/SensorsViews')
+  },
+  {
+    path: '/more-sensor/:id',
+    name: 'more-sensor',
+    component: () => import( '../views/detail/MoreSensorView')
   },
   {
     path: '/card/:type',
@@ -19,7 +24,12 @@ const routes = [
   {
     path: '/details/:id',
     name: 'details',
-    component: () => import( '../views/DeviceStatusView')
+    component: () => import( '../views/detail/DeviceStatusView')
+  },
+  {
+    path: '/more-rout/:id',
+    name: 'rout',
+    component: () => import( '../views/detail/MoreRoutView')
   },
 ]
 

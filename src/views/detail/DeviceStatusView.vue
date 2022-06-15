@@ -1,11 +1,11 @@
 <template>
 <div class="v-device-status">
-   <h2>Device name: {{$route.params.id}}</h2>
    <div class="time-line">
       TODO Trends
+      <h2>Device name: {{$route.params.id}}</h2>
    </div>
 
-   <div class="info">
+   <div class="device-info info">
       <div class="info__message info__preset">
          <h3>События механизма</h3>
          <message-line
@@ -45,6 +45,9 @@
       </div>
       <div class="info__rout-message info__preset">
          <h3>Запуски в маршруте</h3>
+         <rout-line></rout-line>
+         <rout-line></rout-line>
+         <rout-line></rout-line>
          <rout-line></rout-line>
       </div>
    </div>
@@ -91,6 +94,7 @@ export default {
 .time-line{
    max-width: 1000px;
    border: 1px solid tomato;
+   height: 270px;
 }
 
 .info{
@@ -111,6 +115,13 @@ export default {
 
 .charts-wrap{
    display: flex;
+}
+
+@media (max-width: 992px) {
+   .info{
+      grid-template-columns: 1fr;
+   }
+   
 }
 
 </style>
