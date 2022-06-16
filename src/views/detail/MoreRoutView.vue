@@ -3,6 +3,7 @@
       <div class="time-line">
          TODO Trends
          <h2>Rout: {{$route.params.id}}</h2>
+         
       </div>
 
       <div class="rout-info">

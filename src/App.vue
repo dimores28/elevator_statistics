@@ -16,6 +16,7 @@
           dark range multiCalendars 
           locale="ru"
           :format="format"
+          @update:modelValue="handleDate"
         >
         	<template #calendar-header="{ index, day }">
             <div :class="index === 5 || index === 6 ? 'red-color' : ''">
@@ -50,31 +51,32 @@ import vNav from './views/NavigationView'
 import { ru } from 'date-fns/locale';
 import { ref, onMounted } from 'vue';
 
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 export default {
   setup(){
     const date = ref(new Date());
 
 		onMounted(() => {
-            const startDate = new Date();
-            const endDate = new Date(new Date().setDate(startDate.getDate() + 7));
+            const startDate = new Date();//new Date(new Date().setDate(new Date().getDate() - 1));
+            const endDate = new Date();//new Date(new Date().setDate(new Date().getDate() + 1));
             date.value = [startDate, endDate];
         })
 
         const format = (date) => {
-          const day = date[0].getDate();
-          const month = date[0].getMonth() + 1;
-          const year = date[0].getFullYear();
-          const day2 = date[1].getDate();
-          const month2 = date[1].getMonth() + 1;
-          const year2 = date[1].getFullYear();
-          return `${day}/${month}/${year} - ${day2}/${month2}/${year2}`;
+          const day_1 = date[0].toLocaleDateString("ru-RU");
+          const day_2 = date[1].toLocaleDateString("ru-RU");
+          return `${day_1} - ${day_2}`;
+        }
+
+        const handleDate = (modelData) => {
+          date.value = modelData;
         }
 
     return {
             date,
             format,
             ru,
+            handleDate
         }
   },
   components:{
@@ -86,11 +88,27 @@ export default {
     }
   },
   computed:{
-    ...mapGetters('navigationData',['TITLE', 'TEXT']),
+    ...mapGetters('navigationData',
+    [
+      'TITLE', 
+      'TEXT',
+    ]),
   },
   methods:{
+    ...mapActions('navigationData',
+    [
+      'SET_START_DATE',
+      'SET_END_DATE',
+    ]),
+    handleDate(modelData){
+      if(modelData != null){
+        this.SET_START_DATE(modelData[0]);
+        this.SET_END_DATE(modelData[1]);
+      }
+        
 
-  }
+    }
+  },
 }
 </script>
 

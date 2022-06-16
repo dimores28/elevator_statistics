@@ -1,8 +1,12 @@
 <template>
 <div class="v-device-status">
    <div class="time-line">
-      TODO Trends
-      <h2>Device name: {{$route.params.id}}</h2>
+      <!-- <h2>Device name: {{$route.params.id}}</h2> -->
+      <apexchart type="rangeBar" height="260"
+         :series="timlineData"
+         :options="timlinePreset"
+      >
+      </apexchart>
    </div>
 
    <div class="device-info info">
@@ -60,6 +64,7 @@
 import routLine from '@/components/UI/v-rout_line'
 import VueApexCharts from "vue3-apexcharts";
 import chartPreset from '@/core/presetApexchart'
+import timlinePreset from '@/core/presetTimeLine'
 import vLegend from '@/components/UI/v-legend';
 
 import { mapGetters, mapActions } from 'vuex'
@@ -74,6 +79,49 @@ export default {
       return {
          series: [44, 55, 23],
          chartOptions: chartPreset,
+         timlineData: [
+            // Thomas Jefferson
+            {
+               name: 'Work',
+               data: [
+                  {
+                     x: 'w',
+                     y: [ 1, 2]
+                  },
+                   {
+                     x: 'w',
+                     y: [ 6, 7]
+                  },
+               ]
+            },
+            {
+               name: 'Breaking',
+               data: [
+                  {
+                     x: 'w',
+                     y: [ 2, 4]
+                  },
+                  {
+                     x: 'w',
+                     y: [ 7, 8]
+                  },
+               ]
+            },
+            {
+               name: 'Repaer',
+               data: [
+                  {
+                     x: 'w',
+                     y: [ 4, 5]
+                  },
+                  {
+                     x: 'w',
+                     y: [ 8, 12]
+                  }
+               ]
+            },
+         ],
+         timlinePreset: timlinePreset
       }
    },
    computed:{
@@ -93,7 +141,7 @@ export default {
 <style lang="less">
 .time-line{
    max-width: 1000px;
-   border: 1px solid tomato;
+   // border: 1px solid tomato;
    height: 270px;
 }
 
