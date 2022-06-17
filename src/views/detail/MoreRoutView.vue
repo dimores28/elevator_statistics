@@ -9,6 +9,11 @@
       <div class="rout-info">
          <div class="rout-info__events">
             <h3>События в маршруте</h3>
+            <v-route-log v-for="(log, i) in LOGS_BY_ROUTID($route.params.id)" :key="i"
+               :text="log.RouteMessage"
+               :datatime="log.LastAccess"
+            >
+            </v-route-log>
          </div>
          <div class="rout-info__charts">
             <h3>Работа/простой</h3>
@@ -21,7 +26,13 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+import vRouteLog from '@/components/UI/v-rout_log';
+
 export default {
+   components:{
+      vRouteLog
+   },
    props:{
 
    },
@@ -31,10 +42,15 @@ export default {
       }
    },
    computed:{
+       ...mapGetters('routList',['LOGS', 'LOGS_BY_ROUTID']),
 
    },
    methods:{
+      ...mapActions('routList',['LOAD_ROUT_LOGS']),
 
+   },
+   mounted(){
+      this.LOAD_ROUT_LOGS();
    }
 }
 </script>

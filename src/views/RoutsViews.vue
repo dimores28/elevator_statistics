@@ -1,7 +1,7 @@
 <template>
    <div class="table-wrapper">
             <DataTable
-               :value="GET_ALL_LOGS" 
+               :value="ROUTS" 
                responsiveLayout="stack" 
                breakpoint="960px" 
                v-model:selection="selected" 
@@ -11,10 +11,10 @@
               
             >
                 <Column field="Source" header="Начало маршрута" :sortable="true"></Column>
-                <Column field="Recive" header="Конец маршрута" :sortable="true"></Column>
-                <Column field="RouteCulture" header="Культура" :sortable="true"></Column>
-                <Column field="LastAccess" header="Время запуска" :sortable="true"></Column>
-                <Column field="LastAccess" header="Время останова" :sortable="true"></Column>
+                <Column field="Receiver" header="Конец маршрута" :sortable="true"></Column>
+                <Column field="Culture" header="Культура" :sortable="true"></Column>
+                <Column field="StartTime" header="Время запуска" :sortable="true"></Column>
+                <Column field="StopTime" header="Время останова" :sortable="true"></Column>
             </DataTable>
    </div>
 </template>
@@ -29,23 +29,23 @@ export default {
         }
     },
     computed:{
-      ...mapGetters('routList',['GET_ALL_LOGS']),
+      ...mapGetters('routList',['ROUTS']),
 
     },
     methods:{
-      ...mapActions('routList',['LOAD_ROUT_LOGS']),
+      ...mapActions('routList',['LOAD_ROUTE_LIST']),
       ...mapActions('navigationData',['SET_TITLE', 'SET_TEXT']),
       more(){
          if(this.selected){
-            this.SET_TEXT('Маршруты  > ' + this.selected.Source)
-            this.$router.push({ name: 'rout', params: { id: this.selected.id } });
+            this.SET_TEXT('Маршруты  > ' + this.selected.Source + '-->' +this.selected.Receiver)
+            this.$router.push({ name: 'rout', params: { id: this.selected.MesIDRout } });
          }
       }
     },
     mounted(){
       this.SET_TITLE('Маршруты');
       this.SET_TEXT('');
-      this.LOAD_ROUT_LOGS();
+      this.LOAD_ROUTE_LIST();
     }
 }
 </script>
