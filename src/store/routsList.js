@@ -23,6 +23,9 @@ export default {
       },
       SET_ROUTE_LIST(state, data){
          state.routeList = data;
+      },
+      WRITE_MECHANISMS(state, data){
+         state.mechanisms = data;
       }
    },
    actions: {
@@ -32,10 +35,16 @@ export default {
             commit('SET_ROUT_LOGS', response.data);
          });
       },
-      async LOAD_ROUTE_LIST({commit}){
+      async LOAD_ROUTE_LIST({commit}, routeID){
          await axios.get(API_URL + "messages")
          .then(response =>{
             commit('SET_ROUTE_LIST', response.data)
+         });
+      },
+      async LOAD_MECHANISMS({commit}, routeID){
+         await axios.get(API_URL + 'deviceList')
+         .then(response =>{
+            commit('WRITE_MECHANISMS', response.data);
          });
       }
    },

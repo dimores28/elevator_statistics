@@ -42,7 +42,7 @@ export default {
       bottom: 5px;
       width: 8px;
       border-radius: 0px 8px 8px 0px;
-      background: #179433;
+      background: var(--clr_state_ok );
    }
 }
 

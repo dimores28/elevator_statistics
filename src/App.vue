@@ -145,6 +145,10 @@ body{
   background: E5E5E5;
 }
 
+.body{
+  height: 100vh;
+}
+
 #app {
   font-family: 'Roboto', sans-serif;
   text-align: center;

@@ -20,6 +20,12 @@
          </div>
          <div class="rout-info__device-list">
             <h3>Механизмы в маршруте</h3>
+               <v-device
+                  v-for="(dev, i) in MECHANISMS"
+                  :key="i"
+                  :content="dev.PText5"
+               >
+               </v-device>
          </div>
       </div>
    </div>
@@ -28,11 +34,15 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import vRouteLog from '@/components/UI/v-rout_log';
+import vDevice from '@/components/UI/v-device';
+import VDevice from '@/components/UI/v-device.vue';
 
 export default {
    components:{
-      vRouteLog
-   },
+    vRouteLog,
+    vDevice,
+    VDevice
+},
    props:{
 
    },
@@ -42,15 +52,25 @@ export default {
       }
    },
    computed:{
-       ...mapGetters('routList',['LOGS', 'LOGS_BY_ROUTID']),
+       ...mapGetters('routList',
+       [
+         'LOGS', 
+         'LOGS_BY_ROUTID', 
+         'MECHANISMS'
+         ]),
 
    },
    methods:{
-      ...mapActions('routList',['LOAD_ROUT_LOGS']),
+      ...mapActions('routList',
+      [
+         'LOAD_ROUT_LOGS',
+          'LOAD_MECHANISMS'
+      ]),
 
    },
    mounted(){
       this.LOAD_ROUT_LOGS();
+      this.LOAD_MECHANISMS(this.$route.params.id);
    }
 }
 </script>
