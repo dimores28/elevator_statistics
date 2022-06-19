@@ -7,18 +7,20 @@
       </div>
 
       <div class="rout-info">
-         <div class="rout-info__events">
+         <div class="rout-info__events rout-info__substrate">
             <h3>События в маршруте</h3>
-            <v-route-log v-for="(log, i) in LOGS_BY_ROUTID($route.params.id)" :key="i"
+            <v-route-log 
+               v-for="(log, i) in LOGS_BY_ROUTID($route.params.id)" 
+               :key="i"
                :text="log.RouteMessage"
                :datatime="log.LastAccess"
             >
             </v-route-log>
          </div>
-         <div class="rout-info__charts">
+         <div class="rout-info__charts rout-info__substrate">
             <h3>Работа/простой</h3>
          </div>
-         <div class="rout-info__device-list">
+         <div class="rout-info__device-list rout-info__substrate">
             <h3>Механизмы в маршруте</h3>
                <v-device
                   v-for="(dev, i) in MECHANISMS"
@@ -35,13 +37,11 @@
 import { mapGetters, mapActions } from 'vuex'
 import vRouteLog from '@/components/UI/v-rout_log';
 import vDevice from '@/components/UI/v-device';
-import VDevice from '@/components/UI/v-device.vue';
 
 export default {
    components:{
     vRouteLog,
     vDevice,
-    VDevice
 },
    props:{
 
@@ -90,5 +90,20 @@ export default {
          grid-column: 1;
          grid-row: 1 / 3;
       }
+
+      &__device-list{
+         height: 320px;
+         overflow: auto;
+          scrollbar-width: 3px;
+          scrollbar-color: var(--clr_gray2);
+      }
+
+
+
+      &__substrate{
+        background: var(--clr_gray3);
+        padding: 8px; 
+      }
+      
    }
 </style>

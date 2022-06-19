@@ -149,6 +149,24 @@ body{
   height: 100vh;
 }
 
+::-webkit-scrollbar-thumb{
+    width: 8px;
+    height: 30px;
+    background: #000;
+    border-radius: 10px;
+    background-color: #171f1f;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    background-color: #f9f9fd8a;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: var(--clr_gray2);
+}
+
 #app {
   font-family: 'Roboto', sans-serif;
   text-align: center;
