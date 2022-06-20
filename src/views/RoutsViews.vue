@@ -30,10 +30,11 @@ export default {
     },
     computed:{
       ...mapGetters('routList',['ROUTS']),
+      ...mapGetters('navigationData', ['TIME_RANGE']),
 
     },
     methods:{
-      ...mapActions('routList',['LOAD_ROUTE_LIST']),
+      ...mapActions('routList',['LOAD_ROUTE_LIST_BY_TIMERANGE']),
       ...mapActions('navigationData',['SET_TITLE', 'SET_TEXT']),
       more(){
          if(this.selected){
@@ -45,7 +46,12 @@ export default {
     mounted(){
       this.SET_TITLE('Маршруты');
       this.SET_TEXT('');
-      this.LOAD_ROUTE_LIST();
+      this.LOAD_ROUTE_LIST_BY_TIMERANGE(this.TIME_RANGE);
+
+      const context = this;
+      this.emitter.on('select-datapicker', function(timerange){
+         context.LOAD_ROUTE_LIST_BY_TIMERANGE(timerange);
+      });
     }
 }
 </script>

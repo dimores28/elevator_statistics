@@ -1,5 +1,6 @@
 import axios from 'axios'
-const API_URL = 'http://localhost:3000/';
+// const API_URL = 'http://localhost:3000/';
+const API_URL = 'http://localhost:30094/';
 
 export default {
 	namespaced: true,
@@ -29,20 +30,48 @@ export default {
       }
    },
    actions: {
-      async LOAD_ROUT_LOGS({commit}){
-         await axios.get(API_URL + 'routLog')
+      async LOAD_ROUT_LOGS({commit}, routeID){
+         await axios.get(API_URL + 'Route/Log',  {params:{MesIDRout: routeID}})
          .then(response=>{
+            response.data.forEach(function(item){
+               item.LastAccess = new Date(item.LastAccess).toLocaleString().replace(/,+/g, "");
+               return item;
+            });
+
             commit('SET_ROUT_LOGS', response.data);
          });
       },
-      async LOAD_ROUTE_LIST({commit}, routeID){
-         await axios.get(API_URL + "messages")
+      async LOAD_ROUTE_LIST({commit}){
+         await axios.get(API_URL + "Route")
          .then(response =>{
+               response.data.forEach(function(item){
+               item.StartTime = new Date(item.StartTime).toLocaleString().replace(/,+/g, "")
+               item.StopTime = new Date(item.StopTime).toLocaleString().replace(/,+/g, "")
+
+               return item;
+            });
+
+            commit('SET_ROUTE_LIST', response.data)
+         });
+      },
+      async LOAD_ROUTE_LIST_BY_TIMERANGE({commit}, timerange){
+          let start = timerange.StartDate.toISOString().slice(0, 10);
+          let end = timerange.EndDate.toISOString().slice(0, 10);
+
+         await axios.get(API_URL + "Route/Range", {params:{startTime: start, endTime: end}})
+         .then(response =>{
+               response.data.forEach(function(item){
+               item.StartTime = new Date(item.StartTime).toLocaleString().replace(/,+/g, "")
+               item.StopTime = new Date(item.StopTime).toLocaleString().replace(/,+/g, "")
+
+               return item;
+            });
+
             commit('SET_ROUTE_LIST', response.data)
          });
       },
       async LOAD_MECHANISMS({commit}, routeID){
-         await axios.get(API_URL + 'deviceList')
+         await axios.get(API_URL + 'api/Alg/RoutID', {params:{routID: routeID}})
          .then(response =>{
             commit('WRITE_MECHANISMS', response.data);
          });

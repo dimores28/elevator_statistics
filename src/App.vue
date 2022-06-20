@@ -57,8 +57,10 @@ export default {
     const date = ref(new Date());
 
 		onMounted(() => {
-            const startDate = new Date();//new Date(new Date().setDate(new Date().getDate() - 1));
-            const endDate = new Date();//new Date(new Date().setDate(new Date().getDate() + 1));
+            let startDate = new Date();
+            startDate.setDate(startDate.getDate()-1);
+            const endDate = new Date();
+
             date.value = [startDate, endDate];
         })
 
@@ -84,14 +86,15 @@ export default {
   },
   data(){
     return{
-      date: null,
+      //  date: null,
     }
   },
   computed:{
     ...mapGetters('navigationData',
     [
       'TITLE', 
-      'TEXT',
+      'TEXT',,
+      'TIME_RANGE'
     ]),
   },
   methods:{
@@ -104,11 +107,15 @@ export default {
       if(modelData != null){
         this.SET_START_DATE(modelData[0]);
         this.SET_END_DATE(modelData[1]);
-      }
-        
 
+        this.emitter.emit("select-datapicker", this.TIME_RANGE);
+      }
     }
   },
+  mounted(){
+    this.SET_START_DATE(this.date[0]);
+    this.SET_END_DATE(this.date[1]);
+  }
 }
 </script>
 

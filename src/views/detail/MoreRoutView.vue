@@ -9,25 +9,29 @@
       <div class="rout-info">
          <div class="rout-info__events rout-info__substrate">
             <h3>События в маршруте</h3>
-            <v-route-log 
-               v-for="(log, i) in LOGS_BY_ROUTID($route.params.id)" 
-               :key="i"
-               :text="log.RouteMessage"
-               :datatime="log.LastAccess"
-            >
-            </v-route-log>
+            <div class="rout-info__events_wrap">
+               <v-route-log 
+                  v-for="(log, i) in LOGS" 
+                  :key="i"
+                  :text="log.RouteMessage"
+                  :datatime="log.LastAccess"
+               >
+               </v-route-log>
+            </div>
          </div>
          <div class="rout-info__charts rout-info__substrate">
             <h3>Работа/простой</h3>
          </div>
          <div class="rout-info__device-list rout-info__substrate">
             <h3>Механизмы в маршруте</h3>
+            <div class="rout-info__device-list_wrap">
                <v-device
                   v-for="(dev, i) in MECHANISMS"
                   :key="i"
                   :content="dev.PText5"
                >
                </v-device>
+            </div>
          </div>
       </div>
    </div>
@@ -55,7 +59,6 @@ export default {
        ...mapGetters('routList',
        [
          'LOGS', 
-         'LOGS_BY_ROUTID', 
          'MECHANISMS'
          ]),
 
@@ -69,7 +72,7 @@ export default {
 
    },
    mounted(){
-      this.LOAD_ROUT_LOGS();
+      this.LOAD_ROUT_LOGS(this.$route.params.id);
       this.LOAD_MECHANISMS(this.$route.params.id);
    }
 }
@@ -89,13 +92,28 @@ export default {
       &__events{
          grid-column: 1;
          grid-row: 1 / 3;
+
+         &_wrap{
+            height: 493px;
+            overflow: auto;
+         } 
       }
 
+      &__charts{
+         height: 152px;
+      }
+
+
       &__device-list{
-         height: 320px;
+         
          overflow: auto;
           scrollbar-width: 3px;
           scrollbar-color: var(--clr_gray2);
+
+          &_wrap{
+            height: 320px;
+            overflow: auto;
+          }
       }
 
 

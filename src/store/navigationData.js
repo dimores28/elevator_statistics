@@ -5,14 +5,17 @@ export default {
    state: {
       title: 'Маршруты',
       text: '',
-      StartDate : new Date(),
-		EndDate : new Date(),
+      StartDate : null,
+		EndDate : null,
    },
    getters: {
       TITLE: state => state.title,
       TEXT: state => state.text,
       START_DATE: state => state.StartDate,
       END_DATE : state => state.EndDate,
+      TIME_RANGE(state){
+         return {StartDate: state.StartDate,  EndDate: state.EndDate}
+      },
    },
    mutations: {
       WRITE_TITLE(state, title){
