@@ -26,7 +26,7 @@
 			<router-link 
 				v-for="item in deviceNavigation"
 				:key="item.route"
-				:to="{ path: item.route + item.type}" 
+				:to="{ path: item.route + item.type + '/' + item.title}" 
 				v-slot="{ route, isExactActive, navigate }" 
 				:custom="true"
 			>
@@ -52,12 +52,12 @@ export default {
 			    { route: 'sensors', title: 'Датчики', icon: 'Icon_Sensors.svg' },
 			],
 			deviceNavigation:[
-				{ route: '/card/', title: 'конвейеры скребковые', icon: 'Icon_Scraper.svg', type: '1' },
-				{ route: '/card/', title: 'конвейеры ленточные', icon: 'Icon_Tape.svg', type: '2' },
-				{ route: '/card/', title: 'перекедные клапана', icon: 'Icon_DiverterValve.svg', type: '7' },
-				{ route: '/card/', title: 'шлюзовые зтворы', icon: 'Icon_Gateway.svg', type: '8' },
-				{ route: '/card/', title: 'нории', icon: 'Icon_Noriya.svg', type: '9' },
-				{ route: '/card/', title: 'вентиляторы', icon: 'Icon_Fan.svg', type: '21' },
+				{ route: '/card/', title: 'Конвейеры скребковые', icon: 'Icon_Scraper.svg', type: '1' },
+				{ route: '/card/', title: 'Конвейеры ленточные', icon: 'Icon_Tape.svg', type: '2' },
+				{ route: '/card/', title: 'Перекедные клапана', icon: 'Icon_DiverterValve.svg', type: '7' },
+				{ route: '/card/', title: 'Шлюзовые зтворы', icon: 'Icon_Gateway.svg', type: '8' },
+				{ route: '/card/', title: 'Нории', icon: 'Icon_Noriya.svg', type: '9' },
+				{ route: '/card/', title: 'Вентиляторы', icon: 'Icon_Fan.svg', type: '21' },
 			]
 		}),
 }

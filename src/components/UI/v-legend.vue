@@ -45,10 +45,11 @@ export default {
 .v-legend{
    display: flex;
    justify-content: space-between;
+   align-content: stretch;
    position: relative;
-   padding: 8px 8px 12px 30px;
+   padding: 8px 8px 12px 20px;
    border-bottom: 1px solid white;
-   width: 260px;
+   max-width: 298px;
 
    &__led{
       position: absolute;
@@ -58,5 +59,12 @@ export default {
       width: 8px;
       border-radius: 0 8px 8px 0;
    }
+
+   &__percent{
+      margin: 0 20px;
+   }
+
 }
+
+
 </style>

@@ -9,17 +9,27 @@ const routes = [
   {
     path: '/sensors',
     name: 'sensors',
-    component: () => import( '../views/RoutsViews')
+    component: () => import( '../views/SensorsViews')
   },
   {
-    path: '/card/:type',
+    path: '/more-sensor/:id',
+    name: 'more-sensor',
+    component: () => import( '../views/detail/MoreSensorView')
+  },
+  {
+    path: '/card/:type/:title',
     name: 'card',
     component: () => import( '../views/CardViews')
   },
   {
     path: '/details/:id',
     name: 'details',
-    component: () => import( '../views/DeviceStatusView')
+    component: () => import( '../views/detail/DeviceStatusView')
+  },
+  {
+    path: '/more-rout/:id',
+    name: 'rout',
+    component: () => import( '../views/detail/MoreRoutView')
   },
 ]
 

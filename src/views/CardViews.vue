@@ -1,5 +1,4 @@
 <template>
-   <!-- <div>User {{ $route.params.type }}</div> -->
    <div class="card-wrapper">
          <v-card
             v-for="(card, i) in CARDS_BY_TYPE($route.params.type)"
@@ -22,17 +21,32 @@ export default {
       cards: [],
    }),
    computed:{
-       ...mapGetters('card',['CARDS_BY_TYPE'])
+       ...mapGetters('card',['CARDS_BY_TYPE', 'CARD_BY_ID']),
+      chapter(){
+         return this.$route.params.title;
+      }
    },
    methods:{
       ...mapActions('card',['CARD_LOAD']),
+      ...mapActions('navigationData',['SET_TITLE', 'SET_TEXT']),
       seeMore(id){
+         
+         this.SET_TEXT(this.chapter + ' > ' + this.CARD_BY_ID(id).UAName);
+         this.SET_TITLE(this.$route.params.title)
          this.$router.push({ name: 'details', params: { id: id } });
       }
    },
+   watch:{
+      chapter(){
+         if(this.chapter){
+            this.SET_TITLE(this.chapter);
+         }
+      }
+   },
    mounted(){
+      this.SET_TITLE(this.$route.params.title)
+      this.SET_TEXT('');
       this.CARD_LOAD();
-       
    }
    
 }

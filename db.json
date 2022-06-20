@@ -18,24 +18,14 @@
         {"id":16, "title": "H5", "errorsNum": 0, "state": 1, "type": 9}
     ],
     "messages":[
-        {"dev_id": 1, "message": "Пуск", "DateTime": "20.06.2021 12:10:23", "MessageClass": "Log"},
-        {"dev_id": 1, "message": "Стоп", "DateTime": "20.06.2021 12:10:23", "MessageClass": "Log"},
-        {"dev_id": 1, "message": "Механизм поставлен в ремонт", "DateTime": "20.06.2021 12:10:23", "MessageClass": "Repeir"},
-        {"dev_id": 1, "message": "Механизм снят с ремонта", "DateTime": "20.06.2021 12:10:23", "MessageClass": "Repeir"},
-        {"dev_id": 1, "message": "Сработал подпор", "DateTime": "20.06.2021 12:10:23", "MessageClass": "Errors"},
-        {"dev_id": 1, "message": "Превышен первый порог нагрузки", "DateTime": "20.06.2021 12:10:23", "MessageClass": "Warning"},
-        {"dev_id": 5, "message": "Пуск", "DateTime": "20.06.2021 12:10:23", "MessageClass": "Log"},
-        {"dev_id": 5, "message": "Стоп", "DateTime": "20.06.2021 12:10:23", "MessageClass": "Log"},
-        {"dev_id": 7, "message": "Механизм поставлен в ремонт", "DateTime": "20.06.2021 12:10:23", "MessageClass": "Repeir"},
-        {"dev_id": 7, "message": "Механизм снят с ремонта", "DateTime": "20.06.2021 12:10:23", "MessageClass": "Repeir"},
-        {"dev_id": 3, "message": "Сработал подпор", "DateTime": "20.06.2021 12:10:23", "MessageClass": "Errors"},
-        {"dev_id": 12, "message": "Превышен первый порог нагрузки", "DateTime": "20.06.2021 12:10:23", "MessageClass": "Warning"},
-        {"dev_id": 12, "message": "Пуск", "DateTime": "20.06.2021 12:10:23", "MessageClass": "Log"},
-        {"dev_id": 12, "message": "Стоп", "DateTime": "20.06.2021 12:10:23", "MessageClass": "Log"},
-        {"dev_id": 12, "message": "Механизм поставлен в ремонт", "DateTime": "20.06.2021 12:10:23", "MessageClass": "Repeir"},
-        {"dev_id": 12, "message": "Механизм снят с ремонта", "DateTime": "20.06.2021 12:10:23", "MessageClass": "Repeir"},
-        {"dev_id": 16, "message": "Сработал подпор", "DateTime": "20.06.2021 12:10:23", "MessageClass": "Errors"},
-        {"dev_id": 16, "message": "Превышен первый порог нагрузки", "DateTime": "20.06.2021 12:10:23", "MessageClass": "Warning"}
+        {"MesIDRout":2,"Source":"Автоприемка 3","Receiver":"Силос 3.1","Culture":"Пшеница 1 кл","StartTime":"2022-06-10 13:36:35","StopTime":"2022-06-10 13:39:09"},
+        {"MesIDRout":3,"Source":"Автоприемка 3","Receiver":"Силос 3.4","Culture":"Пшеница 1 кл","StartTime":"2022-06-17 10:02:03","StopTime":"2022-06-1 10:46:09"},
+        {"MesIDRout":4,"Source":"Силос 3.1","Receiver":"Силос 3.4","Culture":"Пшеница 1 кл","StartTime":"2022-06-17 10:50:08","StopTime":"2022-06-17 11:25:52"},
+        {"MesIDRout":5,"Source":"Силос 10.4","Receiver":"Силос 10.6","Culture":"Пшеница 3 кл","StartTime":"2022-06-17 10:54:16","StopTime":"2022-06-17 11:26:02"},
+        {"MesIDRout":6,"Source":"Бункер 12","Receiver":"Сушилка 2","Culture":"Подсолнух","StartTime":"2022-06-17 10:56:21","StopTime":"2022-06-17 11:27:10"},
+        {"MesIDRout":7,"Source":"Сушилка 2","Receiver":"Силос 3.4","Culture":"Пшеница 1 кл","StartTime":"2022-06-17 11:34:42","StopTime":"2022-06-17 11:38:16"},
+        {"MesIDRout":8,"Source":"Бункер 12","Receiver":"Сушилка 2","Culture":"Шрот","StartTime":"2022-02-22 15:23:00","StopTime":"2022-02-22 15:25:26"},
+        {"MesIDRout":16,"Source":"Силос 3.2","Receiver":"Силос 3.4","Culture":"Пшеница 1 кл","StartTime":"2022-06-17 14:48:33","StopTime":"2022-06-17 15:40:31"}
     ],
     "presence":[
         {"source": "Силос СБ-3", "reciver": "Морская отгрузка", "culture": "Кукуруза"},
@@ -43,19 +33,16 @@
         {"source": "СРВ 2", "reciver": "Силос СБ-23", "culture": "Пшеница 1кл"}
     ],
     "routLog":[
-        {"id":1,"MesIDRout":3,"Source":"Автоприемка 3","Recive":"Силос 3.4","RouteCulture":"Кукуруза",           "RouteMessage":"Запушен","User":"","LastAccess":"2022-02-22 15:13:47"},
-        {"id":2,"MesIDRout":3,"Source":"Конвейер Т2","Recive":"Неизвестный элемент","RouteCulture":"Кукуруза","RouteMessage":"Промежуточный эл-т","User":"","LastAccess":"2022-02-22 15:13:49"},
-        {"id":3,"MesIDRout":3,"Source":"Конвейер Т2","Recive":"Неизвестный элемент","RouteCulture":"Кукуруза","RouteMessage":"Промежуточный эл-т","User":"","LastAccess":"2022-02-22 15:13:49"},
-        {"id":4,"MesIDRout":3,"Source":"Конвейер Т4.3","Recive":"Неизвестный элемент","RouteCulture":"Кукуруза","RouteMessage":"Промежуточный эл-т","User":"","LastAccess":"2022-02-22 15:13:50"},
-        {"id":5,"MesIDRout":3,"Source":"Сепаратор 10","Recive":"Неизвестный элемент","RouteCulture":"Кукуруза","RouteMessage":"Промежуточный эл-т","User":"","LastAccess":"2022-02-22 15:13:51"},
-        {"id":6,"MesIDRout":3,"Source":"Конвейер Т9.3","Recive":"Неизвестный элемент","RouteCulture":"Кукуруза","RouteMessage":"Промежуточный эл-т","User":"","LastAccess":"2022-02-22 15:13:52"},
-        {"id":7,"MesIDRout":3,"Source":"Конвейер Т9.3","Recive":"Неизвестный элемент","RouteCulture":"Кукуруза","RouteMessage":"Промежуточный эл-т","User":"","LastAccess":"2022-02-22 15:13:53"},
-        {"id":8,"MesIDRout":3,"Source":"Конвейер Т9.2","Recive":"Неизвестный элемент","RouteCulture":"Кукуруза","RouteMessage":"Промежуточный эл-т","User":"","LastAccess":"2022-02-22 15:13:53"},
-        {"id":9,"MesIDRout":3,"Source":"Конвейер Т9.1","Recive":"Неизвестный элемент","RouteCulture":"Кукуруза","RouteMessage":"Промежуточный эл-т","User":"","LastAccess":"2022-02-22 15:13:54"},
-        {"id":21,"MesIDRout":3,"Source":"Автоприемка 3","Recive":"Силос 3.4","RouteCulture":"Кукуруза","RouteMessage":"Остановлен","User":"","LastAccess":"2022-02-22 15:16:49"},
-        {"id":22,"MesIDRout":3,"Source":"Автоприемка 3","Recive":"Силос 3.4","RouteCulture":"Кукуруза","RouteMessage":"Остановлен","User":"","LastAccess":"2022-02-22 15:16:49"},
-        {"id":24,"MesIDRout":3,"Source":"Автоприемка 3","Recive":"Силос 3.4","RouteCulture":"Кукуруза","RouteMessage":"Развален","User":"","LastAccess":"2022-02-22T15:17:26"},
-        {"id":25,"MesIDRout":3,"Source":"Автоприемка 3","Recive":"Силос 3.4","RouteCulture":"Кукуруза","RouteMessage":"Развален","User":"","LastAccess":"2022-02-22T15:17:26"}
+        {"id":121,"MesIDRout":8,"Source":"Силос 10.4","Recive":"Силос 10.6","RouteCulture":"Пшеница 3 кл","RouteMessage":"АВАРИЯ","User":"Инженер","LastAccess":"2022-06-17 11:39:12"},
+        {"id":122,"MesIDRout":8,"Source":"Силос 10.4","Recive":"Силос 10.6","RouteCulture":"Пшеница 3 кл","RouteMessage":"АВАРИЯ","User":"Инженер","LastAccess":"2022-06-17 11:39:12"},
+        {"id":123,"MesIDRout":8,"Source":"Силос 10.4","Recive":"Силос 10.6","RouteCulture":"Пшеница 3 кл","RouteMessage":"Перезапушен","User":"Инженер","LastAccess":"2022-06-17 11:39:29"},
+        {"id":124,"MesIDRout":8,"Source":"Силос 10.4","Recive":"Силос 10.6","RouteCulture":"Пшеница 3 кл","RouteMessage":"Перезапушен","User":"Инженер","LastAccess":"2022-06-17 11:39:29"},
+        {"id":125,"MesIDRout":8,"Source":"Силос 10.4","Recive":"Силос 10.6","RouteCulture":"Пшеница 3 кл","RouteMessage":"Остановлен","User":"Инженер","LastAccess":"2022-06-17 11:39:52"},
+        {"id":126,"MesIDRout":8,"Source":"Силос 10.4","Recive":"Силос 10.6","RouteCulture":"Пшеница 3 кл","RouteMessage":"Развален","User":"Инженер","LastAccess":"2022-06-17 11:40:06"},
+        {"id":113,"MesIDRout":7,"Source":"Силос 3.1","Recive":"Силос 3.4","RouteCulture":"Пшеница 1 кл","RouteMessage":"АВАРИЯ","User":"Инженер","LastAccess":"2022-06-17 11:37:19"},
+        {"id":114,"MesIDRout":7,"Source":"Силос 3.1","Recive":"Силос 3.4","RouteCulture":"Пшеница 1 кл","RouteMessage":"Перезапушен","User":"Инженер","LastAccess":"2022-06-17 11:37:36"},
+        {"id":115,"MesIDRout":7,"Source":"Силос 3.1","Recive":"Силос 3.4","RouteCulture":"Пшеница 1 кл","RouteMessage":"Остановлен","User":"Инженер","LastAccess":"2022-06-17 11:38:16"},
+        {"id":116,"MesIDRout":7,"Source":"Силос 3.1","Recive":"Силос 3.4","RouteCulture":"Пшеница 1 кл","RouteMessage":"Развален","User":"Инженер","LastAccess":"2022-06-17 11:38:45"}
     ],
     "settings": [
         {"ID":8,"UAIndex":1,"UAName":"Нория H1","UAType":9, "errorsNum": 3, "state": 3},
@@ -208,5 +195,22 @@
         {"ID":158,"UAIndex":148,"UAName":"-","UAType":0},
         {"ID":159,"UAIndex":149,"UAName":"-","UAType":0},
         {"ID":160,"UAIndex":150,"UAName":"Звонок","UAType":101}
+    ],
+    "sensors":[
+        {"name": "Подпор нижний", "device": "Нория Н1", "numberAlarm": 5, "dynamics": "down"},
+        {"name": "Подпор нижний", "device": "Нория Н2", "numberAlarm": 3, "dynamics": "down"},
+        {"name": "Подпор верхний", "device": "Нория Н6", "numberAlarm": 4, "dynamics": "down"},
+        {"name": "Контроль скорости", "device": "Нория Н3", "numberAlarm": 2, "dynamics": "up"}
+    ],
+    "deviceList": [
+        {"MsgNr":23,"PValue3":6.0,"PValue4":16.0,"PText5":"Нория H6"},
+        {"MsgNr":23,"PValue3":7.0,"PValue4":16.0,"PText5":"Нория H7"},
+        {"MsgNr":23,"PValue3":19.0,"PValue4":16.0,"PText5":"Конвейер Т4.2"},
+        {"MsgNr":23,"PValue3":20.0,"PValue4":16.0,"PText5":"Конвейер Т4.3"},
+        {"MsgNr":23,"PValue3":21.0,"PValue4":16.0,"PText5":"Конвейер Т9"},
+        {"MsgNr":23,"PValue3":22.0,"PValue4":16.0,"PText5":"Конвейер Т9.1"},
+        {"MsgNr":23,"PValue3":23.0,"PValue4":16.0,"PText5":"Конвейер Т9.2"},
+        {"MsgNr":23,"PValue3":24.0,"PValue4":16.0,"PText5":"Конвейер Т9.3"},
+        {"MsgNr":23,"PValue3":140.0,"PValue4":16.0,"PText5":"Сепаратор 10"}
     ]
 }

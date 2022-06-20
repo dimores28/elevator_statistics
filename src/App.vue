@@ -1,6 +1,30 @@
 <template>
    <header class="header">
-     <h2>Header</h2>
+     <div class="bread-crumbs">
+        <span class="bread-crumbs__text">
+            {{TEXT}}
+        </span>
+        <p class="bread-crumbs__title">
+            {{TITLE}}
+        </p>
+     </div>
+     <div class="datapicker-wrap">
+        <Datepicker 
+          v-model="date"
+          :enableTimePicker="false"
+          position="right" 
+          dark range multiCalendars 
+          locale="ru"
+          :format="format"
+          @update:modelValue="handleDate"
+        >
+        	<template #calendar-header="{ index, day }">
+            <div :class="index === 5 || index === 6 ? 'red-color' : ''">
+              {{ day }}
+            </div>
+          </template>
+        </Datepicker>
+     </div>
    </header>
    <aside class="nav">
      <div class="logo">
@@ -24,17 +48,74 @@
 
 <script>
 import vNav from './views/NavigationView'
+import { ru } from 'date-fns/locale';
+import { ref, onMounted } from 'vue';
 
-
-
+import { mapGetters, mapActions } from 'vuex';
 export default {
+  setup(){
+    const date = ref(new Date());
+
+		onMounted(() => {
+            let startDate = new Date();
+            startDate.setDate(startDate.getDate()-1);
+            const endDate = new Date();
+
+            date.value = [startDate, endDate];
+        })
+
+        const format = (date) => {
+          const day_1 = date[0].toLocaleDateString("ru-RU");
+          const day_2 = date[1].toLocaleDateString("ru-RU");
+          return `${day_1} - ${day_2}`;
+        }
+
+        const handleDate = (modelData) => {
+          date.value = modelData;
+        }
+
+    return {
+            date,
+            format,
+            ru,
+            handleDate
+        }
+  },
   components:{
     vNav,
-
   },
-  data:()=>({
-    cardProps: {id:1, title:'H2', errorsNum: 2, state: 4}
-  })
+  data(){
+    return{
+      //  date: null,
+    }
+  },
+  computed:{
+    ...mapGetters('navigationData',
+    [
+      'TITLE', 
+      'TEXT',,
+      'TIME_RANGE'
+    ]),
+  },
+  methods:{
+    ...mapActions('navigationData',
+    [
+      'SET_START_DATE',
+      'SET_END_DATE',
+    ]),
+    handleDate(modelData){
+      if(modelData != null){
+        this.SET_START_DATE(modelData[0]);
+        this.SET_END_DATE(modelData[1]);
+
+        this.emitter.emit("select-datapicker", this.TIME_RANGE);
+      }
+    }
+  },
+  mounted(){
+    this.SET_START_DATE(this.date[0]);
+    this.SET_END_DATE(this.date[1]);
+  }
 }
 </script>
 
@@ -65,7 +146,32 @@ export default {
 
 html,
 body{
-  background: var(--clr_bg) !important;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  color: #fff;
+  background: E5E5E5;
+}
+
+.body{
+  height: 100vh;
+}
+
+::-webkit-scrollbar-thumb{
+    width: 8px;
+    height: 30px;
+    background: #000;
+    border-radius: 10px;
+    background-color: #171f1f;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    background-color: #f9f9fd8a;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: var(--clr_gray2);
 }
 
 #app {
@@ -77,20 +183,49 @@ body{
                         "nav main"
                         "footer footer";
   grid-template-columns: minmax(200px, 264px) auto;
-  grid-template-rows: 82px auto 80px;
+  grid-template-rows: 90px auto 80px;
   max-width: 1200px;
   margin: 0 auto;
+  background: var(--clr_bg);
+  box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.1);
 }
 
 
 .header{
   grid-area: header;
-  border: 1px solid red;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 65px 20px 65px;
 }
+
+  .bread-crumbs{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 24px;
+    letter-spacing: 0.18px;
+    text-align: left;
+
+    &__text{
+      font-style: normal;
+      font-weight: 400;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+      letter-spacing: 0.25px;
+      color: rgba(255, 255, 255, 0.54);
+      display: inline-block;
+    }
+
+    &__title{
+      text-align: left;
+      margin: 0;
+    }
+  }
 
 .main{
   grid-area: main;
-  border: 1px solid green;
 }
 
 .nav{
