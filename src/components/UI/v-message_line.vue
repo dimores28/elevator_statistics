@@ -2,7 +2,7 @@
    <div class="v-message-line">
       <div class="message">
          <div class="message__led" :class="classLight"></div>
-         <p class="message__text">{{message.message}}</p>
+         <p class="message__text">{{message.Text1}}</p>
          <p class="message__date">{{message.DateTime}}</p>
       </div>
 

@@ -1,19 +1,19 @@
 <template>
 <div class="v-device-status">
    <div class="time-line">
-      <!-- <h2>Device name: {{$route.params.id}}</h2> -->
-      <apexchart type="rangeBar" height="260"
+      <h2>Device name: {{$route.params.id}}</h2>
+      <!-- <apexchart type="rangeBar" height="260"
          :series="timlineData"
          :options="timlinePreset"
       >
-      </apexchart>
+      </apexchart> -->
    </div>
 
    <div class="device-info info">
       <div class="info__message info__preset">
          <h3>События механизма</h3>
          <message-line
-            v-for="(mess, i) in MESSAGES_BY_ID($route.params.id)"
+            v-for="(mess, i) in MESSAGES"
             :key="i"
             :message="mess"
          >
@@ -125,14 +125,19 @@ export default {
       }
    },
    computed:{
-      ...mapGetters('device',['MESSAGES_BY_ID']),
+      ...mapGetters('device',['MESSAGES']),
+      ...mapGetters('navigationData', ['TIME_RANGE']),
    },
    methods:{
       ...mapActions('device',['LOAD']),
 
    },
    created(){
-      this.LOAD();
+      let device = {};
+      device.id = this.$route.params.id;
+      device.range = this.TIME_RANGE;
+
+      this.LOAD(device);
    }
    
 }

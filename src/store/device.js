@@ -1,5 +1,6 @@
 import axios from 'axios'
-const API_URL = 'http://localhost:3000/';
+// const API_URL = 'http://localhost:3000/';
+const API_URL = 'http://localhost:30094/';
 
 export default {
 	namespaced: true,
@@ -19,9 +20,22 @@ export default {
       }
    },
    actions: {
-      async LOAD({commit}){
-         await axios.get(API_URL + 'messages')
+      async LOAD({commit}, device){
+         let start = device.range.StartDate.toISOString().slice(0, 10);
+         let end = device.range.EndDate.toISOString().slice(0, 10);
+         await axios.get(API_URL + 'api/Alg/DeviceRenge', 
+         {
+            params:{
+               byID: device.id,
+               startTime: start,
+               endTime: end
+         }})
          .then((response)=>{
+            console.log(response.data);
+            response.data.forEach(function(item){
+               item.DateTime = new Date(item.DateTime).toLocaleString().replace(/,+/g, "");
+               return item;
+            });
             commit('SET_MESSAGES', response.data);
          });
       }

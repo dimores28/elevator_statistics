@@ -3,3 +3,7 @@ export default function toISODate(datetime){
     let date = str[0].split('.');
     return date[2] + '-' + date[1] + '-' + date[1] + ' ' + str[1];
  }
+
+ export function parseDateQuery(data){
+    let result = [];
+ }
