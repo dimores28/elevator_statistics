@@ -4,7 +4,7 @@
             v-for="(card, i) in CARDS_BY_TYPE($route.params.type)"
             :key="i"
             :mechanismData="card"
-            @details="seeMore"
+            @details="seeMore(card.UAIndex, card.ID)"
          >
          </v-card>
    </div>
@@ -29,11 +29,11 @@ export default {
    methods:{
       ...mapActions('card',['CARD_LOAD']),
       ...mapActions('navigationData',['SET_TITLE', 'SET_TEXT']),
-      seeMore(id){
+      seeMore(index, id){
          
          this.SET_TEXT(this.chapter + ' > ' + this.CARD_BY_ID(id).UAName);
          this.SET_TITLE(this.$route.params.title)
-         this.$router.push({ name: 'details', params: { id: id } });
+         this.$router.push({ name: 'details', params: { id: index } });
       }
    },
    watch:{

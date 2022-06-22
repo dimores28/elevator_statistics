@@ -1,5 +1,6 @@
 import axios from 'axios'
-const API_URL = 'http://localhost:3000/';
+// const API_URL = 'http://localhost:3000/';
+const API_URL = 'http://localhost:30094/';
 
 export default {
    namespaced: true,
@@ -26,7 +27,7 @@ export default {
    actions: {
        async CARD_LOAD({commit}){
         
-        await axios.get(API_URL + 'settings')
+        await axios.get(API_URL + 'api/SettingsTable')
         .then(response=>{
             let arr = []
             for(let i = 0; i < response.data.length; i++){

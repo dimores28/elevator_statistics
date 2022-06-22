@@ -1,9 +1,9 @@
 <template>
    <div class="v-rout-line">
       <div class="rout-log">
-         <div class="rout-log__souce">Силос СБ-3</div>
-         <div class="rout-log__recive">Морская отгрузка</div>
-         <div class="rout-log__culture">Кукуруза</div>
+         <div class="rout-log__souce">{{log.Source}}</div>
+         <div class="rout-log__recive">{{log.Recive}}</div>
+         <div class="rout-log__culture">{{log.RouteCulture}}</div>
       </div>
    </div>
 </template>
@@ -12,7 +12,7 @@
 export default {
    props:{
       log:{
-         type: Object,
+         type: Object
       }
    },
    

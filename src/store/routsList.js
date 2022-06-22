@@ -1,4 +1,5 @@
 import axios from 'axios'
+import toISODate from '@/api/workWithDate'
 // const API_URL = 'http://localhost:3000/';
 const API_URL = 'http://localhost:30094/';
 
@@ -17,6 +18,18 @@ export default {
          return rez;
       }, 
       MECHANISMS: state => state.mechanisms,
+      SORTED_LOGS: state =>{
+         let sorted = state.routLogs.sort(function(a, b) {
+               if(new Date(a.LastAccess) > new Date(b.LastAccess))
+                  return 1;
+               if(new Date(a.LastAccess) == new Date(b.LastAccess))
+                  return 0;
+               if(new Date(a.LastAccess) < new Date(b.LastAccess))
+                  return -1;
+         });
+         return sorted;
+ 
+      },
    },
    mutations: {
       SET_ROUT_LOGS(state, data){
@@ -27,20 +40,39 @@ export default {
       },
       WRITE_MECHANISMS(state, data){
          state.mechanisms = data;
+      },
+      COMPLETE_LOGS(state, data){
+         let log = {};
+
+         data.forEach(function(mess){
+            
+            log.LastAccess = mess.DateTime;
+            log.MesIDRout = mess.PValue4
+            log.RouteMessage = mess.Text1;
+            log.error = true;
+
+            state.routLogs.push(log);
+         });
+
+         state.routLogs = state.routLogs.sort(function(a, b) {
+            let time1 = a.LastAccess;
+            let time2 = b.LastAccess;
+
+            time1 = new Date(toISODate(time1));
+            time2 = new Date(toISODate(time2));
+
+            if(time1 > time2)
+               return 1;
+         
+            if(time1 == time2)
+               return 0;
+            
+            if(time1 < time2)
+               return -1;
+         });
       }
    },
    actions: {
-      async LOAD_ROUT_LOGS({commit}, routeID){
-         await axios.get(API_URL + 'Route/Log',  {params:{MesIDRout: routeID}})
-         .then(response=>{
-            response.data.forEach(function(item){
-               item.LastAccess = new Date(item.LastAccess).toLocaleString().replace(/,+/g, "");
-               return item;
-            });
-
-            commit('SET_ROUT_LOGS', response.data);
-         });
-      },
       async LOAD_ROUTE_LIST({commit}){
          await axios.get(API_URL + "Route")
          .then(response =>{
@@ -75,6 +107,29 @@ export default {
          .then(response =>{
             commit('WRITE_MECHANISMS', response.data);
          });
+      },
+      async LOAD_ROUT_LOGS({commit}, routeID){
+         await axios.get(API_URL + 'Route/Log',  {params:{MesIDRout: routeID}})
+         .then(response=>{
+            response.data.forEach(function(item){
+               item.LastAccess = new Date(item.LastAccess).toLocaleString().replace(/,+/g, "");
+               return item;
+            });
+
+            commit('SET_ROUT_LOGS', response.data);
+         });
+      },
+      async LOAD_ROUTE_ALARM({commit}, routeID){
+         await axios.get(API_URL + 'api/Alg/RouteAlarms',  {params:{routID: routeID}})
+         .then(response =>{
+            response.data.forEach(function(item){
+               item.DateTime = new Date(item.DateTime).toLocaleString().replace(/,+/g, "");
+               return item;
+            });
+            
+            commit('COMPLETE_LOGS', response.data);
+         });
       }
    },
 }
+

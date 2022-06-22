@@ -1,24 +1,25 @@
 <template>
 <div class="v-device-status">
    <div class="time-line">
-      <!-- <h2>Device name: {{$route.params.id}}</h2> -->
-      <apexchart type="rangeBar" height="260"
+      <h2>Device name: {{$route.params.id}}</h2>
+      <!-- <apexchart type="rangeBar" height="260"
          :series="timlineData"
          :options="timlinePreset"
       >
-      </apexchart>
+      </apexchart> -->
    </div>
 
    <div class="device-info info">
       <div class="info__message info__preset">
          <h3>События механизма</h3>
-         <message-line
-            v-for="(mess, i) in MESSAGES_BY_ID($route.params.id)"
-            :key="i"
-            :message="mess"
-         >
-
-         </message-line>
+         <div class="info__message_wrap">
+            <message-line
+               v-for="(mess, i) in MESSAGES"
+               :key="i"
+               :message="mess"
+            >
+            </message-line>
+         </div>
       </div>
       <div class="info__charts info__preset">
          <h3>Время работы/простоя/в ремонте</h3>
@@ -49,10 +50,14 @@
       </div>
       <div class="info__rout-message info__preset">
          <h3>Запуски в маршруте</h3>
-         <rout-line></rout-line>
-         <rout-line></rout-line>
-         <rout-line></rout-line>
-         <rout-line></rout-line>
+         <div class="info__rout-message_wrap">
+            <rout-line
+               v-for= "(item, i) in ROUTE_LIST"
+               :key="i"
+               :log="item"
+            >
+            </rout-line>
+         </div>
       </div>
    </div>
 
@@ -125,14 +130,20 @@ export default {
       }
    },
    computed:{
-      ...mapGetters('device',['MESSAGES_BY_ID']),
+      ...mapGetters('device',['MESSAGES', 'ROUTE_LIST']),
+      ...mapGetters('navigationData', ['TIME_RANGE']),
    },
    methods:{
-      ...mapActions('device',['LOAD']),
+      ...mapActions('device',['LOAD', 'GET_LIST_OF_ROUTES']),
 
    },
    created(){
-      this.LOAD();
+      let device = {};
+      device.id = this.$route.params.id;
+      device.range = this.TIME_RANGE;
+
+      this.LOAD(device);
+      this.GET_LIST_OF_ROUTES(device);
    }
    
 }
@@ -158,6 +169,19 @@ export default {
    &__message{
       grid-column: 1;
       grid-row: 1 / 3;
+
+      &_wrap{
+         height: 493px;
+         overflow: auto;
+      }
+   }
+
+   &__rout-message{
+
+      &_wrap{
+         height: 320px;
+         overflow: auto;   
+      }
    }
 }
 

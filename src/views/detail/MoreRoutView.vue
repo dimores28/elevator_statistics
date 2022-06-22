@@ -15,6 +15,7 @@
                   :key="i"
                   :text="log.RouteMessage"
                   :datatime="log.LastAccess"
+                  :error="log.error"
                >
                </v-route-log>
             </div>
@@ -66,14 +67,16 @@ export default {
    methods:{
       ...mapActions('routList',
       [
-         'LOAD_ROUT_LOGS',
-          'LOAD_MECHANISMS'
+          'LOAD_ROUT_LOGS',
+          'LOAD_MECHANISMS',
+          'LOAD_ROUTE_ALARM',
       ]),
 
    },
    mounted(){
       this.LOAD_ROUT_LOGS(this.$route.params.id);
       this.LOAD_MECHANISMS(this.$route.params.id);
+      this.LOAD_ROUTE_ALARM(this.$route.params.id);
    }
 }
 </script>

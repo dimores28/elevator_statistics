@@ -2,7 +2,7 @@
    <div class="v-message-line">
       <div class="message">
          <div class="message__led" :class="classLight"></div>
-         <p class="message__text">{{message.message}}</p>
+         <p class="message__text">{{message.Text1}}</p>
          <p class="message__date">{{message.DateTime}}</p>
       </div>
 
@@ -18,24 +18,28 @@ export default {
    },
    computed:{
       classLight(){
-         if(this.message.MessageClass == 'Log'){
+         if(this.message.ClassName == 'Log'){
             return 'log';
          }
-         else if(this.message.MessageClass == 'Repeir')
+         else if(this.message.ClassName == 'Repeir')
          {
             return 'repeir';
          }
-         else if(this.message.MessageClass == 'Warning'){
+         else if(this.message.ClassName == 'Warning'){
             return 'warning';
          }
-         else if(this.message.MessageClass == 'Errors')
+         else if(this.message.ClassName == 'Error')
          {
             return 'errors';
          }
-         else if(this.message.MessageClass == 'Operator')
+         else if(this.message.ClassName == 'Operator')
          {
             return 'operator';
-         }
+         } 
+         else if(this.message.ClassName == 'Rout')
+         {
+            return 'rout';
+         } 
       }
    }
 }
@@ -89,6 +93,10 @@ export default {
       background: var(--clr_state_warning);
    }
    .operator{
-      background: rgb(233, 95, 199);
+      background: rgb(255, 153, 204);
+   }
+
+   .rout{
+      background: rgb(255, 94, 252);
    }
 </style>
