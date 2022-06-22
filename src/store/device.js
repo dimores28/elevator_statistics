@@ -6,6 +6,7 @@ export default {
 	namespaced: true,
    state: {
       messages: [],
+      routeList: [],
    },
    getters: {
       MESSAGES: state => state.messages,
@@ -13,10 +14,14 @@ export default {
          let messages = state.messages.filter(item => item.dev_id == id);
          return messages;
       },
+      ROUTE_LIST : state => state.routeList,
    },
    mutations: {
       SET_MESSAGES(state, data){
          state.messages = data;
+      },
+      SET_ROUTE_LIST(state, data){
+         state.routeList = data;
       }
    },
    actions: {
@@ -31,12 +36,26 @@ export default {
                endTime: end
          }})
          .then((response)=>{
-            console.log(response.data);
             response.data.forEach(function(item){
                item.DateTime = new Date(item.DateTime).toLocaleString().replace(/,+/g, "");
                return item;
             });
             commit('SET_MESSAGES', response.data);
+         });
+      },
+      async GET_LIST_OF_ROUTES({commit}, device){
+         let start = device.range.StartDate.toISOString().slice(0, 10);
+         let end = device.range.EndDate.toISOString().slice(0, 10);
+
+         await axios.get(API_URL + 'api/Alg/PresenceRoute',{
+            params:{
+               deviceID: device.id,
+               startTime: start,
+               endTime: end,
+            }
+         })
+         .then(response=>{
+            commit('SET_ROUTE_LIST', response.data);
          });
       }
    },
