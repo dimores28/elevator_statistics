@@ -1,5 +1,6 @@
 import axios from 'axios'
 import toISODate from '@/api/workWithDate'
+import msToTimemsToTime from '@/api/convertMsToTime'
 // const API_URL = 'http://localhost:3000/';
 const API_URL = 'http://localhost:30094/';
 
@@ -9,6 +10,8 @@ export default {
       routLogs: [],
       routeList: [],
       mechanisms: [],
+      period: null,
+      routeStops: [],
    },
    getters: {
       LOGS : state => state.routLogs,
@@ -29,6 +32,29 @@ export default {
          });
          return sorted;
  
+      },
+      SIMPLE_ROUTE(state){
+         let stopTime = 0;
+         let simple = null;
+
+         state.routeStops.forEach(item =>{
+            if(item.MesIDMes === 5){
+               simple = item.LastAccess;
+            }else if(item.MesIDMes === 2 && simple){
+               stopTime += (new Date(item.LastAccess) - new Date(simple));
+               simple = null;
+            }
+         });
+
+         return stopTime;
+      },
+      PERIOD: state => state.period,
+      SIMPLE_ROUTE_TIME(state, getters){
+         return msToTimemsToTime(getters.SIMPLE_ROUTE);
+      },
+      PERIOD_TIME(state, getters){
+         let work = state.period - getters.SIMPLE_ROUTE;
+         return msToTimemsToTime(work);
       },
    },
    mutations: {
@@ -70,6 +96,12 @@ export default {
             if(time1 < time2)
                return -1;
          });
+      },
+      ROUTE_STOPS(state, data){
+         state.routeStops = data;
+      },
+      SET_PERIOD(state, period){
+         state.period = period;
       }
    },
    actions: {
@@ -129,7 +161,16 @@ export default {
             
             commit('COMPLETE_LOGS', response.data);
          });
+      },
+      async LOG_ROUTE_STOPS({commit}, routeID){
+         await axios.get(API_URL + `Statistics/SimpleRoute/${routeID}`)
+         .then(response =>{
+            commit('ROUTE_STOPS', response.data)
+         });
+      },
+      SET_TIMERANGE({commit}, timerange){
+          let renge = new Date(toISODate(timerange.StopTime)) - new Date(toISODate(timerange.StartTime));
+         commit('SET_PERIOD', renge);
       }
    },
 }
-

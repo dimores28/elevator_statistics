@@ -1,6 +1,5 @@
 import axios from 'axios'
-// import {msToTime} from '@/api/workWithDate'
-// const API_URL = 'http://localhost:3000/';
+import msToTimemsToTime from '@/api/convertMsToTime'
 const API_URL = 'http://localhost:30094/';
 
 export default {
@@ -24,9 +23,9 @@ export default {
          let start = null;
 
          state.repairs.forEach(item =>{
-            if(item.MsgNr == 6){
+            if(item.MsgNr === 6){
                start = item.DateTime 
-            }else if(item.MsgNr == 7){
+            }else if(item.MsgNr === 7 && start){
                repairTime += (new Date(item.DateTime) - new Date(start));
                start = null;
             }
@@ -39,16 +38,28 @@ export default {
          let start = null;
 
          state.launches.forEach(item =>{
-            if(item.MsgNr == 23 || item.MsgNr == 24){
+            if(item.MsgNr === 23 || item.MsgNr === 24){
                start = item.DateTime;
-            }else if(item.MsgNr == 25){
+            }else if(item.MsgNr === 25 && start){
                workTime += (new Date(item.DateTime) - new Date(start));
+               start = null;
             }
          });
 
          return workTime;
       },
       PERIOD: state => state.period,
+      SIMPLE_TIME(state, getters){
+         let time = state.period - getters.TIME_REPAIR - getters.TIME_WORK;
+         return msToTimemsToTime(time);
+      },
+      WORK_TIME(state, getters){
+         return msToTimemsToTime(getters.TIME_WORK);
+      },
+      REPAIR_TIME(state, getters){
+         return msToTimemsToTime(getters.TIME_REPAIR);
+      },
+
    },
    mutations: {
       SET_MESSAGES(state, data){
