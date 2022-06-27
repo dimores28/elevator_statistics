@@ -149,7 +149,7 @@ body{
   font-family: 'Roboto', sans-serif;
   font-style: normal;
   color: #fff;
-  background: E5E5E5;
+  background: #2f3134;
 }
 
 .body{
@@ -226,6 +226,7 @@ body{
 
 .main{
   grid-area: main;
+  min-height: 82vh;
 }
 
 .nav{

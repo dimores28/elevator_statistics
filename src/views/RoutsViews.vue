@@ -34,11 +34,15 @@ export default {
 
     },
     methods:{
-      ...mapActions('routList',['LOAD_ROUTE_LIST_BY_TIMERANGE']),
+      ...mapActions('routList',['LOAD_ROUTE_LIST_BY_TIMERANGE', 'SET_TIMERANGE']),
       ...mapActions('navigationData',['SET_TITLE', 'SET_TEXT']),
       more(){
          if(this.selected){
-            this.SET_TEXT('Маршруты  > ' + this.selected.Source + '-->' +this.selected.Receiver)
+            this.SET_TEXT('Маршруты  > ' + this.selected.Source + '-->' +this.selected.Receiver);
+            this.SET_TIMERANGE({
+               StartTime: this.selected.StartTime,
+               StopTime: this.selected.StopTime
+               });
             this.$router.push({ name: 'rout', params: { id: this.selected.MesIDRout } });
          }
       }

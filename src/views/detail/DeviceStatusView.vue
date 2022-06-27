@@ -29,20 +29,20 @@
             </div>
             <div class="charts__legend">
                <v-legend
-                  text="Время в работе"
-                  precent="55"
-                  time="03:37:14"
+                  text="В работе"
+                  :precent="series[1]"
+                  :time="TIME_REPAIR"
                />
                <v-legend
-                  text="Время в ремонте"
-                  precent="36"
-                  time="02:03:14"
+                  text="В ремонте"
+                  :precent="series[0]"
+                  :time="WORK_TIME"
                   activeColor="#2D4EC4"
                />
                <v-legend
-                  text="Время простоя"
-                  precent="19"
-                  time="00:57:14"
+                  text="Простой"
+                  :precent="series[2]"
+                  :time="SIMPLE_TIME"
                   activeColor="#000"
                />
             </div> 
@@ -82,7 +82,7 @@ export default {
    },
    data(){
       return {
-         series: [44, 55, 23],
+         
          chartOptions: chartPreset,
          timlineData: [
             // Thomas Jefferson
@@ -130,11 +130,42 @@ export default {
       }
    },
    computed:{
-      ...mapGetters('device',['MESSAGES', 'ROUTE_LIST']),
+      ...mapGetters('device',
+      [
+         'MESSAGES', 
+         'ROUTE_LIST',
+         'TIME_REPAIR',
+         'TIME_WORK',
+         'PERIOD',
+         'SIMPLE_TIME',
+         'WORK_TIME',
+         'TIME_REPAIR'
+      ]),
       ...mapGetters('navigationData', ['TIME_RANGE']),
+      series(){
+         let work = Math.round(this.TIME_WORK * 100 / this.PERIOD);
+         let repaer = Math.round(this.TIME_REPAIR * 100 / this.PERIOD);
+         let downtime = 100 - work - repaer
+         return [ repaer, work, downtime];
+      },
+      
    },
    methods:{
-      ...mapActions('device',['LOAD', 'GET_LIST_OF_ROUTES']),
+      ...mapActions('device',
+      [
+         'LOAD', 
+         'GET_LIST_OF_ROUTES', 
+         'LOAD_STATISTICALl_DATA',
+      ]),
+      reload(timerange){
+         let device = {};
+         device.id = this.$route.params.id;
+         device.range = timerange;
+
+         this.LOAD(device);
+         this.GET_LIST_OF_ROUTES(device);
+         this.LOAD_STATISTICALl_DATA(device);
+      }
 
    },
    created(){
@@ -144,6 +175,13 @@ export default {
 
       this.LOAD(device);
       this.GET_LIST_OF_ROUTES(device);
+      this.LOAD_STATISTICALl_DATA(device);
+   },
+   mounted(){
+      const context = this;
+      this.emitter.on('select-datapicker', function(device){
+          context.reload(device);
+      });
    }
    
 }

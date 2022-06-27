@@ -22,6 +22,24 @@
          </div>
          <div class="rout-info__charts rout-info__substrate">
             <h3>Работа/простой</h3>
+            <div class="charts-wrap">
+               <div class="charts">
+                  <apexchart type="pie" width="132" :options="chartOptions" :series="series"></apexchart>
+               </div>
+               <div class="charts__legend">
+                  <v-legend
+                     text="В работе"
+                     :precent="series[1]"
+                     :time="PERIOD_TIME"
+                  />
+                  <v-legend
+                     text="В ремонте"
+                     :precent="series[0]"
+                     :time="SIMPLE_ROUTE_TIME"
+                     activeColor="#2D4EC4"
+                  />
+               </div>
+            </div>
          </div>
          <div class="rout-info__device-list rout-info__substrate">
             <h3>Механизмы в маршруте</h3>
@@ -42,26 +60,48 @@
 import { mapGetters, mapActions } from 'vuex'
 import vRouteLog from '@/components/UI/v-rout_log';
 import vDevice from '@/components/UI/v-device';
+import VueApexCharts from "vue3-apexcharts";
+import chartPreset from '@/core/presetApexchart';
+import vLegend from '@/components/UI/v-legend';
+
+
 
 export default {
    components:{
     vRouteLog,
     vDevice,
+    apexchart: VueApexCharts,
+    vLegend
 },
    props:{
 
    },
    data(){
       return{
-
+         chartOptions: chartPreset,
       }
    },
    computed:{
        ...mapGetters('routList',
        [
          'LOGS', 
-         'MECHANISMS'
+         'MECHANISMS',
+         'SIMPLE_ROUTE',
+         'PERIOD',
+         'PERIOD_TIME',
+         'SIMPLE_ROUTE_TIME'
          ]),
+      series(){
+         if(this.PERIOD && this.SIMPLE_ROUTE){
+            let work = Math.round((this.PERIOD - this.SIMPLE_ROUTE) * 100 / this.PERIOD);
+            let stoped = Math.round(this.SIMPLE_ROUTE * 100 / this.PERIOD);
+            return [stoped, work]
+         }
+         else{
+            return [0,0];
+         }
+         
+      },
 
    },
    methods:{
@@ -70,6 +110,7 @@ export default {
           'LOAD_ROUT_LOGS',
           'LOAD_MECHANISMS',
           'LOAD_ROUTE_ALARM',
+          'LOG_ROUTE_STOPS',
       ]),
 
    },
@@ -77,6 +118,7 @@ export default {
       this.LOAD_ROUT_LOGS(this.$route.params.id);
       this.LOAD_MECHANISMS(this.$route.params.id);
       this.LOAD_ROUTE_ALARM(this.$route.params.id);
+      this.LOG_ROUTE_STOPS(this.$route.params.id);
    }
 }
 </script>
@@ -102,11 +144,6 @@ export default {
          } 
       }
 
-      &__charts{
-         height: 152px;
-      }
-
-
       &__device-list{
          
          overflow: auto;
@@ -126,5 +163,9 @@ export default {
         padding: 8px; 
       }
       
+   }
+
+   .charts-wrap{
+      display: flex;
    }
 </style>
