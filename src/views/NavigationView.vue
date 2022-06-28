@@ -1,6 +1,6 @@
 <template>
    <div class="v-navigations">
-      	<nav class="list-group">
+      	<nav class="list-group" role="navigation">
 				<router-link 
 					v-for="item in menu"
 					:key="item.route"
@@ -10,19 +10,25 @@
 				>
 					<li class="list-group__item" :class="isExactActive ? 'active' : ''">
 					<span :class="isExactActive ? 'list-group__item_led' : ''"></span>
-						<img 
-							:src="require('@/assets/img/'+ item.icon)" 
-							:alt="item.title"
-							width="24"
+						<a 
+							:href="route.fullPath" 
+							@click="navigate"
+							class="list-group__item_linck"
 						>
-						<a :href="route.fullPath" @click="navigate">{{ item.title }}</a>
+							<img 
+								:src="require('@/assets/img/'+ item.icon)" 
+								:alt="item.title"
+								width="24"
+							>
+							<span>{{ item.title }}</span>
+						</a>
 					</li>
 				</router-link>
 		</nav>
 		<p class="separator">
 			Механизмы
 		</p>
-		<nav class="list-group">
+		<nav class="list-group" role="navigation">
 			<router-link 
 				v-for="item in deviceNavigation"
 				:key="item.route"
@@ -32,20 +38,35 @@
 			>
 				<li class="list-group__item" :class="isExactActive ? 'active' : ''">
 				<span :class="isExactActive ? 'list-group__item_led' : ''"></span>
+					<a 
+						:href="route.fullPath" 
+						@click="navigate"
+						class="list-group__item_linck"
+					>
 					<img 
 						:src="require('@/assets/img/'+ item.icon)" 
 						:alt="item.title"
 						width="24"
 					>
-					<a :href="route.fullPath" @click="navigate">{{ item.title }}</a>
+						<span>{{ item.title }}</span>
+					</a>
 				</li>
 			</router-link>
 		</nav>
    </div>
+<burger-btn
+	@open="showMenu"
+>
+</burger-btn>
 </template>
 
 <script>
+import BurgerBtn from '@/components/UI/butger-btn.vue'
+
 export default {
+	components:{
+		BurgerBtn
+	},
    data: () => ({
 			menu: [
 				{ route: 'routes', title: 'Маршруты', icon: 'Icon_Rouds.svg'},
@@ -60,6 +81,11 @@ export default {
 				{ route: '/card/', title: 'Вентиляторы', icon: 'Icon_Fan.svg', type: '21' },
 			]
 		}),
+		methods:{
+			showMenu(){
+				console.log('show');
+			}
+		}
 }
 
 //Коды элементов
@@ -95,10 +121,16 @@ export default {
 			padding: 10px;
 			text-align: left;
 			position: relative;
+			
 
 			img{
 				margin-right: 16px;
 				margin-left: 28px;
+			}
+
+			&_linck{
+				display: flex;	
+				align-items: center;
 			}
 
 			&_led{
@@ -135,4 +167,5 @@ export default {
 		text-align: left;
 		padding: 28px;
 	}
+
 </style>

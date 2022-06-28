@@ -4,7 +4,8 @@
 
       <div class="card__content">
          <p class="card__lable">{{mechanismData.UAName}}</p>
-         <p class="card__subline" :class="showSubline">Ошибок: {{mechanismData.errorsNum}}</p>
+         <p class="card__subline">Ошибок: 0</p>
+         <div class="card__info">П 3 - 10 Мч</div>
       </div>
 
    </div>
@@ -91,16 +92,16 @@ export default {
       &__lable{
          font-family: 'Roboto';
          font-weight: 400;
-         font-size: 28px;
-         line-height: 42px;
+         font-size: 16px;
+         line-height: 32px;
          margin: 7px;
          text-align: center;
-         word-spacing: 9999px;
+         // word-spacing: 9999px;
       }
 
       &__subline{
-         font-size: 16px;
-         line-height: 18px;
+         font-size: 14px;
+         line-height: 16px;
          letter-spacing: 0.5px;
          margin: 7px;
 
@@ -108,6 +109,13 @@ export default {
          &_hide{
             visibility: hidden;
          }
+      }
+
+      &__info{
+         font-size: 12px;
+         line-height: 18px;
+         letter-spacing: 0.5px;
+         margin: 4px;
       }
 
    }

@@ -33,7 +33,7 @@
                      :time="PERIOD_TIME"
                   />
                   <v-legend
-                     text="В ремонте"
+                     text="В простое"
                      :precent="series[0]"
                      :time="SIMPLE_ROUTE_TIME"
                      activeColor="#2D4EC4"

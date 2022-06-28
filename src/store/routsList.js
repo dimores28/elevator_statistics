@@ -1,8 +1,8 @@
 import axios from 'axios'
 import toISODate from '@/api/workWithDate'
 import msToTimemsToTime from '@/api/convertMsToTime'
-// const API_URL = 'http://localhost:3000/';
-const API_URL = 'http://localhost:30094/';
+import {API_URL} from '@/core/host'
+
 
 export default {
 	namespaced: true,

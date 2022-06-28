@@ -247,4 +247,17 @@ body{
   border: 1px solid tan;
 }
 
+.hide{
+  position: absolute;
+  z-index: 3;
+}
+
+@media screen and (max-width: 690px){
+  #app{
+    grid-template-areas:"header"
+                        "main"
+                        "footer";
+    grid-template-columns: 100%;                    
+  }
+}
 </style>

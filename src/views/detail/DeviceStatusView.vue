@@ -31,12 +31,12 @@
                <v-legend
                   text="В работе"
                   :precent="series[1]"
-                  :time="TIME_REPAIR"
+                  :time="WORK_TIME"
                />
                <v-legend
                   text="В ремонте"
                   :precent="series[0]"
-                  :time="WORK_TIME"
+                  :time="REPAIR_TIME"
                   activeColor="#2D4EC4"
                />
                <v-legend
@@ -139,7 +139,7 @@ export default {
          'PERIOD',
          'SIMPLE_TIME',
          'WORK_TIME',
-         'TIME_REPAIR'
+         'REPAIR_TIME'
       ]),
       ...mapGetters('navigationData', ['TIME_RANGE']),
       series(){

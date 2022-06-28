@@ -1,6 +1,6 @@
 import axios from 'axios'
-// const API_URL = 'http://localhost:3000/';
-const API_URL = 'http://localhost:30094/';
+import {API_URL} from '@/core/host'
+
 
 export default {
    namespaced: true,
