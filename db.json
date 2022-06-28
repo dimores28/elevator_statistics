@@ -44,7 +44,7 @@
         {"id":115,"MesIDRout":7,"Source":"Силос 3.1","Recive":"Силос 3.4","RouteCulture":"Пшеница 1 кл","RouteMessage":"Остановлен","User":"Инженер","LastAccess":"2022-06-17 11:38:16"},
         {"id":116,"MesIDRout":7,"Source":"Силос 3.1","Recive":"Силос 3.4","RouteCulture":"Пшеница 1 кл","RouteMessage":"Развален","User":"Инженер","LastAccess":"2022-06-17 11:38:45"}
     ],
-    "settings": [
+    "SettingsTable": [
         {"ID":8,"UAIndex":1,"UAName":"Нория H1","UAType":9, "errorsNum": 3, "state": 3},
         {"ID":9,"UAIndex":2,"UAName":"Нория H2","UAType":9, "errorsNum": 6, "state": 4},
         {"ID":10,"UAIndex":3,"UAName":"Нория H3","UAType":9, "errorsNum": 6, "state": 4},

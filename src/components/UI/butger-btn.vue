@@ -30,6 +30,8 @@ export default {
   cursor: pointer;
   display: flex;
   padding: 0;
+  width: 60px;
+  height: 60px;
 }
 .line {
   fill: none;

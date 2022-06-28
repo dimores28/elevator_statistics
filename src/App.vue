@@ -1,5 +1,11 @@
 <template>
    <header class="header">
+    <div class="burger">
+      <burger-btn
+        @open="showMenu"
+      >
+      </burger-btn>
+    </div>
      <div class="bread-crumbs">
         <span class="bread-crumbs__text">
             {{TEXT}}
@@ -50,6 +56,7 @@
 import vNav from './views/NavigationView'
 import { ru } from 'date-fns/locale';
 import { ref, onMounted } from 'vue';
+import BurgerBtn from '@/components/UI/butger-btn.vue'
 
 import { mapGetters, mapActions } from 'vuex';
 export default {
@@ -83,6 +90,7 @@ export default {
   },
   components:{
     vNav,
+    BurgerBtn,
   },
   data(){
     return{
@@ -110,6 +118,9 @@ export default {
 
         this.emitter.emit("select-datapicker", this.TIME_RANGE);
       }
+    },
+    showMenu(){
+      document.querySelector('.nav').classList.toggle('naw-show');
     }
   },
   mounted(){
@@ -199,30 +210,34 @@ body{
   padding: 15px 65px 20px 65px;
 }
 
-  .bread-crumbs{
+.burger{
+  display: none;
+}
+
+.bread-crumbs{
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 24px;
+  letter-spacing: 0.18px;
+  text-align: left;
+
+  &__text{
     font-style: normal;
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 24px;
-    letter-spacing: 0.18px;
-    text-align: left;
-
-    &__text{
-      font-style: normal;
-      font-weight: 400;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 20px;
-      letter-spacing: 0.25px;
-      color: rgba(255, 255, 255, 0.54);
-      display: inline-block;
-    }
-
-    &__title{
-      text-align: left;
-      margin: 0;
-    }
+    font-weight: 400;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+    color: rgba(255, 255, 255, 0.54);
+    display: inline-block;
   }
+
+  &__title{
+    text-align: left;
+    margin: 0;
+  }
+}
 
 .main{
   grid-area: main;
@@ -252,12 +267,48 @@ body{
   z-index: 3;
 }
 
-@media screen and (max-width: 690px){
+@media screen and (max-width: 720px){
   #app{
     grid-template-areas:"header"
                         "main"
                         "footer";
-    grid-template-columns: 100%;                    
+    grid-template-columns: 100%;  
+    grid-template-rows: auto auto 80px;                  
+  }
+
+  .header{
+    flex-direction: column;
+    border: 1px solid tomato;
+  }
+
+  .bread-crumbs{
+    margin-bottom: 15px;
+    text-align: center;
+
+    &__title{
+      text-align: center;
+    }
+  }
+
+  .burger{
+    display: block;
+    position: absolute;
+    z-index: 10;
+    top: 15px;
+    left: 15px;
+  }
+
+  .nav{
+    position: absolute;
+    top: 140px;
+    left: 0;
+    z-index: 11;
+    transform: translateX(-100%);
+    transition: all 0.6s ease-in;
+  }
+
+  .naw-show{
+    transform: translateX(0);
   }
 }
 </style>

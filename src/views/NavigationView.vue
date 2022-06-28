@@ -54,19 +54,12 @@
 			</router-link>
 		</nav>
    </div>
-<burger-btn
-	@open="showMenu"
->
-</burger-btn>
 </template>
 
 <script>
-import BurgerBtn from '@/components/UI/butger-btn.vue'
+
 
 export default {
-	components:{
-		BurgerBtn
-	},
    data: () => ({
 			menu: [
 				{ route: 'routes', title: 'Маршруты', icon: 'Icon_Rouds.svg'},
@@ -80,12 +73,7 @@ export default {
 				{ route: '/card/', title: 'Нории', icon: 'Icon_Noriya.svg', type: '9' },
 				{ route: '/card/', title: 'Вентиляторы', icon: 'Icon_Fan.svg', type: '21' },
 			]
-		}),
-		methods:{
-			showMenu(){
-				console.log('show');
-			}
-		}
+		})
 }
 
 //Коды элементов
