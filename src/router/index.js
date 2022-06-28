@@ -31,6 +31,11 @@ const routes = [
     name: 'rout',
     component: () => import( '../views/detail/MoreRoutView')
   },
+  {
+		name: 'E404',
+		path: '/:pathMatch(.*)',
+		component: () => import( '../views/errors/e404'),
+	},
 ]
 
 const router = createRouter({

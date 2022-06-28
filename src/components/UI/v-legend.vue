@@ -14,7 +14,7 @@ export default {
          type: String,
       },
       precent:{
-         type: String,
+         type: Number,
       },
       time:{
          type: String,

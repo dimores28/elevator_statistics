@@ -1,12 +1,15 @@
 <template>
    <div class="card-wrapper">
-         <v-card
+         <div class="row">
+            <v-card
             v-for="(card, i) in CARDS_BY_TYPE($route.params.type)"
-            :key="i"
-            :mechanismData="card"
-            @details="seeMore(card.UAIndex, card.ID)"
-         >
+               :key="i"
+               :mechanismData="card"
+               @details="seeMore(card.UAIndex, card.ID)"
+               class="col"
+            >
          </v-card>
+         </div>
    </div>
 </template>
 
@@ -54,9 +57,41 @@ export default {
 
 <style lang="less">
    .card-wrapper{
-   display: grid;
-   grid-gap: 15px;
-   grid-template-columns: repeat(auto-fit, minmax(196px, 1fr));
-   padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 10px;
+   }
+
+   .row{
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 -10px;
+   }
+
+   .col{
+      width: calc(100% / 4 - 20px);
+      margin: 10px;
+   }
+
+   @media screen and (max-width: 920px){
+      .col{
+       width: calc(100% / 3 - 20px);
+      }
+   }
+
+   @media screen and (max-width: 540px){
+      .col{
+       width: calc(100% / 2 - 20px);
+      }
+   }
+
+   @media screen and (max-width: 360px){
+      .col{
+       width: calc(100% / 1 - 20px);
+      }
+
+      .card-wrapper{
+         padding: 10px 25px;
+      }
    }
 </style>
