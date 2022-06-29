@@ -278,7 +278,6 @@ body{
 
   .header{
     flex-direction: column;
-    border: 1px solid tomato;
   }
 
   .bread-crumbs{
@@ -300,7 +299,7 @@ body{
 
   .nav{
     position: absolute;
-    top: 140px;
+    top: 145px;
     left: 0;
     z-index: 11;
     transform: translateX(-100%);

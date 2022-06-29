@@ -36,7 +36,7 @@ export default {
          
          this.SET_TEXT(this.chapter + ' > ' + this.CARD_BY_ID(id).UAName);
          this.SET_TITLE(this.$route.params.title)
-         this.$router.push({ name: 'details', params: { id: index } });
+         this.$router.push({ name: 'details', params: { id: index, name: this.CARD_BY_ID(id).UAName} });
       }
    },
    watch:{

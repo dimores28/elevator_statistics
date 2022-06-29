@@ -1,12 +1,14 @@
 <template>
 <div class="v-device-status">
    <div class="time-line">
-      <h2>Device name: {{$route.params.id}}</h2>
-      <!-- <apexchart type="rangeBar" height="260"
-         :series="timlineData"
-         :options="timlinePreset"
-      >
-      </apexchart> -->
+      <h2>{{$route.params.name}}</h2>
+      <div class="time-line__wrap">
+         <apexchart type="rangeBar" height="260"
+            :series="timlineData"
+            :options="timlinePreset"
+         >
+         </apexchart>
+      </div>
    </div>
 
    <div class="device-info info">
@@ -84,48 +86,7 @@ export default {
       return {
          
          chartOptions: chartPreset,
-         timlineData: [
-            // Thomas Jefferson
-            {
-               name: 'Work',
-               data: [
-                  {
-                     x: 'w',
-                     y: [ 1, 2]
-                  },
-                   {
-                     x: 'w',
-                     y: [ 6, 7]
-                  },
-               ]
-            },
-            {
-               name: 'Breaking',
-               data: [
-                  {
-                     x: 'w',
-                     y: [ 2, 4]
-                  },
-                  {
-                     x: 'w',
-                     y: [ 7, 8]
-                  },
-               ]
-            },
-            {
-               name: 'Repaer',
-               data: [
-                  {
-                     x: 'w',
-                     y: [ 4, 5]
-                  },
-                  {
-                     x: 'w',
-                     y: [ 8, 12]
-                  }
-               ]
-            },
-         ],
+         timlineData: [],
          timlinePreset: timlinePreset
       }
    },
@@ -191,7 +152,10 @@ export default {
 .time-line{
    max-width: 1000px;
    // border: 1px solid tomato;
-   height: 270px;
+
+   h2{
+      margin-top: 0;
+   }
 }
 
 .info{
