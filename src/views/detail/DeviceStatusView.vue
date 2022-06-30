@@ -87,7 +87,52 @@ export default {
          
          chartOptions: chartPreset,
          timlineData: [],
-         timlinePreset: timlinePreset
+         timlinePreset: timlinePreset,
+         data: [
+               // John Adams
+               {
+               name: 'Thomas Jefferson',
+               data: [
+                  {
+                     x: 'w',
+                     y: [ 0, 2]
+                  },
+                  {
+                     x: 'w',
+                     y: [ 5, 9]
+                  }
+               ]
+               },
+               // George Washington
+               {
+               name: 'w',
+               data: [
+                  {
+                     x: 'w',
+                     y: [ 2, 3]
+                  },
+               ]
+               },
+               // Thomas Jefferson
+               {
+               name: 'Thomas Jefferson',
+               data: [
+                  {
+                     x: 'w',
+                     y: [ 3, 5]
+                  },
+                  {
+                     x: 'w',
+                     y: [ 9, 10]
+                  },
+                  {
+                     x: 'w',
+                     y: [ 12, 17]
+                  }
+               ]
+               },
+
+            ],
       }
    },
    computed:{
@@ -126,8 +171,7 @@ export default {
          this.LOAD(device);
          this.GET_LIST_OF_ROUTES(device);
          this.LOAD_STATISTICALl_DATA(device);
-      }
-
+      },
    },
    created(){
       let device = {};
@@ -143,6 +187,10 @@ export default {
       this.emitter.on('select-datapicker', function(device){
           context.reload(device);
       });
+
+      setTimeout(() => {
+               context.timlineData = context.data;
+      }, 1000);
    }
    
 }
