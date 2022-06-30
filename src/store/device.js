@@ -59,6 +59,9 @@ export default {
       REPAIR_TIME(state, getters){
          return msToTimemsToTime(getters.TIME_REPAIR);
       },
+      LAUNCHES: state => state.launches,
+      REPAIRS: state => state.repairs,
+      ERRORS: state => state.messages.filter(e => e.ClassName === "Error")
 
    },
    mutations: {

@@ -73,6 +73,7 @@ import VueApexCharts from "vue3-apexcharts";
 import chartPreset from '@/core/presetApexchart'
 import timlinePreset from '@/core/presetTimeLine'
 import vLegend from '@/components/UI/v-legend';
+import toISODate from '@/api/workWithDate'
 
 import { mapGetters, mapActions } from 'vuex'
 export default {
@@ -91,7 +92,7 @@ export default {
          data: [
                // John Adams
                {
-               name: 'Thomas Jefferson',
+               name: 'В работе',
                data: [
                   {
                      x: 'w',
@@ -105,7 +106,7 @@ export default {
                },
                // George Washington
                {
-               name: 'w',
+               name: 'В авварии',
                data: [
                   {
                      x: 'w',
@@ -115,7 +116,7 @@ export default {
                },
                // Thomas Jefferson
                {
-               name: 'Thomas Jefferson',
+               name: 'В ремонте',
                data: [
                   {
                      x: 'w',
@@ -145,7 +146,10 @@ export default {
          'PERIOD',
          'SIMPLE_TIME',
          'WORK_TIME',
-         'REPAIR_TIME'
+         'REPAIR_TIME',
+         'LAUNCHES',
+         'REPAIRS',
+         'ERRORS'
       ]),
       ...mapGetters('navigationData', ['TIME_RANGE']),
       series(){
@@ -172,6 +176,61 @@ export default {
          this.GET_LIST_OF_ROUTES(device);
          this.LOAD_STATISTICALl_DATA(device);
       },
+      getTimlineData(){
+         let rezData = [];
+
+         let work = {name: 'В работе', data: []};
+         let start = null;
+         let stop = null;
+
+         this.LAUNCHES.forEach(element => {
+            if(element.MsgNr === 23 && !start ){
+               start = new Date(element.DateTime) - 0;
+            }
+            else if(element.MsgNr === 25 && !stop) {
+               stop = new Date(element.DateTime) - 0;
+            }
+
+            if(start && stop){
+               work.data.push({x: 'w', y: [start, stop]});
+               start = null;
+               stop = null;
+            }
+            
+         });
+         rezData.push(work);
+
+         let repaer = {name: 'В ремонте', data: []};
+         this.REPAIRS.forEach(elem =>{
+
+            if(elem.MsgNr === 6 && !start ){
+               start = new Date(elem.DateTime) - 0;
+            }
+            else if(elem.MsgNr === 7 && !stop) {
+               stop = new Date(elem.DateTime) - 0;
+            }
+
+            if(start && stop){
+               repaer.data.push({x: 'w', y: [start, stop]});
+               start = null;
+               stop = null;
+            }
+
+         });
+         rezData.push(repaer);
+
+         let alarm = {name: 'В авварии', data: []};
+         this.ERRORS.forEach(arr => {
+            let s = new Date(toISODate(arr.DateTime));
+            let e = new Date(s.getTime() + 10*60000)
+
+            alarm.data.push({x: 'w', y: [new Date(s) - 0,  new Date(e) - 0]});
+         });
+
+         rezData.push(alarm);
+
+         return rezData;
+      },
    },
    created(){
       let device = {};
@@ -189,7 +248,8 @@ export default {
       });
 
       setTimeout(() => {
-               context.timlineData = context.data;
+         let t = context.getTimlineData();
+         context.timlineData = t;      
       }, 1000);
    }
    

@@ -12,7 +12,7 @@ export default {
           }
         },
         colors: [
-          "#179433", "#FF0000", "#2D4EC4",
+          "#179433", "#2D4EC4", "#FF0000",
         ],
         fill: {
           type: 'solid',
