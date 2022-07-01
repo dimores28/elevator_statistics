@@ -1,5 +1,5 @@
 <template>
-   <header class="header">
+   <header class="header" @onresize="resize">
     <div class="burger">
       <burger-btn
         @open="showMenu"
@@ -19,8 +19,10 @@
           v-model="date"
           :enableTimePicker="false"
           position="right" 
-          dark range multiCalendars 
+          dark range 
+          :multiCalendars="multi"
           locale="ru"
+          placeholder="Выберите дату"
           :format="format"
           @update:modelValue="handleDate"
         >
@@ -94,7 +96,7 @@ export default {
   },
   data(){
     return{
-      //  date: null,
+       multi: true,
     }
   },
   computed:{
@@ -121,11 +123,15 @@ export default {
     },
     showMenu(){
       document.querySelector('.nav').classList.toggle('naw-show');
+    },
+    resize(){
+      console.log('resize');
     }
   },
   mounted(){
     this.SET_START_DATE(this.date[0]);
     this.SET_END_DATE(this.date[1]);
+    this.multi = document.documentElement.clientWidth > 760;
   }
 }
 </script>
@@ -194,7 +200,7 @@ body{
                         "nav main"
                         "footer footer";
   grid-template-columns: minmax(200px, 264px) auto;
-  grid-template-rows: 90px auto 80px;
+  grid-template-rows: 125px auto 80px;
   max-width: 1200px;
   margin: 0 auto;
   background: var(--clr_bg);
@@ -206,7 +212,7 @@ body{
   grid-area: header;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   padding: 15px 65px 20px 65px;
 }
 
@@ -267,7 +273,18 @@ body{
   z-index: 3;
 }
 
-@media screen and (max-width: 720px){
+@media screen and (max-width: 780px){
+  .header{
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .bread-crumbs{
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (max-width: 760px){
   #app{
     grid-template-areas:"header"
                         "main"
@@ -276,9 +293,7 @@ body{
     grid-template-rows: auto auto 80px;                  
   }
 
-  .header{
-    flex-direction: column;
-  }
+  
 
   .bread-crumbs{
     margin-bottom: 15px;
@@ -293,7 +308,7 @@ body{
     display: block;
     position: absolute;
     z-index: 10;
-    top: 15px;
+    top: 0;
     left: 15px;
   }
 
