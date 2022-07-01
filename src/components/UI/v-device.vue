@@ -28,6 +28,10 @@ export default {
    position: relative;
    text-align: left;
 
+   :hover{
+      cursor: pointer;
+   }
+
    &__led{
       position: absolute;
       top: 5px;

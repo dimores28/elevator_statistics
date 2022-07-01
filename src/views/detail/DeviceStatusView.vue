@@ -54,9 +54,10 @@
          <h3>Запуски в маршруте</h3>
          <div class="info__rout-message_wrap">
             <rout-line
-               v-for= "(item, i) in ROUTE_LIST"
-               :key="i"
+               v-for= "item in ROUTE_LIST"
+               :key="item.MesIDRout"
                :log="item"
+               @click="openRout(item.MesIDRout, item.Source, item.Recive)"
             >
             </rout-line>
          </div>
@@ -69,10 +70,10 @@
 
 <script>
 import routLine from '@/components/UI/v-rout_line'
-import VueApexCharts from "vue3-apexcharts";
+import VueApexCharts from "vue3-apexcharts"
 import chartPreset from '@/core/presetApexchart'
 import timlinePreset from '@/core/presetTimeLine'
-import vLegend from '@/components/UI/v-legend';
+import vLegend from '@/components/UI/v-legend'
 import toISODate from '@/api/workWithDate'
 
 import { mapGetters, mapActions } from 'vuex'
@@ -85,55 +86,9 @@ export default {
    },
    data(){
       return {
-         
          chartOptions: chartPreset,
          timlineData: [],
-         timlinePreset: timlinePreset,
-         data: [
-               // John Adams
-               {
-               name: 'В работе',
-               data: [
-                  {
-                     x: 'w',
-                     y: [ 0, 2]
-                  },
-                  {
-                     x: 'w',
-                     y: [ 5, 9]
-                  }
-               ]
-               },
-               // George Washington
-               {
-               name: 'В авварии',
-               data: [
-                  {
-                     x: 'w',
-                     y: [ 2, 3]
-                  },
-               ]
-               },
-               // Thomas Jefferson
-               {
-               name: 'В ремонте',
-               data: [
-                  {
-                     x: 'w',
-                     y: [ 3, 5]
-                  },
-                  {
-                     x: 'w',
-                     y: [ 9, 10]
-                  },
-                  {
-                     x: 'w',
-                     y: [ 12, 17]
-                  }
-               ]
-               },
-
-            ],
+         timlinePreset: timlinePreset
       }
    },
    computed:{
@@ -167,6 +122,7 @@ export default {
          'GET_LIST_OF_ROUTES', 
          'LOAD_STATISTICALl_DATA',
       ]),
+      ...mapActions('navigationData',['SET_TITLE', 'SET_TEXT']),
       reload(timerange){
          let device = {};
          device.id = this.$route.params.id;
@@ -231,6 +187,11 @@ export default {
 
          return rezData;
       },
+      openRout(id, Source, Recive){
+         this.SET_TITLE('Маршруты');
+         this.SET_TEXT(`Маршруты > ${Source} --> ${Recive}`)
+         this.$router.push({ name: 'rout', params: { id: id, rout: `${Source} --> ${Recive}`} });
+      }
    },
    created(){
       let device = {};

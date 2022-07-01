@@ -54,6 +54,7 @@ export default {
       border-bottom: 1px solid var(--clr_gray3);
       padding: 10px 24px 15px 32px;
 
+
       &__led{
          position: absolute;
          width: 8px;
