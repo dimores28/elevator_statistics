@@ -27,7 +27,7 @@
          <h3>Время работы/простоя/в ремонте</h3>
          <div class="charts-wrap">
             <div class="charts">
-               <apexchart type="pie" width="132" :options="chartOptions" :series="series"></apexchart>
+               <apexchart type="pie"  :options="chartOptions" :series="series" id="pie"></apexchart>
             </div>
             <div class="charts__legend">
                <v-legend
@@ -220,17 +220,21 @@ export default {
 <style lang="less">
 .time-line{
    max-width: 1000px;
-   // border: 1px solid tomato;
 
    h2{
       margin-top: 0;
    }
 }
 
+.apexcharts-canvas{
+   margin: 0 auto;
+}
+
 .info{
    display: grid;
-   grid-gap: 28px;
+   grid-gap: 20px;
    grid-template-columns: 1fr 1fr;
+   padding: 0 10px;
 
    &__preset{
       background: var(--clr_gray3);
@@ -260,11 +264,49 @@ export default {
    display: flex;
 }
 
+#pie{
+      width: 150px;
+}
+
+.charts__legend{
+   flex-grow: 1;
+   padding-right: 10px;
+}
+
 @media (max-width: 992px) {
    .info{
       grid-template-columns: 1fr;
+      padding: 20px;
+
+      &__message{
+         grid-column: 1;
+         grid-row: 2;
+      }
+   }
+
+   .time-line{
+      padding: 0 20px;
+   }
+
+   #pie{
+      width: 180px;
    }
    
+}
+
+@media (max-width: 510px) {
+   .time-line__wrap{
+      display: none;
+   }
+
+   #pie{
+      margin: 0 auto;
+   }
+
+   .charts-wrap{
+      flex-direction: column;
+      // align-items: center;
+   }
 }
 
 </style>
