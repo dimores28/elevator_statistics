@@ -305,7 +305,6 @@ export default {
 
    .charts-wrap{
       flex-direction: column;
-      // align-items: center;
    }
 }
 

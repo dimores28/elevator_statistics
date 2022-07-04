@@ -49,7 +49,6 @@ export default {
    .message{
       position: relative;
       display: flex;
-      // max-width: 510px;
       justify-content: space-between;
       border-bottom: 1px solid var(--clr_gray3);
       padding: 10px 24px 15px 32px;

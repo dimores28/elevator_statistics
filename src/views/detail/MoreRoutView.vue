@@ -2,14 +2,14 @@
    <div class="more-rout">
       <div class="time-line">
          <h2>{{$route.params.rout}}</h2>
-         <div class="time-line__wrap">
-         <apexchart type="rangeBar" height="260"
-            :series="timlineData"
-            :options="timlinePreset"
-         >
-         </apexchart>
-      </div>
-         
+            <div class="time-line__wrap">
+               <apexchart type="rangeBar" height="260"
+                  :series="timlineData"
+                  :options="timlinePreset"
+               >
+               </apexchart>
+               
+            </div>
       </div>
 
       <div class="rout-info">
@@ -30,7 +30,7 @@
             <h3>Работа/простой</h3>
             <div class="charts-wrap">
                <div class="charts">
-                  <apexchart type="pie" width="132" :options="chartOptions" :series="series"></apexchart>
+                  <apexchart type="pie" :options="chartOptions" :series="series" id="pie"></apexchart>
                </div>
                <div class="charts__legend">
                   <v-legend
@@ -203,7 +203,7 @@ export default {
 
    .rout-info{
       display: grid;
-      grid-gap: 28px;
+      grid-gap: 20px;
       grid-template-columns: 1fr 1fr;
 
       &__events{
@@ -240,4 +240,47 @@ export default {
    .charts-wrap{
       display: flex;
    }
+
+   #pie{
+      width: 150px;
+   }
+
+@media (max-width: 992px) {
+   .rout-info {
+      grid-template-columns: 1fr;
+      padding: 20px;
+
+      &__events {
+         grid-column: 1;
+         grid-row: 2;
+      }
+
+      .time-line{
+         padding: 0 20px;
+      }
+
+      #pie{
+         width: 180px;
+      }
+   }
+
+
+}
+
+@media (max-width: 510px) {
+   .time-line{
+      height: auto;
+   }
+   .time-line__wrap{
+      display: none;
+   }
+
+   .charts-wrap{
+      flex-direction: column;
+   }
+
+   #pie{
+      margin: 0 auto;
+   }
+}
 </style>
