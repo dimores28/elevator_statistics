@@ -22,11 +22,14 @@ export default {
 
 <style lang="less">
 .v-device{
-   max-width: 327px;
    border-bottom: 1px solid #FFF;
    padding: 10px 10px 10px 40px;
    position: relative;
-   text-align: left;
+   text-align: center;
+
+   :hover{
+      cursor: pointer;
+   }
 
    &__led{
       position: absolute;

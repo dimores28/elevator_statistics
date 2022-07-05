@@ -20,6 +20,11 @@ export default {
 </script>
 
 <style lang="less">
+
+.v-rout-line:hover{
+   cursor: pointer;
+}
+
 .rout-log{
    display: flex;
    justify-content: space-between;

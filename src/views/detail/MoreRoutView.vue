@@ -1,9 +1,15 @@
 <template>
    <div class="more-rout">
       <div class="time-line">
-         TODO Trends
-         <h2>Rout: {{$route.params.id}}</h2>
-         
+         <h2>{{$route.params.rout}}</h2>
+            <div class="time-line__wrap">
+               <apexchart type="rangeBar" height="260"
+                  :series="timlineData"
+                  :options="timlinePreset"
+               >
+               </apexchart>
+               
+            </div>
       </div>
 
       <div class="rout-info">
@@ -24,7 +30,7 @@
             <h3>Работа/простой</h3>
             <div class="charts-wrap">
                <div class="charts">
-                  <apexchart type="pie" width="132" :options="chartOptions" :series="series"></apexchart>
+                  <apexchart type="pie" :options="chartOptions" :series="series" id="pie"></apexchart>
                </div>
                <div class="charts__legend">
                   <v-legend
@@ -45,9 +51,10 @@
             <h3>Механизмы в маршруте</h3>
             <div class="rout-info__device-list_wrap">
                <v-device
-                  v-for="(dev, i) in MECHANISMS"
-                  :key="i"
+                  v-for="dev in MECHANISMS"
+                  :key="dev.PValue3"
                   :content="dev.PText5"
+                  @click="detailsMechanism(dev.PValue3, dev.PText5)"
                >
                </v-device>
             </div>
@@ -57,28 +64,28 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex';
 import vRouteLog from '@/components/UI/v-rout_log';
 import vDevice from '@/components/UI/v-device';
 import VueApexCharts from "vue3-apexcharts";
 import chartPreset from '@/core/presetApexchart';
 import vLegend from '@/components/UI/v-legend';
-
+import timlinePreset from '@/core/presetTimeLine';
+import toISODate from '@/api/workWithDate';
 
 
 export default {
-   components:{
-    vRouteLog,
-    vDevice,
-    apexchart: VueApexCharts,
-    vLegend
-},
-   props:{
-
+      components:{
+      vRouteLog,
+      vDevice,
+      apexchart: VueApexCharts,
+      vLegend
    },
    data(){
       return{
          chartOptions: chartPreset,
+         timlineData: [],
+         timlinePreset: timlinePreset,
       }
    },
    computed:{
@@ -112,6 +119,64 @@ export default {
           'LOAD_ROUTE_ALARM',
           'LOG_ROUTE_STOPS',
       ]),
+      ...mapActions('navigationData',['SET_TITLE', 'SET_TEXT']),
+      loadTimlineData(){
+         let rezData = [];
+
+         let worked = {name: 'В работе', data: []};
+         let stopped = {name: 'В простое', data: []};
+
+         let startTime = null;
+         let stopTime = null;
+
+         let breaking = null;
+         let restarted = null;
+
+         this.LOGS.forEach(elem => {
+          // 1 - Запущен; 2 -перезапущен; 4 - Остановлен; 5 - Авария;
+            
+            //В работе
+            if((elem.MesIDMes === 1 || elem.MesIDMes === 2) && !startTime) {
+               startTime = new Date(toISODate(elem.LastAccess)) - 0;
+            }
+            else if((elem.MesIDMes === 4 || elem.MesIDMes === 5) && !stopTime) {
+               stopTime = new Date(toISODate(elem.LastAccess)) - 0;
+            }
+
+            if(startTime && stopTime) {
+               worked.data.push({x: 'w', y: [startTime, stopTime]});
+               startTime = null;
+               stopTime = null;
+            }
+
+            //В простое
+            if(elem.MesIDMes === 5 && !breaking) {
+                 breaking = new Date(toISODate(elem.LastAccess)) - 0;
+            }
+            else if(elem.MesIDMes === 2 && !restarted) {
+               restarted = new Date(toISODate(elem.LastAccess)) - 0;
+            }
+
+            if(breaking && restarted) {
+               stopped.data.push({x: 'w', y: [breaking, restarted]});
+               breaking = null;
+               restarted = null;
+            }
+
+
+         });
+
+
+         rezData.push(worked);
+         rezData.push(stopped);
+
+         return rezData;
+      },
+      detailsMechanism(id, name){
+         this.SET_TITLE('Механизмы');
+         this.SET_TEXT(`Механизмы > ${name}`)
+         this.$router.push({ name: 'details', params: { id: id, name: name} });
+      }
 
    },
    mounted(){
@@ -119,6 +184,13 @@ export default {
       this.LOAD_MECHANISMS(this.$route.params.id);
       this.LOAD_ROUTE_ALARM(this.$route.params.id);
       this.LOG_ROUTE_STOPS(this.$route.params.id);
+
+      let cont = this;
+      setTimeout(()=>{
+         let data = cont.loadTimlineData();
+         // console.log(data);
+         cont.timlineData = data;
+      }, 1000)
    }
 }
 </script>
@@ -131,7 +203,7 @@ export default {
 
    .rout-info{
       display: grid;
-      grid-gap: 28px;
+      grid-gap: 20px;
       grid-template-columns: 1fr 1fr;
 
       &__events{
@@ -168,4 +240,47 @@ export default {
    .charts-wrap{
       display: flex;
    }
+
+   #pie{
+      width: 150px;
+   }
+
+@media (max-width: 992px) {
+   .rout-info {
+      grid-template-columns: 1fr;
+      padding: 20px;
+
+      &__events {
+         grid-column: 1;
+         grid-row: 2;
+      }
+
+      .time-line{
+         padding: 0 20px;
+      }
+
+      #pie{
+         width: 180px;
+      }
+   }
+
+
+}
+
+@media (max-width: 510px) {
+   .time-line{
+      height: auto;
+   }
+   .time-line__wrap{
+      display: none;
+   }
+
+   .charts-wrap{
+      flex-direction: column;
+   }
+
+   #pie{
+      margin: 0 auto;
+   }
+}
 </style>

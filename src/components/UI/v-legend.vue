@@ -49,7 +49,7 @@ export default {
    position: relative;
    padding: 8px 8px 12px 20px;
    border-bottom: 1px solid white;
-   max-width: 298px;
+   // max-width: 298px;
 
    &__led{
       position: absolute;

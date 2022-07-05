@@ -36,7 +36,6 @@ export default {
    justify-content: space-between;
    text-align: center;
    padding: 10px 10px 15px 32px;
-   max-width: 510px;
    border-bottom: 1px solid var(--clr_gray3);
 
    &__led{
@@ -50,12 +49,24 @@ export default {
    }
 
    &__DateTime{
-      min-width: 146px;
+      min-width: 150px;
       margin-left: 10px;
    }
 
    .error{
       background: var(--clr_state_alarm );
+   }
+}
+
+@media (max-width: 576px) {
+   .rout-log {
+      flex-wrap: wrap;
+      justify-content: center;
+
+      &__text{
+         text-align: center;
+         margin-bottom: 10px;
+      }
    }
 }
 

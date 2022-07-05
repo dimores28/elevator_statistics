@@ -2,9 +2,10 @@
    <div class="card-wrapper">
          <div class="row">
             <v-card
-            v-for="(card, i) in CARDS_BY_TYPE($route.params.type)"
-               :key="i"
+            v-for="card in CARDS_BY_TYPE($route.params.type)"
+               :key="card.UAIndex"
                :mechanismData="card"
+               :Errors="NUMBER_WARNINGS_BY_ID(card.UAIndex)"
                @details="seeMore(card.UAIndex, card.ID)"
                class="col"
             >
@@ -17,6 +18,7 @@
 import vCard from '@/components/UI/v-mechanism_card'
 import { mapActions, mapGetters } from 'vuex';
 export default {
+   name: 'Card',
    components:{
       vCard
    },
@@ -24,19 +26,25 @@ export default {
       cards: [],
    }),
    computed:{
-       ...mapGetters('card',['CARDS_BY_TYPE', 'CARD_BY_ID']),
+       ...mapGetters('card',
+       [
+         'CARDS_BY_TYPE', 
+         'CARD_BY_ID', 
+         'NUMBER_WARNINGS_BY_ID'
+       ]),
+       ...mapGetters('navigationData',['TIME_RANGE']),
       chapter(){
          return this.$route.params.title;
       }
    },
    methods:{
-      ...mapActions('card',['CARD_LOAD']),
+      ...mapActions('card',['CARD_LOAD', 'LOAD_NUMBER_WARNINGS']),
       ...mapActions('navigationData',['SET_TITLE', 'SET_TEXT']),
       seeMore(index, id){
          
          this.SET_TEXT(this.chapter + ' > ' + this.CARD_BY_ID(id).UAName);
          this.SET_TITLE(this.$route.params.title)
-         this.$router.push({ name: 'details', params: { id: index } });
+         this.$router.push({ name: 'details', params: { id: index, name: this.CARD_BY_ID(id).UAName} });
       }
    },
    watch:{
@@ -50,6 +58,12 @@ export default {
       this.SET_TITLE(this.$route.params.title)
       this.SET_TEXT('');
       this.CARD_LOAD();
+      this.LOAD_NUMBER_WARNINGS(this.TIME_RANGE);
+
+      let context = this;
+      this.emitter.on('select-datapicker', function(timerange){
+          context.LOAD_NUMBER_WARNINGS(timerange);
+      });
    }
    
 }
@@ -94,4 +108,7 @@ export default {
          padding: 10px 25px;
       }
    }
+
+
+   
 </style>

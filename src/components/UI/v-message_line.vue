@@ -49,10 +49,10 @@ export default {
    .message{
       position: relative;
       display: flex;
-      max-width: 510px;
       justify-content: space-between;
       border-bottom: 1px solid var(--clr_gray3);
       padding: 10px 24px 15px 32px;
+
 
       &__led{
          position: absolute;
@@ -67,13 +67,27 @@ export default {
       &__text{
          text-align: left;
          margin: 0;
+         flex-grow: 1;
       }
 
       &__date{
          text-align: right;
          margin: 0;
          margin-left: 10px;
-         min-width: 146px;
+         min-width: 150px;
+      }
+   }
+
+
+   @media (max-width: 576px) {
+      .message{
+         flex-wrap: wrap;
+         justify-content: center;
+
+         &__text{
+            text-align: center;
+            margin-bottom: 10px;
+         }
       }
    }
 

@@ -1,11 +1,14 @@
 <template>
    <div class="v-mechanism-card card" @click="openCard(mechanismData.ID)">
-      <div class="card__led"  :class="mechanismState"></div>
+      <div class="card__led"  :class="state"></div>
 
       <div class="card__content">
          <p class="card__lable">{{mechanismData.UAName}}</p>
-         <p class="card__subline">Ошибок: 0</p>
-         <div class="card__info">П 3 - 10 Мч</div>
+         <p 
+            class="card__subline"  
+            :style="{opacity: Errors ? 1 : 0 }"
+         >Ошибок: {{Errors}}</p>
+         <div class="card__info">Моточасы: 230</div>
       </div>
 
    </div>
@@ -18,6 +21,10 @@ export default {
       mechanismData:{
          type: Object,
       },
+      Errors:{
+         type: Number,
+         default: 0
+      }
    },
    data: ()=>({
 
@@ -34,6 +41,18 @@ export default {
 				default: retClass = "card__led_ok"; break;
 			}
          return retClass;
+      },
+      state(){
+         let retClass = '';
+            if(this.Errors <= 2){
+               retClass = "card__led_ok";
+            } else if(this.Errors > 2 && this.Errors <= 7) {
+               retClass = "card__led_waqrning";
+            } else if(this.Errors > 7) {
+               retClass = "card__led_alarm";
+            }
+
+        return retClass;    
       },
       showSubline(){
          if(!this.mechanismData.errorsNum){

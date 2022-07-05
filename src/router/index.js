@@ -35,7 +35,7 @@ const routes = [
 		name: 'E404',
 		path: '/:pathMatch(.*)',
 		component: () => import( '../views/errors/e404'),
-	},
+	}
 ]
 
 const router = createRouter({

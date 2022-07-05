@@ -38,12 +38,12 @@ export default {
       ...mapActions('navigationData',['SET_TITLE', 'SET_TEXT']),
       more(){
          if(this.selected){
-            this.SET_TEXT('Маршруты  > ' + this.selected.Source + '-->' +this.selected.Receiver);
+            this.SET_TEXT('Маршруты  > ' + `${this.selected.Source} --> ${this.selected.Receiver}`);
             this.SET_TIMERANGE({
                StartTime: this.selected.StartTime,
                StopTime: this.selected.StopTime
                });
-            this.$router.push({ name: 'rout', params: { id: this.selected.MesIDRout } });
+            this.$router.push({ name: 'rout', params: { id: this.selected.MesIDRout, rout: `${this.selected.Source} --> ${this.selected.Receiver}` } });
          }
       }
     },
@@ -78,5 +78,17 @@ export default {
    letter-spacing: 1.25px;
    text-transform: uppercase;
    color: rgba(255, 255, 255, 0.56);
+}
+
+@media screen and (max-width: 1100px){
+   .table-wrapper{
+      padding: 15px;
+   }
+}
+
+@media screen and (max-width: 720px){
+   .table-wrapper{
+      padding: 20px;
+   }
 }
 </style>
