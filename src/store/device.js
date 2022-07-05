@@ -116,14 +116,14 @@ export default {
          });
       },
       async LOAD_LAUNCHES({commit}, device){
-         await axios.get(API_URL + `Statistics/Launches/${device.id}/${device.start}/${device.end}`)
+         await axios.get(API_URL + `Statistics/Launches/${device?.id}/${device.start}/${device.end}`)
          .then(response =>{
             commit('SET_LAUNCHES', response.data)
          });
 
       },
       async LOAD_REPAIRS({commit}, device){
-         await axios.get(API_URL + `Statistics/Repairs/${device.id}/${device.start}/${device.end}`)
+         await axios.get(API_URL + `Statistics/Repairs/${device?.id}/${device.start}/${device.end}`)
          .then(response =>{
             commit('SET_REPAIRS', response.data)
          });

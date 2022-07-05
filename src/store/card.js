@@ -1,11 +1,13 @@
 import axios from 'axios'
 import {API_URL} from '@/core/host'
+import device from './device';
 
 
 export default {
    namespaced: true,
    state: {
        cards: [], 
+       warnings: [], 
    },
    getters: {
        CARDS: state=> state.cards,
@@ -17,11 +19,23 @@ export default {
       CARD_BY_ID: (state) => (id) =>{
         let card = state.cards.find(card => card.ID === id);
         return card;
+      },
+      NUMBER_WARNINGS_BY_ID: state => id => {
+        let dev = state.warnings.find(w => w.Id == id);
+
+        if(dev === undefined){
+            return 0
+        }
+
+        return dev.Quantity;
       }
    },
    mutations: {
     SET_CARDS(state, data){
         state.cards = data;
+    },
+    SET_WARNINGS(state, data) {
+        state.warnings = data;
     }
    },
    actions: {
@@ -34,6 +48,14 @@ export default {
                 arr.push(response.data[i]);
             }
             commit('SET_CARDS', arr);
+        });
+       },
+       async LOAD_NUMBER_WARNINGS({commit}, timerange){
+        let start = timerange.StartDate.toISOString().slice(0, 10);
+        let end = timerange.EndDate.toISOString().slice(0, 10);
+        await axios.get(API_URL + `api/Alg/NumberWarnings?startTime=${start}&endTime=${end}`)
+        .then(resp => {
+            commit('SET_WARNINGS', resp.data);
         });
        }
    },
