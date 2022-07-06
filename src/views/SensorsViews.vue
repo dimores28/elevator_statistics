@@ -1,23 +1,26 @@
 <template>
    <div class="sensors-logs">
       <DataTable
-         :value="sensors"
+         :value="MESSAGES"
          responsiveLayout="stack" 
          breakpoint="960px"
          v-model:selection="selected" 
          selectionMode="single"
           @click="more"
       >
-         <Column field="name" header="Датчик" :sortable="true"></Column>
-         <Column field="device" header="Механизм" :sortable="true"></Column>
+         <Column field="Text1" header="Датчик" :sortable="true"></Column>
+         <Column field="PText5" header="Механизм" :sortable="true"></Column>
          <Column field="numberAlarm" header="Количество аварий" :sortable="true"></Column>
          <Column field="dynamics" header="Динамика" :sortable="true"></Column>
       </DataTable>
    </div>
 </template>
-
+DateTime
+PText5
+PValue3
+Text1
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 export default {
    props:{
 
@@ -34,10 +37,11 @@ export default {
       }
    },
    computed:{
-
+      ...mapGetters('sensors', ['MESSAGES']),
    },
    methods:{
       ...mapActions('navigationData',['SET_TITLE', 'SET_TEXT']),
+      ...mapActions('sensors',['LOAD_ALL']),
       more(){
           if(this.selected){
             this.SET_TEXT('Датчики > ' + this.selected.device + ' > ' + this.selected.name);
@@ -48,6 +52,7 @@ export default {
    mounted(){
       this.SET_TITLE('Датчики');
       this.SET_TEXT('');
+      this.LOAD_ALL();
    }
 }
 </script>
