@@ -135,16 +135,19 @@ export default {
       getTimlineData(){
          let rezData = [];
 
+          //Смещение времени по часовому поясу 
+         let offset = (new Date().getTimezoneOffset() * -1) * 60000;
+
          let work = {name: 'В работе', data: []};
          let start = null;
          let stop = null;
 
          this.LAUNCHES.forEach(element => {
             if(element.MsgNr === 23 && !start ){
-               start = new Date(element.DateTime) - 0;
+               start = (new Date(element.DateTime) - 0) + offset;
             }
             else if(element.MsgNr === 25 && !stop) {
-               stop = new Date(element.DateTime) - 0;
+               stop = (new Date(element.DateTime) - 0) + offset;
             }
 
             if(start && stop){
@@ -160,10 +163,10 @@ export default {
          this.REPAIRS.forEach(elem =>{
 
             if(elem.MsgNr === 6 && !start ){
-               start = new Date(elem.DateTime) - 0;
+               start = (new Date(element.DateTime) - 0) + offset;
             }
             else if(elem.MsgNr === 7 && !stop) {
-               stop = new Date(elem.DateTime) - 0;
+               stop = (new Date(element.DateTime) - 0) + offset;
             }
 
             if(start && stop){
@@ -180,7 +183,7 @@ export default {
             let s = new Date(toISODate(arr.DateTime));
             let e = new Date(s.getTime() + 10*60000)
 
-            alarm.data.push({x: 'w', y: [new Date(s) - 0,  new Date(e) - 0]});
+            alarm.data.push({x: 'w', y: [(new Date(s) - 0) + offset,  (new Date(e) - 0) + offset]});
          });
 
          rezData.push(alarm);
