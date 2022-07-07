@@ -10,15 +10,11 @@
       >
          <Column field="Text1" header="Датчик" :sortable="true"></Column>
          <Column field="PText5" header="Механизм" :sortable="true"></Column>
-         <Column field="numberAlarm" header="Количество аварий" :sortable="true"></Column>
+         <Column field="Quantity" header="Количество аварий" :sortable="true"></Column>
          <Column field="dynamics" header="Динамика" :sortable="true"></Column>
       </DataTable>
    </div>
 </template>
-DateTime
-PText5
-PValue3
-Text1
 <script>
 import { mapActions, mapGetters } from 'vuex';
 export default {
@@ -27,32 +23,27 @@ export default {
    },
    data(){
       return{
-         sensors:[
-            {"id": 1, "name": "Подпор нижний", "device": "Нория Н1", "numberAlarm": 5, "dynamics": "down"},
-            {"id": 2,"name": "Подпор нижний", "device": "Нория Н2", "numberAlarm": 3, "dynamics": "down"},
-            {"id": 3,"name": "Подпор верхний", "device": "Нория Н6", "numberAlarm": 4, "dynamics": "down"},
-            {"id": 4,"name": "Контроль скорости", "device": "Нория Н3", "numberAlarm": 2, "dynamics": "up"}
-         ],
          selected: null,
       }
    },
    computed:{
       ...mapGetters('sensors', ['MESSAGES']),
+      ...mapGetters('navigationData', ['TIME_RANGE']),
    },
    methods:{
       ...mapActions('navigationData',['SET_TITLE', 'SET_TEXT']),
       ...mapActions('sensors',['LOAD_ALL']),
       more(){
           if(this.selected){
-            this.SET_TEXT('Датчики > ' + this.selected.device + ' > ' + this.selected.name);
-            this.$router.push({ name: 'more-sensor', params: { id: this.selected.id } });
+            this.SET_TEXT('Датчики > ' + this.selected.PText5 + ' > ' + this.selected.Text1);
+            this.$router.push({ name: 'more-sensor', params: { id: this.selected.PValue3 } });
           }
       }
    },
    mounted(){
       this.SET_TITLE('Датчики');
       this.SET_TEXT('');
-      this.LOAD_ALL();
+      this.LOAD_ALL(this.TIME_RANGE);
    }
 }
 </script>

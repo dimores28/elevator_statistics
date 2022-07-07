@@ -15,8 +15,11 @@ export default {
         }
     },
     actions: {
-        async LOAD_ALL({commit}){
-            await axios.get(API_URL + `Sensors`)
+        async LOAD_ALL({commit}, timetange){
+            let start = timetange.StartDate.toISOString().slice(0, 10);
+            let end = timetange.EndDate.toISOString().slice(0, 10);
+
+            await axios.get(API_URL + `Sensors/Messages/${start}/${end}`)
             .then(response => {
                 response.data.forEach(element => {
                     element.DateTime = new Date(element.DateTime).toLocaleString().replace(/,+/g, "");
