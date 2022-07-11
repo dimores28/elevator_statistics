@@ -82,9 +82,9 @@ export default {
       vLegend
    },
    data(){
+      this.timlineData = []
       return{
          chartOptions: chartPreset,
-         timlineData: [],
          timlinePreset: timlinePreset,
       }
    },

@@ -4,8 +4,10 @@
       <h2>{{$route.params.name}}</h2>
       <div class="time-line__wrap">
          <apexchart type="rangeBar" height="260"
+            ref="timline"
+            id="timline"
+            :options="timelineOptions"
             :series="timlineData"
-            :options="timlinePreset"
          >
          </apexchart>
       </div>
@@ -72,7 +74,7 @@
 import routLine from '@/components/UI/v-rout_line'
 import VueApexCharts from "vue3-apexcharts"
 import chartPreset from '@/core/presetApexchart'
-import timlinePreset from '@/core/presetTimeLine'
+import rangeBarOptions from '@/core/presetTimeLine'
 import vLegend from '@/components/UI/v-legend'
 import toISODate from '@/api/workWithDate'
 
@@ -85,10 +87,10 @@ export default {
       
    },
    data(){
+      this.timlineData = []
       return {
          chartOptions: chartPreset,
-         timlineData: [],
-         timlinePreset: timlinePreset
+         timelineOptions: rangeBarOptions,
       }
    },
    computed:{
@@ -112,8 +114,7 @@ export default {
          let repaer = Math.round(this.TIME_REPAIR * 100 / this.PERIOD);
          let downtime = 100 - work - repaer
          return [ repaer, work, downtime];
-      },
-      
+      }
    },
    methods:{
       ...mapActions('device',
@@ -210,7 +211,7 @@ export default {
       this.emitter.on('select-datapicker', function(device){
           context.reload(device);
       });
-
+     
       setTimeout(() => {
          let t = context.getTimlineData();
          context.timlineData = t;      

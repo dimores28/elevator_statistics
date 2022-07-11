@@ -10,7 +10,13 @@
       >
          <Column field="Text1" header="Датчик" :sortable="true"></Column>
          <Column field="PText5" header="Механизм" :sortable="true"></Column>
-         <Column field="Quantity" header="Количество аварий" :sortable="true"></Column>
+         <Column field="Quantity" header="Количество" :sortable="true">
+            <template #body="slotProps">
+               <div class="center">
+                  {{slotProps.data.Quantity}}
+               </div>
+            </template>
+         </Column>
          <Column field="dynamics" header="Динамика" :sortable="true"></Column>
       </DataTable>
    </div>
@@ -44,6 +50,11 @@ export default {
       this.SET_TITLE('Датчики');
       this.SET_TEXT('');
       this.LOAD_ALL(this.TIME_RANGE);
+
+      const context = this;
+      this.emitter.on('select-datapicker', function(timerange){
+         context.LOAD_ALL(timerange);
+      });
    }
 }
 </script>
@@ -66,5 +77,13 @@ export default {
    letter-spacing: 0.5px;
    color: #FFFFFF;
    border-bottom: 1px solid white !important;
+}
+
+.center{
+   text-align: center;
+}
+
+.p-column-title{
+   text-align: center;
 }
 </style>
