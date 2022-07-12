@@ -214,7 +214,15 @@ export default {
      
       setTimeout(() => {
          let t = context.getTimlineData();
-         context.timlineData = t;      
+
+          if((context.LAUNCHES.length != 0 && t[0].data.length === 0) || 
+             (context.REPAIRS.length != 0 && t[1].data.length === 0) || 
+             (context.ERRORS.length != 0 && t[2].data.length === 0)) {
+            t = context.getTimlineData();
+          }
+
+         context.timlineData = t;    
+ 
       }, 1000);
    }
    
@@ -223,7 +231,7 @@ export default {
 
 <style lang="less">
 .time-line{
-   max-width: 1000px;
+   max-width: 980px;
 
    h2{
       margin-top: 0;

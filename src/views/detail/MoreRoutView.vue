@@ -75,7 +75,7 @@ import toISODate from '@/api/workWithDate';
 
 
 export default {
-      components:{
+   components:{
       vRouteLog,
       vDevice,
       apexchart: VueApexCharts,
@@ -192,8 +192,13 @@ export default {
       let cont = this;
       setTimeout(()=>{
          let data = cont.loadTimlineData();
-         // console.log(data);
+
+         if((cont.LOGS.length != 0 && data[0].length === 0)) {
+            data = cont.loadTimlineData();
+         }
+
          cont.timlineData = data;
+         
       }, 1000)
    }
 }
