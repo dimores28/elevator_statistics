@@ -51,8 +51,8 @@
             <h3>Механизмы в маршруте</h3>
             <div class="rout-info__device-list_wrap">
                <v-device
-                  v-for="dev in MECHANISMS"
-                  :key="dev.PValue3"
+                  v-for="(dev, i) in MECHANISMS"
+                  :key="i"
                   :content="dev.PText5"
                   @click="detailsMechanism(dev.PValue3, dev.PText5)"
                >
@@ -75,16 +75,16 @@ import toISODate from '@/api/workWithDate';
 
 
 export default {
-      components:{
+   components:{
       vRouteLog,
       vDevice,
       apexchart: VueApexCharts,
       vLegend
    },
    data(){
+      this.timlineData = []
       return{
          chartOptions: chartPreset,
-         timlineData: [],
          timlinePreset: timlinePreset,
       }
    },
@@ -132,15 +132,19 @@ export default {
          let breaking = null;
          let restarted = null;
 
+         //Смещение времени по часовому поясу 
+         let offset = (new Date().getTimezoneOffset() * -1) * 60000;
+
+
          this.LOGS.forEach(elem => {
           // 1 - Запущен; 2 -перезапущен; 4 - Остановлен; 5 - Авария;
             
             //В работе
             if((elem.MesIDMes === 1 || elem.MesIDMes === 2) && !startTime) {
-               startTime = new Date(toISODate(elem.LastAccess)) - 0;
+               startTime = (new Date(toISODate(elem.LastAccess)) - 0) + offset;
             }
             else if((elem.MesIDMes === 4 || elem.MesIDMes === 5) && !stopTime) {
-               stopTime = new Date(toISODate(elem.LastAccess)) - 0;
+               stopTime = (new Date(toISODate(elem.LastAccess)) - 0) + offset;
             }
 
             if(startTime && stopTime) {
@@ -151,10 +155,10 @@ export default {
 
             //В простое
             if(elem.MesIDMes === 5 && !breaking) {
-                 breaking = new Date(toISODate(elem.LastAccess)) - 0;
+                 breaking = (new Date(toISODate(elem.LastAccess)) - 0) + offset;
             }
             else if(elem.MesIDMes === 2 && !restarted) {
-               restarted = new Date(toISODate(elem.LastAccess)) - 0;
+               restarted = (new Date(toISODate(elem.LastAccess)) - 0) + offset;
             }
 
             if(breaking && restarted) {
@@ -188,8 +192,13 @@ export default {
       let cont = this;
       setTimeout(()=>{
          let data = cont.loadTimlineData();
-         // console.log(data);
+
+         if((cont.LOGS.length != 0 && data[0].length === 0)) {
+            data = cont.loadTimlineData();
+         }
+
          cont.timlineData = data;
+
       }, 1000)
    }
 }

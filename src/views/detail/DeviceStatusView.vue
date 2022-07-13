@@ -4,8 +4,10 @@
       <h2>{{$route.params.name}}</h2>
       <div class="time-line__wrap">
          <apexchart type="rangeBar" height="260"
+            ref="timline"
+            id="timline"
+            :options="timelineOptions"
             :series="timlineData"
-            :options="timlinePreset"
          >
          </apexchart>
       </div>
@@ -72,7 +74,7 @@
 import routLine from '@/components/UI/v-rout_line'
 import VueApexCharts from "vue3-apexcharts"
 import chartPreset from '@/core/presetApexchart'
-import timlinePreset from '@/core/presetTimeLine'
+import rangeBarOptions from '@/core/presetTimeLine'
 import vLegend from '@/components/UI/v-legend'
 import toISODate from '@/api/workWithDate'
 
@@ -85,10 +87,10 @@ export default {
       
    },
    data(){
+      this.timlineData = []
       return {
          chartOptions: chartPreset,
-         timlineData: [],
-         timlinePreset: timlinePreset
+         timelineOptions: rangeBarOptions,
       }
    },
    computed:{
@@ -112,8 +114,7 @@ export default {
          let repaer = Math.round(this.TIME_REPAIR * 100 / this.PERIOD);
          let downtime = 100 - work - repaer
          return [ repaer, work, downtime];
-      },
-      
+      }
    },
    methods:{
       ...mapActions('device',
@@ -135,16 +136,19 @@ export default {
       getTimlineData(){
          let rezData = [];
 
+          //Смещение времени по часовому поясу 
+         let offset = (new Date().getTimezoneOffset() * -1) * 60000;
+
          let work = {name: 'В работе', data: []};
          let start = null;
          let stop = null;
 
          this.LAUNCHES.forEach(element => {
             if(element.MsgNr === 23 && !start ){
-               start = new Date(element.DateTime) - 0;
+               start = (new Date(element.DateTime) - 0) + offset;
             }
             else if(element.MsgNr === 25 && !stop) {
-               stop = new Date(element.DateTime) - 0;
+               stop = (new Date(element.DateTime) - 0) + offset;
             }
 
             if(start && stop){
@@ -160,10 +164,10 @@ export default {
          this.REPAIRS.forEach(elem =>{
 
             if(elem.MsgNr === 6 && !start ){
-               start = new Date(elem.DateTime) - 0;
+               start = (new Date(element.DateTime) - 0) + offset;
             }
             else if(elem.MsgNr === 7 && !stop) {
-               stop = new Date(elem.DateTime) - 0;
+               stop = (new Date(element.DateTime) - 0) + offset;
             }
 
             if(start && stop){
@@ -180,7 +184,7 @@ export default {
             let s = new Date(toISODate(arr.DateTime));
             let e = new Date(s.getTime() + 10*60000)
 
-            alarm.data.push({x: 'w', y: [new Date(s) - 0,  new Date(e) - 0]});
+            alarm.data.push({x: 'w', y: [(new Date(s) - 0) + offset,  (new Date(e) - 0) + offset]});
          });
 
          rezData.push(alarm);
@@ -207,10 +211,18 @@ export default {
       this.emitter.on('select-datapicker', function(device){
           context.reload(device);
       });
-
+     
       setTimeout(() => {
          let t = context.getTimlineData();
-         context.timlineData = t;      
+
+          if((context.LAUNCHES.length != 0 && t[0].data.length === 0) || 
+             (context.REPAIRS.length != 0 && t[1].data.length === 0) || 
+             (context.ERRORS.length != 0 && t[2].data.length === 0)) {
+            t = context.getTimlineData();
+          }
+
+         context.timlineData = t;    
+ 
       }, 1000);
    }
    

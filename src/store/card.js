@@ -1,6 +1,5 @@
 import axios from 'axios'
 import {API_URL} from '@/core/host'
-import device from './device';
 
 
 export default {

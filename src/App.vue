@@ -48,7 +48,9 @@
     </div>
    </main>
     <footer class="footer">
-      <h2>Footer</h2>
+      <div class="container">
+        <span>© 2022 | igc-ua</span><a href="https://igc-ua.com/" target="_blank">Intellect Group Company</a>
+      </div>
     </footer>
 
    
@@ -200,7 +202,7 @@ body{
                         "nav main"
                         "footer footer";
   grid-template-columns: minmax(200px, 264px) auto;
-  grid-template-rows: 125px auto 80px;
+  grid-template-rows: 125px auto auto;
   max-width: 1200px;
   margin: 0 auto;
   background: var(--clr_bg);
@@ -265,7 +267,16 @@ body{
 
 .footer{
   grid-area: footer;
-  border: 1px solid tan;
+  color: #747474;
+  font-size: 12px;
+  background: #151515;  
+  padding: 20px 0;  
+  
+  a{
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+  }
 }
 
 .hide{
@@ -290,7 +301,7 @@ body{
                         "main"
                         "footer";
     grid-template-columns: 100%;  
-    grid-template-rows: auto auto 80px;                  
+    grid-template-rows: auto auto auto;                  
   }
 
   
