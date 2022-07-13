@@ -42,7 +42,7 @@ export default {
       more(){
           if(this.selected){
             this.SET_TEXT('Датчики > ' + this.selected.PText5 + ' > ' + this.selected.Text1);
-            this.$router.push({ name: 'more-sensor', params: { id: this.selected.PValue3 } });
+            this.$router.push({ name: 'more-sensor', params: { id: this.selected.PValue3, MsgNr: this.selected.MsgNr, Quantity: this.selected.Quantity } });
           }
       }
    },

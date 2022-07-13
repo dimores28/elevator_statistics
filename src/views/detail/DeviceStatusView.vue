@@ -231,7 +231,7 @@ export default {
 
 <style lang="less">
 .time-line{
-   max-width: 980px;
+   max-width: 1000px;
 
    h2{
       margin-top: 0;

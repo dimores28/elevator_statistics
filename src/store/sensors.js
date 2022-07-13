@@ -5,13 +5,19 @@ export default {
     namespaced: true,
     state: {
         messages: [],
+        crashStatistics: []
     },
     getters: {
         MESSAGES: state => state.messages,
+        CRASH_STATISTICS: state => state.crashStatistics
     },
     mutations: {
-        SET_MESSAGES(state, mess){
+        SET_MESSAGES(state, mess) {
             state.messages = mess;
+        },
+        SET_CRASH_STAT(state, data) {
+            state.crashStatistics[0] = data[0] ? data[0].Quantity : 0
+            state.crashStatistics[1] = data[1] ? data[1].Quantity : 0
         }
     },
     actions: {
@@ -39,8 +45,18 @@ export default {
                 // anything else 
                 } 
 
-                console.log(error.toJSON());
+                console.log(err.toJSON());
             });
         },
+        async LOAD_STAT({commit}, Msg){
+            await axios.get(API_URL + `Sensors/NumberAccidents/${Msg.MsgN}/${Msg.devID}`)
+            .then( response => {
+                commit('SET_CRASH_STAT', response.data);
+            })
+            .catch( err => {
+                console.log(err.toJSON());
+            });
+
+        }
     }
 }

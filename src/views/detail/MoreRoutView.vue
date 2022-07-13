@@ -51,8 +51,8 @@
             <h3>Механизмы в маршруте</h3>
             <div class="rout-info__device-list_wrap">
                <v-device
-                  v-for="dev in MECHANISMS"
-                  :key="dev.PValue3"
+                  v-for="(dev, i) in MECHANISMS"
+                  :key="i"
                   :content="dev.PText5"
                   @click="detailsMechanism(dev.PValue3, dev.PText5)"
                >
@@ -198,7 +198,7 @@ export default {
          }
 
          cont.timlineData = data;
-         
+
       }, 1000)
    }
 }
