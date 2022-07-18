@@ -17,7 +17,7 @@
             <div class="sensor-info__number-breakdowns">
                <div class="number-row">
                   <span>Кол-во за выбраный период</span>
-                  <span>{{ $route.params.Quantity }}</span>
+                  <span>{{ QUANTITY }}</span>
                </div>
                <div class="number-row">
                   <span>Кол-во за месяц</span>
@@ -43,7 +43,7 @@ export default {
       }
    },
    computed:{
-      ...mapGetters('sensors', ['CRASH_STATISTICS']),
+      ...mapGetters('sensors', ['QUANTITY', 'CRASH_STATISTICS']),
    },
    methods: {
       ...mapActions('sensors',['LOAD_STAT']),

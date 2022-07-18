@@ -1,11 +1,9 @@
 <template>
 <div class="v-device-status">
-   <div class="time-line">
+   <div class="time-line time-line-dev">
       <h2>{{$route.params.name}}</h2>
       <div class="time-line__wrap">
          <apexchart type="rangeBar" height="260"
-            ref="timline"
-            id="timline"
             :options="timelineOptions"
             :series="timlineData"
          >
@@ -221,17 +219,22 @@ export default {
             t = context.getTimlineData();
           }
 
-         context.timlineData = t;    
+         context.timlineData = t;  
+         console.log(context.timlineData);
  
-      }, 1000);
+      }, 100);
    }
    
 }
 </script>
 
 <style lang="less">
-.time-line{
-   max-width: 1000px;
+.time-line {
+   max-width: 920px;
+   &-dev {
+      padding: 0 10px;
+   }
+   
 
    h2{
       margin-top: 0;

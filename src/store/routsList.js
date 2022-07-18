@@ -132,7 +132,10 @@ export default {
             });
 
             commit('SET_ROUTE_LIST', response.data)
-         });
+         })
+         .catch(err => {
+            console.log(err.toJSON());
+        });
       },
       async LOAD_MECHANISMS({commit}, routeID){
          await axios.get(API_URL + 'api/Alg/RoutID', {params:{routID: routeID}})

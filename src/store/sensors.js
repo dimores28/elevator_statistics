@@ -5,15 +5,20 @@ export default {
     namespaced: true,
     state: {
         messages: [],
+        quantity : 0,
         crashStatistics: []
     },
     getters: {
         MESSAGES: state => state.messages,
+        QUANTITY: state => state.quantity,
         CRASH_STATISTICS: state => state.crashStatistics
     },
     mutations: {
         SET_MESSAGES(state, mess) {
             state.messages = mess;
+        },
+        WRITE_QUANTITY(state, num) {
+            state.quantity = num;
         },
         SET_CRASH_STAT(state, data) {
             state.crashStatistics[0] = data[0] ? data[0].Quantity : 0
@@ -21,9 +26,9 @@ export default {
         }
     },
     actions: {
-        async LOAD_ALL({commit}, timetange){
-            let start = timetange.StartDate.toISOString().slice(0, 10);
-            let end = timetange.EndDate.toISOString().slice(0, 10);
+        async LOAD_ALL({commit}, timerange){
+            let start = timerange.StartDate.toISOString().slice(0, 10);
+            let end = timerange.EndDate.toISOString().slice(0, 10);
 
             await axios.get(API_URL + `Sensors/Messages/${start}/${end}`)
             .then(response => {
@@ -57,6 +62,9 @@ export default {
                 console.log(err.toJSON());
             });
 
+        },
+        SET_QUANTITY({commit}, num) {
+            commit('WRITE_QUANTITY', num);
         }
     }
 }

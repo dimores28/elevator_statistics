@@ -4,8 +4,8 @@
          <h2>{{$route.params.rout}}</h2>
             <div class="time-line__wrap">
                <apexchart type="rangeBar" height="260"
-                  :series="timlineData"
                   :options="timlinePreset"
+                  :series="timlineData"
                >
                </apexchart>
                
@@ -86,6 +86,7 @@ export default {
       return{
          chartOptions: chartPreset,
          timlinePreset: timlinePreset,
+         // timlineData : []
       }
    },
    computed:{
@@ -147,6 +148,10 @@ export default {
                stopTime = (new Date(toISODate(elem.LastAccess)) - 0) + offset;
             }
 
+            if(stopTime && !startTime) {
+               stopTime = null;
+            }
+
             if(startTime && stopTime) {
                worked.data.push({x: 'w', y: [startTime, stopTime]});
                startTime = null;
@@ -159,6 +164,10 @@ export default {
             }
             else if(elem.MesIDMes === 2 && !restarted) {
                restarted = (new Date(toISODate(elem.LastAccess)) - 0) + offset;
+            }
+
+            if(!breaking && restarted) {
+               restarted = null;
             }
 
             if(breaking && restarted) {
@@ -189,17 +198,13 @@ export default {
       this.LOAD_ROUTE_ALARM(this.$route.params.id);
       this.LOG_ROUTE_STOPS(this.$route.params.id);
 
-      let cont = this;
-      setTimeout(()=>{
-         let data = cont.loadTimlineData();
+      let context = this;
 
-         if((cont.LOGS.length != 0 && data[0].length === 0)) {
-            data = cont.loadTimlineData();
-         }
-
-         cont.timlineData = data;
-
-      }, 1000)
+      setTimeout(() => {
+         console.log('r');
+         let data = context.loadTimlineData();
+         context.timlineData = data;
+      }, 100)
    }
 }
 </script>
@@ -207,7 +212,6 @@ export default {
 <style lang="less">
    .time-line{
       max-width: 1000px;
-      height: 315px;
    }
 
    .rout-info{
