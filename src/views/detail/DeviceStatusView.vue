@@ -149,6 +149,10 @@ export default {
                stop = (new Date(element.DateTime) - 0) + offset;
             }
 
+            if(stop && !start) {
+               stop = null;
+            }
+
             if(start && stop){
                work.data.push({x: 'w', y: [start, stop]});
                start = null;
@@ -158,20 +162,27 @@ export default {
          });
          rezData.push(work);
 
+         let startRepairs = null;
+         let stopReairs = null;
+
          let repaer = {name: 'В ремонте', data: []};
          this.REPAIRS.forEach(elem =>{
 
-            if(elem.MsgNr === 6 && !start ){
-               start = (new Date(element.DateTime) - 0) + offset;
+            if(elem.MsgNr === 6 && !startRepairs ){
+               startRepairs = (new Date(element.DateTime) - 0) + offset;
             }
-            else if(elem.MsgNr === 7 && !stop) {
-               stop = (new Date(element.DateTime) - 0) + offset;
+            else if(elem.MsgNr === 7 && !stopReairs) {
+               stopReairs = (new Date(element.DateTime) - 0) + offset;
             }
 
-            if(start && stop){
-               repaer.data.push({x: 'w', y: [start, stop]});
-               start = null;
-               stop = null;
+            if(stopReairs && !startRepairs) {
+               stopReairs = null;
+            }
+
+            if(startRepairs && stopReairs){
+               repaer.data.push({x: 'w', y: [startRepairs, stopReairs]});
+               startRepairs = null;
+               stopReairs = null;
             }
 
          });
@@ -204,6 +215,17 @@ export default {
       this.GET_LIST_OF_ROUTES(device);
       this.LOAD_STATISTICALl_DATA(device);
    },
+   watch: {
+      LAUNCHES() {
+         this.timlineData = this.getTimlineData();
+      },
+      REPAIRS() {
+         this.timlineData = this.getTimlineData();
+      },
+      ERRORS() {
+         this.timlineData = this.getTimlineData();
+      }
+   },
    mounted(){
       const context = this;
       this.emitter.on('select-datapicker', function(device){
@@ -211,17 +233,7 @@ export default {
       });
      
       setTimeout(() => {
-         let t = context.getTimlineData();
-
-          if((context.LAUNCHES.length != 0 && t[0].data.length === 0) || 
-             (context.REPAIRS.length != 0 && t[1].data.length === 0) || 
-             (context.ERRORS.length != 0 && t[2].data.length === 0)) {
-            t = context.getTimlineData();
-          }
-
-         context.timlineData = t;  
-         console.log(context.timlineData);
- 
+         context.timlineData = context.getTimlineData(); 
       }, 100);
    }
    

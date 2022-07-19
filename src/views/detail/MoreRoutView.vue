@@ -201,9 +201,7 @@ export default {
       let context = this;
 
       setTimeout(() => {
-         console.log('r');
-         let data = context.loadTimlineData();
-         context.timlineData = data;
+         context.timlineData = context.loadTimlineData();
       }, 100)
    }
 }
