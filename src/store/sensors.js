@@ -6,12 +6,14 @@ export default {
     state: {
         messages: [],
         quantity : 0,
-        crashStatistics: []
+        crashStatistics: [],
+        logs: []
     },
     getters: {
         MESSAGES: state => state.messages,
         QUANTITY: state => state.quantity,
-        CRASH_STATISTICS: state => state.crashStatistics
+        CRASH_STATISTICS: state => state.crashStatistics,
+        LOGS: state => state.logs
     },
     mutations: {
         SET_MESSAGES(state, mess) {
@@ -23,6 +25,9 @@ export default {
         SET_CRASH_STAT(state, data) {
             state.crashStatistics[0] = data[0] ? data[0].Quantity : 0
             state.crashStatistics[1] = data[1] ? data[1].Quantity : 0
+        },
+        SET_LOGS(state, logs){
+            state.logs = logs;
         }
     },
     actions: {
@@ -65,6 +70,26 @@ export default {
         },
         SET_QUANTITY({commit}, num) {
             commit('WRITE_QUANTITY', num);
+        },
+        async LOAD_LOGS({commit}, fields) {
+            let start = fields.range.StartDate.toISOString().slice(0, 10);
+            let stop = fields.range.EndDate.toISOString().slice(0, 10);
+            await axios.get(API_URL + `Sensors/Logs/${fields.MsNr}/${fields.ID}/${fields.SensName}/${start}/${stop}`)
+            .then( response => {
+                commit('SET_LOGS', response.data);
+            })
+            .catch( err => {
+                console.log(err);
+
+                if (err.response) { 
+                    if(err.request.status === 404)
+                    {
+                        console.log('Error 404');
+                    }
+                }
+                
+                console.log(err.toJSON());
+            });
         }
     }
 }

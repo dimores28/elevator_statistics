@@ -192,7 +192,13 @@ export default {
       }
 
    },
-   mounted(){
+   watch: {
+      LOGS() {
+         this.timlineData = this.loadTimlineData();
+      }
+ 
+   },
+   mounted() {
       this.LOAD_ROUT_LOGS(this.$route.params.id);
       this.LOAD_MECHANISMS(this.$route.params.id);
       this.LOAD_ROUTE_ALARM(this.$route.params.id);

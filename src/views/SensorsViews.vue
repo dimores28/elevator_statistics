@@ -41,9 +41,12 @@ export default {
       ...mapActions('sensors',['LOAD_ALL', 'SET_QUANTITY']),
       more(){
           if(this.selected){
-            this.SET_TEXT('Датчики > ' + this.selected.PText5 + ' > ' + this.selected.Text1);
+            const start = this.selected.Text1.indexOf('"');
+            const name  = this.selected.Text1.substring(start + 1, this.selected.Text1.length - 2);
+
+            this.SET_TEXT('Датчики > ' + this.selected.PText5 + ' > ' + name);
             this.SET_QUANTITY(this.selected.Quantity);
-            this.$router.push({ name: 'more-sensor', params: { id: this.selected.PValue3, MsgNr: this.selected.MsgNr } });
+            this.$router.push({ name: 'more-sensor', params: { id: this.selected.PValue3, MsgNr: this.selected.MsgNr, Name: name } });
           }
       }
    },

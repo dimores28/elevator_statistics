@@ -39,14 +39,14 @@ import { mapActions, mapGetters } from 'vuex';
 export default {
    data(){
       return{
-         Quantity: 0
       }
    },
    computed:{
-      ...mapGetters('sensors', ['QUANTITY', 'CRASH_STATISTICS']),
+      ...mapGetters('sensors', ['QUANTITY', 'CRASH_STATISTICS', 'LOGS']),
+      ...mapGetters('navigationData', ['TIME_RANGE']),
    },
    methods: {
-      ...mapActions('sensors',['LOAD_STAT']),
+      ...mapActions('sensors',['LOAD_STAT', 'LOAD_LOGS']),
    },
    mounted() {
       let Msg = {};
@@ -54,8 +54,20 @@ export default {
       Msg.devID = this.$route.params.id;
 
       this.LOAD_STAT(Msg);
+
+      let fields = {};
+      fields.MsNr = this.$route.params.MsgNr;
+      fields.ID = this.$route.params.id;
+      fields.SensName = this.$route.params.Name;
+      fields.range = this.TIME_RANGE;
+
+      this.LOAD_LOGS(fields);
+
    }
 }
+// Class
+// DateTime
+// Text1
 </script>
 
 <style lang="less">
