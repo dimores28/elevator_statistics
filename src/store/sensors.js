@@ -76,6 +76,15 @@ export default {
             let stop = fields.range.EndDate.toISOString().slice(0, 10);
             await axios.get(API_URL + `Sensors/Logs/${fields.MsNr}/${fields.ID}/${fields.SensName}/${start}/${stop}`)
             .then( response => {
+                let pattern = /"[^"\\]+(?:\\.[^"\\]*)*"/;
+
+                response.data.forEach(el => {
+                    el.DateTime = new Date(el.DateTime).toLocaleString().replace(/,+/g, "");
+                    el.Text1 = el.Text1.replace(pattern, "");
+                    el.Text1 = el.Text1.replace(pattern, "");
+                    return el;
+                });
+
                 commit('SET_LOGS', response.data);
             })
             .catch( err => {

@@ -9,7 +9,12 @@
          <div class="sensor__events sensor-info__item">
             <h3>События датчика</h3>
             <div class="sensor-info__events-wrap">
-
+               <v-sens-log
+                  v-for="(log, i) in LOGS"
+                  :key="i"
+                  :log="log"
+               >
+               </v-sens-log>
             </div>
          </div>
          <div class="sensor__alarms sensor-info__item">
@@ -35,8 +40,11 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-
+import vSensLog from '@/components/UI/v-sensor_log'
 export default {
+      components: {
+      vSensLog
+   },
    data(){
       return{
       }
@@ -65,9 +73,7 @@ export default {
 
    }
 }
-// Class
-// DateTime
-// Text1
+
 </script>
 
 <style lang="less">
@@ -84,6 +90,11 @@ export default {
       &__item {
          background: var(--clr_gray3);
          padding: 8px; 
+      }
+
+      &__events-wrap {
+         height: 493px;
+         overflow: auto;
       }
 
       &__number-breakdowns {

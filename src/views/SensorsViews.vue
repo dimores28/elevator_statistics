@@ -22,11 +22,9 @@
    </div>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex';
-export default {
-   props:{
+import { mapActions, mapGetters } from 'vuex'
 
-   },
+export default {
    data(){
       return{
          selected: null,
