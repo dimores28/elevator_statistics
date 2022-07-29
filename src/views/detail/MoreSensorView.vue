@@ -1,8 +1,10 @@
 <template>
    <div class="more-sensor">
-      <div class="time-line">
-         TODO Trends
+      <div class="line-wrap">
          <h2>Sensor: {{$route.params.MsgNr}}</h2>
+         <div class="line-charts">
+               <apexchart type="line" height="260" :options="chartOptions" :series="series"></apexchart>
+         </div>
       </div>
 
       <div class="sensor-info">
@@ -40,13 +42,21 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import vSensLog from '@/components/UI/v-sensor_log'
+import vSensLog from '@/components/UI/v-sensor_log';
+import VueApexCharts from "vue3-apexcharts";
+import lineChartOptions from "@/core/presetLineChart";
 export default {
       components: {
-      vSensLog
+      vSensLog,
+      apexchart: VueApexCharts,
    },
    data(){
       return{
+         series: [{
+            name: 'Срабатываний',
+            data: [4, 3, 10, 9, 29, 19, 22, 9, 12, 7, 19, 5, 13, 9, 17, 2, 7, 5]
+          }],
+          chartOptions: lineChartOptions
       }
    },
    computed:{
@@ -77,9 +87,8 @@ export default {
 </script>
 
 <style lang="less">
-   .time-line{
+   .line-wrap{
       max-width: 1000px;
-      height: 315px;
    }
 
    .sensor-info {
