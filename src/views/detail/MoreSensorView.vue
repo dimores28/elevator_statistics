@@ -37,6 +37,7 @@
             </div>
          </div>
       </div>
+      {{ TRENDS_DATA }}
    </div>
 </template>
 
@@ -54,24 +55,36 @@ export default {
       return{
          series: [{
             name: 'Срабатываний',
-            data: [4, 3, 10, 9, 29, 19, 22, 9, 12, 7, 19, 5, 13, 9, 17, 2, 7, 5]
+            data: [0,7,0,6,0,3,0,9,2,1,5,0,0,1,0]
           }],
           chartOptions: lineChartOptions
       }
    },
    computed:{
-      ...mapGetters('sensors', ['QUANTITY', 'CRASH_STATISTICS', 'LOGS']),
+      ...mapGetters('sensors', 
+      [
+         'QUANTITY', 
+         'CRASH_STATISTICS', 
+         'LOGS',
+         'TRENDS_DATA'
+      ]),
       ...mapGetters('navigationData', ['TIME_RANGE']),
    },
    methods: {
-      ...mapActions('sensors',['LOAD_STAT', 'LOAD_LOGS']),
+      ...mapActions('sensors',
+      [
+         'LOAD_STAT', 
+         'LOAD_LOGS', 
+         'LOAD_CHARTS_DATA'
+      ]),
    },
-   mounted() {
+   async mounted() {
       let Msg = {};
       Msg.MsgN = this.$route.params.MsgNr;
       Msg.devID = this.$route.params.id;
 
-      this.LOAD_STAT(Msg);
+      await this.LOAD_STAT(Msg);
+      await this.LOAD_CHARTS_DATA(Msg);
 
       let fields = {};
       fields.MsNr = this.$route.params.MsgNr;
@@ -79,8 +92,10 @@ export default {
       fields.SensName = this.$route.params.Name;
       fields.range = this.TIME_RANGE;
 
-      this.LOAD_LOGS(fields);
+      await this.LOAD_LOGS(fields);
 
+      this.chartOptions.xaxis.categories = this.TRENDS_DATA.categories;
+      // console.log(this.chartOptions.xaxis.categories);
    }
 }
 

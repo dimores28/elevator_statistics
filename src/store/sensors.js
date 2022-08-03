@@ -7,13 +7,41 @@ export default {
         messages: [],
         quantity : 0,
         crashStatistics: [],
-        logs: []
+        logs: [],
+        charts: []
     },
     getters: {
         MESSAGES: state => state.messages,
         QUANTITY: state => state.quantity,
         CRASH_STATISTICS: state => state.crashStatistics,
-        LOGS: state => state.logs
+        LOGS: state => state.logs,
+        CHARTS: state => state.charts,
+        TRENDS_DATA(state) {
+            let currentDay = new Date();
+            let series = [];
+            let categories = [];
+
+            for(let i = 0; i < 15; i++){
+                categories.push(currentDay.setDate(currentDay.getDate() - i));
+                currentDay = new Date();
+            }
+
+            let q = 0;
+            categories.forEach(e => {
+                let day = new Date(e).getDate();
+                
+                state.charts.forEach(item => {
+                     if(day === new Date(item.DateTime).getDate()) {
+                        q = item.Quantity;
+                     }
+                })
+
+                series.push(q);
+                q = 0;
+            });
+
+            return {series: series, categories: categories}
+        }
     },
     mutations: {
         SET_MESSAGES(state, mess) {
@@ -26,8 +54,35 @@ export default {
             state.crashStatistics[0] = data[0] ? data[0].Quantity : 0
             state.crashStatistics[1] = data[1] ? data[1].Quantity : 0
         },
-        SET_LOGS(state, logs){
+        SET_LOGS(state, logs) {
             state.logs = logs;
+        },
+        SET_CHARTS(state, charts) {
+
+            if (!charts.length)
+            {
+                state.charts = [];
+                return;
+            }
+
+            let curentDate = new Date(charts[0].DateTime);
+            let normalizedCharts = [];
+            let Quantity = 0;
+
+            charts.forEach(el => {
+                if (new Date(curentDate).getDate() === new Date(el.DateTime).getDate()) {
+                    Quantity++;
+                } else {
+                    normalizedCharts.push({Quantity: Quantity, DateTime: new Date(curentDate)});
+                    Quantity = 1;
+                }
+                
+                curentDate = new Date(el.DateTime);
+            });
+
+            normalizedCharts.push({Quantity: Quantity, DateTime: new Date(curentDate)});
+
+            state.charts = normalizedCharts;
         }
     },
     actions: {
@@ -98,6 +153,15 @@ export default {
                 }
                 
                 console.log(err.toJSON());
+            });
+        },
+        async LOAD_CHARTS_DATA({commit}, mess) {
+            await axios.get(API_URL + `Sensors/Chart/${mess.MsgN}/${mess.devID}`)
+            .then(response => {
+                commit('SET_CHARTS', response.data);
+            })
+            .catch(err => {
+                return Promise.reject(err);
             });
         }
     }
