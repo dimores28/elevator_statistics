@@ -22,11 +22,9 @@
    </div>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex';
-export default {
-   props:{
+import { mapActions, mapGetters } from 'vuex'
 
-   },
+export default {
    data(){
       return{
          selected: null,
@@ -38,11 +36,15 @@ export default {
    },
    methods:{
       ...mapActions('navigationData',['SET_TITLE', 'SET_TEXT']),
-      ...mapActions('sensors',['LOAD_ALL']),
+      ...mapActions('sensors',['LOAD_ALL', 'SET_QUANTITY']),
       more(){
           if(this.selected){
-            this.SET_TEXT('Датчики > ' + this.selected.PText5 + ' > ' + this.selected.Text1);
-            this.$router.push({ name: 'more-sensor', params: { id: this.selected.PValue3, MsgNr: this.selected.MsgNr, Quantity: this.selected.Quantity } });
+            const start = this.selected.Text1.indexOf('"');
+            const name  = this.selected.Text1.substring(start + 1, this.selected.Text1.length - 2);
+
+            this.SET_TEXT('Датчики > ' + this.selected.PText5 + ' > ' + name);
+            this.SET_QUANTITY(this.selected.Quantity);
+            this.$router.push({ name: 'more-sensor', params: { id: this.selected.PValue3, MsgNr: this.selected.MsgNr, Name: name } });
           }
       }
    },

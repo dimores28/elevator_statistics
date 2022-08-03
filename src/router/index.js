@@ -32,6 +32,11 @@ const routes = [
     component: () => import( '../views/detail/MoreRoutView')
   },
   {
+    path: '/test',
+    name: 'test',
+    component: () => import( '../views/test')
+  },
+  {
 		name: 'E404',
 		path: '/:pathMatch(.*)',
 		component: () => import( '../views/errors/e404'),

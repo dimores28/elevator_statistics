@@ -1,15 +1,22 @@
 <template>
    <div class="more-sensor">
-      <div class="time-line">
-         TODO Trends
+      <div class="line-wrap">
          <h2>Sensor: {{$route.params.MsgNr}}</h2>
+         <div class="line-charts">
+               <apexchart type="line" height="260" :options="chartOptions" :series="series"></apexchart>
+         </div>
       </div>
 
       <div class="sensor-info">
          <div class="sensor__events sensor-info__item">
             <h3>События датчика</h3>
             <div class="sensor-info__events-wrap">
-
+               <v-sens-log
+                  v-for="(log, i) in LOGS"
+                  :key="i"
+                  :log="log"
+               >
+               </v-sens-log>
             </div>
          </div>
          <div class="sensor__alarms sensor-info__item">
@@ -17,7 +24,7 @@
             <div class="sensor-info__number-breakdowns">
                <div class="number-row">
                   <span>Кол-во за выбраный период</span>
-                  <span>{{ $route.params.Quantity }}</span>
+                  <span>{{ QUANTITY }}</span>
                </div>
                <div class="number-row">
                   <span>Кол-во за месяц</span>
@@ -30,38 +37,73 @@
             </div>
          </div>
       </div>
+      {{ TRENDS_DATA }}
    </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-
+import vSensLog from '@/components/UI/v-sensor_log';
+import VueApexCharts from "vue3-apexcharts";
+import lineChartOptions from "@/core/presetLineChart";
 export default {
+      components: {
+      vSensLog,
+      apexchart: VueApexCharts,
+   },
    data(){
       return{
-         Quantity: 0
+         series: [{
+            name: 'Срабатываний',
+            data: [0,7,0,6,0,3,0,9,2,1,5,0,0,1,0]
+          }],
+          chartOptions: lineChartOptions
       }
    },
    computed:{
-      ...mapGetters('sensors', ['CRASH_STATISTICS']),
+      ...mapGetters('sensors', 
+      [
+         'QUANTITY', 
+         'CRASH_STATISTICS', 
+         'LOGS',
+         'TRENDS_DATA'
+      ]),
+      ...mapGetters('navigationData', ['TIME_RANGE']),
    },
    methods: {
-      ...mapActions('sensors',['LOAD_STAT']),
+      ...mapActions('sensors',
+      [
+         'LOAD_STAT', 
+         'LOAD_LOGS', 
+         'LOAD_CHARTS_DATA'
+      ]),
    },
-   mounted() {
+   async mounted() {
       let Msg = {};
       Msg.MsgN = this.$route.params.MsgNr;
       Msg.devID = this.$route.params.id;
 
-      this.LOAD_STAT(Msg);
+      await this.LOAD_STAT(Msg);
+      await this.LOAD_CHARTS_DATA(Msg);
+
+      let fields = {};
+      fields.MsNr = this.$route.params.MsgNr;
+      fields.ID = this.$route.params.id;
+      fields.SensName = this.$route.params.Name;
+      fields.range = this.TIME_RANGE;
+
+      await this.LOAD_LOGS(fields);
+
+      this.chartOptions.xaxis.categories = this.TRENDS_DATA.categories;
+      // console.log(this.chartOptions.xaxis.categories);
    }
 }
+
 </script>
 
 <style lang="less">
-   .time-line{
+   .line-wrap{
       max-width: 1000px;
-      height: 315px;
    }
 
    .sensor-info {
@@ -72,6 +114,11 @@ export default {
       &__item {
          background: var(--clr_gray3);
          padding: 8px; 
+      }
+
+      &__events-wrap {
+         height: 493px;
+         overflow: auto;
       }
 
       &__number-breakdowns {
