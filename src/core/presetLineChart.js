@@ -9,7 +9,7 @@ export default {
       },
       xaxis: {
         type: 'datetime',
-        categories: [],
+        categories:  [],
         tickAmount: 10,
         labels: {
           formatter: function(value, timestamp, opts) {
