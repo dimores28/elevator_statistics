@@ -1,7 +1,7 @@
 <template>
    <div class="more-sensor">
       <div class="line-wrap">
-         <h2>Sensor: {{$route.params.MsgNr}}</h2>
+         <h2></h2>
          <div class="line-charts">
                <apexchart type="line" height="260" :options="chartOptions" :series="series"></apexchart>
          </div>
@@ -37,7 +37,6 @@
             </div>
          </div>
       </div>
-      {{ TRENDS_DATA }}
    </div>
 </template>
 
@@ -55,7 +54,7 @@ export default {
       return{
          series: [{
             name: 'Срабатываний',
-            data: [0,7,0,6,0,3,0,9,2,1,5,0,0,1,0]
+            data: []
           }],
           chartOptions: lineChartOptions
       }
@@ -78,6 +77,12 @@ export default {
          'LOAD_CHARTS_DATA'
       ]),
    },
+   watch: {
+      TRENDS_DATA(){
+         this.series[0].data = this.TRENDS_DATA.series;
+         this.chartOptions.xaxis.categories = this.TRENDS_DATA.categories;
+      }
+   },
    async mounted() {
       let Msg = {};
       Msg.MsgN = this.$route.params.MsgNr;
@@ -93,9 +98,6 @@ export default {
       fields.range = this.TIME_RANGE;
 
       await this.LOAD_LOGS(fields);
-
-      this.chartOptions.xaxis.categories = this.TRENDS_DATA.categories;
-      // console.log(this.chartOptions.xaxis.categories);
    }
 }
 
