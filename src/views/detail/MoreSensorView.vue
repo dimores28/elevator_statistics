@@ -98,6 +98,8 @@ export default {
       fields.range = this.TIME_RANGE;
 
       await this.LOAD_LOGS(fields);
+
+      this.chartOptions.xaxis.categories = this.TRENDS_DATA.categories;
    }
 }
 
@@ -142,7 +144,7 @@ export default {
          padding: 20px;
       }
 
-      .time-line{
+      .line-charts{
          padding: 0 20px;
       }
    }
