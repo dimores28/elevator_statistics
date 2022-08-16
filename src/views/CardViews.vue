@@ -5,7 +5,7 @@
             v-for="card in CARDS_BY_TYPE($route.params.type)"
                :key="card.UAIndex"
                :mechanismData="card"
-               :Errors="NUMBER_WARNINGS_BY_ID(card.UAIndex)"
+               :Errors="NUMBER_WARNINGS_BY_ID(card.UAIndex)" 
                @details="seeMore(card.UAIndex, card.ID)"
                class="col"
             >
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+//"NUMBER_WARNINGS_BY_ID(card.UAIndex)"
 import vCard from '@/components/UI/v-mechanism_card'
 import { mapActions, mapGetters } from 'vuex';
 export default {

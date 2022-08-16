@@ -39,7 +39,7 @@ export default {
    },
    actions: {
        async CARD_LOAD({commit}){
-        
+
         await axios.get(API_URL + 'api/SettingsTable')
         .then(response=>{
             let arr = []
