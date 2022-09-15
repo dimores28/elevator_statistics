@@ -144,6 +144,7 @@ export default {
          });
       },
       async LOAD_ROUT_LOGS({commit}, routeID){
+         console.log(routeID);
          await axios.get(API_URL + 'Route/Log',  {params:{MesIDRout: routeID}})
          .then(response=>{
             response.data.forEach(function(item){
@@ -152,7 +153,19 @@ export default {
             });
 
             commit('SET_ROUT_LOGS', response.data);
-         });
+         })
+         .catch( err => {
+            console.log(err);
+
+            if (err.response) { 
+                if(err.request.status === 404)
+                {
+                    console.log('Error 404');
+                }
+            }
+            
+            console.log(err.toJSON());
+        });
       },
       async LOAD_ROUTE_ALARM({commit}, routeID){
          await axios.get(API_URL + 'api/Alg/RouteAlarms',  {params:{routID: routeID}})
