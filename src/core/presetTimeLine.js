@@ -1,13 +1,13 @@
 export default {
 
         chart: {
-          height: 260,
+          height: 200,
           type: 'rangeBar'
         },
         plotOptions: {
           bar: {
             horizontal: true,
-            barHeight: '50%',
+            barHeight: '70%',
             rangeBarGroupRows: true
           }
         },
