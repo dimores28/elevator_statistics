@@ -175,7 +175,7 @@ export default {
                return item;
             });
             
-            commit('COMPLETE_LOGS', response.data);
+            //commit('COMPLETE_LOGS', response.data);
          });
       },
       async LOG_ROUTE_STOPS({commit}, routeID){

@@ -144,7 +144,7 @@ export default {
         //В работе
         if ((elem.MesIDMes === 1 || elem.MesIDMes === 2) && !startTime) {
           startTime = new Date(toISODate(elem.LastAccess)) - 0 + offset;
-        } else if ((elem.MesIDMes === 4 || elem.MesIDMes === 5) && !stopTime) {
+        } else if ((elem.MesIDMes === 4 || elem.MesIDMes === 5 || elem.MesIDMes === 3) && !stopTime) {
           stopTime = new Date(toISODate(elem.LastAccess)) - 0 + offset;
         }
 
