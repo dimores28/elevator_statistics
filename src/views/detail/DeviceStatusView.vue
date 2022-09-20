@@ -1,7 +1,7 @@
 <template>
   <div class="v-device-status">
     <div class="time-line time-line-dev">
-      <h2>{{ $route.params.name }}</h2>
+      <h2 class="h2">{{ $route.params.name }}</h2>
       <div class="time-line__wrap">
         <apexchart
           type="rangeBar"
@@ -15,14 +15,14 @@
 
     <div class="device-info info">
       <div class="info__message info__preset">
-        <h3>События механизма</h3>
+        <h3 class="h3">События механизма</h3>
         <div class="info__message_wrap">
           <message-line v-for="(mess, i) in MESSAGES" :key="i" :message="mess">
           </message-line>
         </div>
       </div>
       <div class="info__charts info__preset">
-        <h3>Время работы/простоя/в ремонте</h3>
+        <h3 class="h3">Время работы/простоя/в ремонте</h3>
         <div class="charts-wrap">
           <div class="charts">
             <apexchart
@@ -50,7 +50,7 @@
         </div>
       </div>
       <div class="info__rout-message info__preset">
-        <h3>Запуски в маршруте</h3>
+        <h3 class="h3">Запуски в маршруте</h3>
         <div class="info__rout-message_wrap">
           <rout-line
             v-for="item in ROUTE_LIST"
@@ -160,9 +160,9 @@ export default {
       let repaer = { name: "В ремонте", data: [] };
       this.REPAIRS.forEach((elem) => {
         if (elem.MsgNr === 6 && !startRepairs) {
-          startRepairs = new Date(element.DateTime) - 0 + offset;
+          startRepairs = new Date(elem.DateTime) - 0 + offset;
         } else if (elem.MsgNr === 7 && !stopReairs) {
-          stopReairs = new Date(element.DateTime) - 0 + offset;
+          stopReairs = new Date(elem.DateTime) - 0 + offset;
         }
 
         if (stopReairs && !startRepairs) {

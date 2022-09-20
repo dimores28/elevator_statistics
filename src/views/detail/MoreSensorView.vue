@@ -1,7 +1,6 @@
 <template>
   <div class="more-sensor">
     <div class="line-wrap">
-      <h2></h2>
       <div class="line-charts">
         <apexchart
           type="line"
@@ -14,14 +13,14 @@
 
     <div class="sensor-info">
       <div class="sensor__events sensor-info__item">
-        <h3>События датчика</h3>
+        <h3 class="h3">События датчика</h3>
         <div class="sensor-info__events-wrap">
           <v-sens-log v-for="(log, i) in LOGS" :key="i" :log="log">
           </v-sens-log>
         </div>
       </div>
       <div class="sensor__alarms sensor-info__item">
-        <h3>Количество аварий</h3>
+        <h3 class="h3">Количество аварий</h3>
         <div class="sensor-info__number-breakdowns">
           <div class="number-row">
             <span>Кол-во за выбраный период</span>
@@ -130,7 +129,7 @@ export default {
   display: flex;
   justify-content: space-between;
   text-align: left;
-  padding: 15px 20px 10px;
+  padding: 16px 10px 10px 0;
   border-bottom: 1px solid #fff;
 }
 

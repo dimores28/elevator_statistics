@@ -61,7 +61,7 @@ export default {
       },
       LAUNCHES: state => state.launches,
       REPAIRS: state => state.repairs,
-      ERRORS: state => state.messages.filter(e => e.ClassName === "Error")
+      ERRORS: state => state.messages.filter(e => e.ClassName === "NEW_ErrorsSens")
 
    },
    mutations: {
