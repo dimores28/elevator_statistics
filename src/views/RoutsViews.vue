@@ -99,8 +99,13 @@ export default {
   font-size: 14px;
   line-height: 16px;
   letter-spacing: 1.25px;
+  text-align: left;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.56);
+}
+
+.p-column-title {
+  text-align: left;
 }
 
 .table-wrapper {

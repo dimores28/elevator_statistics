@@ -22,7 +22,7 @@
             :key="i"
             :text="log.RouteMessage"
             :datatime="log.LastAccess"
-            :error="log.error"
+            :error="log.MesIDMes"
           >
           </v-route-log>
         </div>
@@ -50,6 +50,7 @@
               :time="SIMPLE_ROUTE_TIME"
               activeColor="#2D4EC4"
             />
+            <p>{{ ALL_TIME }}</p>
           </div>
         </div>
       </div>
@@ -60,6 +61,7 @@
             v-for="(dev, i) in MECHANISMS"
             :key="i"
             :content="dev.PText5"
+            :status="dev.Status"
             @click="detailsMechanism(dev.PValue3, dev.PText5)"
           >
           </v-device>
@@ -101,10 +103,11 @@ export default {
       "SIMPLE_ROUTE",
       "PERIOD",
       "PERIOD_TIME",
-      "SIMPLE_ROUTE_TIME"
+      "SIMPLE_ROUTE_TIME",
+      "ALL_TIME"
     ]),
     series() {
-      if (this.PERIOD && this.SIMPLE_ROUTE) {
+      if (this.PERIOD || this.SIMPLE_ROUTE) {
         let work = Math.round(
           ((this.PERIOD - this.SIMPLE_ROUTE) * 100) / this.PERIOD
         );
@@ -209,7 +212,7 @@ export default {
 
 <style lang="less">
 .time-line {
-  max-width: 1000px;
+  max-width: 1118px;
 }
 
 .rout-info {
@@ -248,8 +251,19 @@ export default {
   display: flex;
 }
 
+.charts {
+  &__legend {
+    flex: 1 1;
+    text-align: right;
+    p {
+      padding-right: 8px;
+      margin-bottom: 0;
+    }
+  }
+}
+
 #pie {
-  width: 150px;
+  width: 180px;
 }
 
 @media (max-width: 992px) {
