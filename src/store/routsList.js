@@ -56,6 +56,9 @@ export default {
          let work = state.period - getters.SIMPLE_ROUTE;
          return msToTimemsToTime(work);
       },
+      ALL_TIME(state) {
+         return msToTimemsToTime(state.period);
+      }
    },
    mutations: {
       SET_ROUT_LOGS(state, data){

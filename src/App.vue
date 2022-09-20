@@ -1,36 +1,38 @@
 <template>
   <header class="header" @onresize="resize">
-    <div class="burger">
-      <burger-btn @open="showMenu"> </burger-btn>
-    </div>
-    <div class="bread-crumbs">
-      <span class="bread-crumbs__text">
-        {{ TEXT }}
-      </span>
-      <p class="bread-crumbs__title">
-        {{ TITLE }}
-      </p>
-    </div>
-    <div class="datapicker-wrap">
-      <Datepicker
-        v-model="date"
-        :enableTimePicker="false"
-        position="right"
-        dark
-        range
-        :multiCalendars="multi"
-        locale="ru"
-        placeholder="Выберите дату"
-        :format="format"
-        class="dp__theme_dark"
-        @update:modelValue="handleDate"
-      >
-        <template #calendar-header="{ index, day }">
-          <div :class="index === 5 || index === 6 ? 'red-color' : ''">
-            {{ day }}
-          </div>
-        </template>
-      </Datepicker>
+    <div class="container header__content">
+      <div class="burger">
+        <burger-btn @open="showMenu"> </burger-btn>
+      </div>
+      <div class="bread-crumbs">
+        <span class="bread-crumbs__text">
+          {{ TEXT }}
+        </span>
+        <p class="bread-crumbs__title">
+          {{ TITLE }}
+        </p>
+      </div>
+      <div class="datapicker-wrap">
+        <Datepicker
+          v-model="date"
+          :enableTimePicker="false"
+          position="right"
+          dark
+          range
+          :multiCalendars="multi"
+          locale="ru"
+          placeholder="Выберите дату"
+          :format="format"
+          class="dp__theme_dark"
+          @update:modelValue="handleDate"
+        >
+          <template #calendar-header="{ index, day }">
+            <div :class="index === 5 || index === 6 ? 'red-color' : ''">
+              {{ day }}
+            </div>
+          </template>
+        </Datepicker>
+      </div>
     </div>
   </header>
   <aside class="nav">
@@ -151,7 +153,7 @@ export default {
 @import (css) "../src/assets/css/fonts";
 
 .container {
-  max-width: 920px;
+  max-width: 1118px;
   margin: 0 auto;
 }
 
@@ -196,7 +198,7 @@ body {
     "footer footer";
   grid-template-columns: minmax(200px, 264px) auto;
   grid-template-rows: auto auto auto;
-  max-width: 1200px;
+  max-width: 1440px;
   margin: 0 auto;
   background: var(--clr_bg);
   box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.1);
@@ -205,10 +207,13 @@ body {
 
 .header {
   grid-area: header;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 15px 10px 0px 8px;
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 16px 8px;
+  }
 }
 
 .burger {
