@@ -22,8 +22,8 @@ export default {
   },
   computed: {
     logType() {
-      if (this.log.Class === 64) return "error";
-      else if (this.log.Class === 66) return "repair";
+      if (this.log.Class === 70) return "error";
+      else if (this.log.Class === 72) return "repair";
       else return "";
     }
   }
