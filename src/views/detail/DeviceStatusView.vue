@@ -180,7 +180,7 @@ export default {
       let alarm = { name: "В авварии", data: [] };
       this.ERRORS.forEach((arr) => {
         let s = new Date(toISODate(arr.DateTime));
-        let e = new Date(s.getTime() + 10 * 60000);
+        let e = new Date(s.getTime() + 60000);
 
         alarm.data.push({
           x: "w",
