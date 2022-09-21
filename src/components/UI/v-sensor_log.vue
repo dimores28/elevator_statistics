@@ -30,7 +30,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .sensor-log {
   display: flex;
   justify-content: space-between;
