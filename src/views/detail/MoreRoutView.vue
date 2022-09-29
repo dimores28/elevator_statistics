@@ -114,7 +114,7 @@ export default {
         let stoped = Math.round((this.SIMPLE_ROUTE * 100) / this.PERIOD);
         return [stoped, work];
       } else {
-        return [0, 0];
+        return [1, 1];
       }
     }
   },
@@ -266,10 +266,20 @@ export default {
   width: 180px;
 }
 
+@media (max-width: 1100px) {
+  .time-line {
+    padding: 0 20px 0 20px;
+  }
+
+  .rout-info {
+    padding: 0 25px;
+  }
+}
+
 @media (max-width: 992px) {
   .rout-info {
     grid-template-columns: 1fr;
-    padding: 20px;
+    padding: 0 20px;
 
     &__events {
       grid-column: 1;
@@ -277,7 +287,7 @@ export default {
     }
 
     .time-line {
-      padding: 0 20px;
+      padding: 0 20px 0 20px;
     }
 
     #pie {
