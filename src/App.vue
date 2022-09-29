@@ -20,8 +20,8 @@
           dark
           range
           :multiCalendars="multi"
-          locale="ru"
-          placeholder="Выберите дату"
+          locale="uk"
+          placeholder="Виберіть дату"
           :format="format"
           class="dp__theme_dark"
           @update:modelValue="handleDate"
@@ -57,7 +57,7 @@
 
 <script>
 import vNav from "./views/NavigationView";
-import { ru } from "date-fns/locale";
+import { uk } from "date-fns/locale";
 import { ref, onMounted } from "vue";
 import BurgerBtn from "@/components/UI/butger-btn.vue";
 
@@ -87,7 +87,7 @@ export default {
     return {
       date,
       format,
-      ru,
+      uk,
       handleDate
     };
   },
@@ -207,6 +207,8 @@ body {
 
 .header {
   grid-area: header;
+  box-sizing: border-box;
+  padding: 0 16px;
 
   &__content {
     display: flex;
@@ -248,6 +250,8 @@ body {
 .main {
   grid-area: main;
   min-height: 82vh;
+  box-sizing: border-box;
+  padding: 0 16px;
 }
 
 .nav {
@@ -282,10 +286,19 @@ body {
   z-index: 3;
 }
 
+@media screen and (max-width: 1100px) {
+  .main,
+  .header {
+    padding: 0;
+  }
+}
+
 @media screen and (max-width: 780px) {
   .header {
-    flex-direction: column;
-    align-items: center;
+    &__content {
+      flex-direction: column;
+      align-items: end;
+    }
   }
 
   .bread-crumbs {
@@ -303,12 +316,20 @@ body {
     grid-template-rows: auto auto auto;
   }
 
+  .header {
+    padding-right: 16px;
+  }
+
   .bread-crumbs {
-    margin-bottom: 15px;
+    margin-bottom: 16px;
     text-align: center;
 
     &__title {
       text-align: center;
+    }
+
+    &__text {
+      display: none;
     }
   }
 
@@ -317,7 +338,7 @@ body {
     position: absolute;
     z-index: 10;
     top: 0;
-    left: 15px;
+    left: 16px;
   }
 
   .nav {
@@ -331,6 +352,21 @@ body {
 
   .naw-show {
     transform: translateX(0);
+  }
+}
+
+@media screen and (max-width: 440px) {
+  .datapicker-wrap {
+    width: 200px;
+
+    .dp__input_icon,
+    .dp__clear_icon {
+      display: none;
+    }
+
+    .dp__input_icon_pad {
+      padding-left: 14px;
+    }
   }
 }
 </style>

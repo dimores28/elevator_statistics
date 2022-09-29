@@ -31,7 +31,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style scoped lang="less">
 .rout-log {
   position: relative;
   display: flex;

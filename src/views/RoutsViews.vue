@@ -114,7 +114,7 @@ export default {
 
 @media screen and (max-width: 1100px) {
   .table-wrapper {
-    padding: 15px;
+    padding: 16px;
   }
 }
 
