@@ -2,14 +2,22 @@
   <div class="v-navigations">
     <nav class="list-group" role="navigation">
       <router-link
-        v-for="item in menu"
+        v-for="(item, i) in menu"
         :key="item.route"
         :to="{ name: item.route }"
         v-slot="{ route, isExactActive, navigate }"
         :custom="true"
       >
-        <li class="list-group__item" :class="isExactActive ? 'active' : ''">
-          <span :class="isExactActive ? 'list-group__item_led' : ''"></span>
+        <li
+          class="list-group__item"
+          :class="isExactActive || linckActive === i ? 'active' : ''"
+          @click="active(i)"
+        >
+          <span
+            :class="
+              isExactActive || linckActive === i ? 'list-group__item_led' : ''
+            "
+          ></span>
           <a
             :href="route.fullPath"
             @click="navigate"
@@ -28,14 +36,24 @@
     <p class="separator">Механизмы</p>
     <nav class="list-group" role="navigation">
       <router-link
-        v-for="item in deviceNavigation"
+        v-for="(item, i) in deviceNavigation"
         :key="item.route"
         :to="{ path: item.route + item.type + '/' + item.title }"
         v-slot="{ route, isExactActive, navigate }"
         :custom="true"
       >
-        <li class="list-group__item" :class="isExactActive ? 'active' : ''">
-          <span :class="isExactActive ? 'list-group__item_led' : ''"></span>
+        <li
+          class="list-group__item"
+          :class="isExactActive || linckActive === i + 2 ? 'active' : ''"
+          @click="active(i + 2)"
+        >
+          <span
+            :class="
+              isExactActive || linckActive === i + 2
+                ? 'list-group__item_led'
+                : ''
+            "
+          ></span>
           <a
             :href="route.fullPath"
             @click="navigate"
@@ -93,19 +111,12 @@ export default {
         icon: "Icon_Fan.svg",
         type: "21"
       }
-    ]
+    ],
+    linckActive: 0
   }),
   methods: {
-    active(e) {
-      const list = document.querySelectorAll(".list-group__item");
-      console.log(e.target.parentElement);
-      const linck = e.target.parentElement;
-
-      for (let elem of list) {
-        elem.classList.remove("active");
-      }
-
-      linck.parentElement.classList.add("active");
+    active(i) {
+      this.linckActive = i;
     }
   }
 };
@@ -170,7 +181,8 @@ export default {
   }
 }
 
-.active {
+.active,
+.activ {
   background: var(--clr_bg);
 }
 
