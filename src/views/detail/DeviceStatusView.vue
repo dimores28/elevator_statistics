@@ -15,14 +15,14 @@
 
     <div class="device-info info">
       <div class="info__message info__preset">
-        <h3 class="h3">События механизма</h3>
+        <h3 class="h3">Події механізму</h3>
         <div class="info__message_wrap">
           <message-line v-for="(mess, i) in MESSAGES" :key="i" :message="mess">
           </message-line>
         </div>
       </div>
       <div class="info__charts info__preset">
-        <h3 class="h3">Время работы/простоя/в ремонте</h3>
+        <h3 class="h3">Час роботи/зупинки/у ремонті</h3>
         <div class="charts-wrap">
           <div class="charts">
             <apexchart
@@ -33,15 +33,15 @@
             ></apexchart>
           </div>
           <div class="charts__legend">
-            <v-legend text="В работе" :precent="series[1]" :time="WORK_TIME" />
+            <v-legend text="В роботі" :precent="series[1]" :time="WORK_TIME" />
             <v-legend
-              text="В ремонте"
+              text="У ремонті"
               :precent="series[0]"
               :time="REPAIR_TIME"
               activeColor="#2D4EC4"
             />
             <v-legend
-              text="Простой"
+              text="Зупинено"
               :precent="series[2]"
               :time="SIMPLE_TIME"
               activeColor="#000"
@@ -50,7 +50,7 @@
         </div>
       </div>
       <div class="info__rout-message info__preset">
-        <h3 class="h3">Запуски в маршруте</h3>
+        <h3 class="h3">Запуски у маршруті</h3>
         <div class="info__rout-message_wrap">
           <rout-line
             v-for="item in ROUTE_LIST"
@@ -131,7 +131,7 @@ export default {
       //Смещение времени по часовому поясу
       let offset = new Date().getTimezoneOffset() * -1 * 60000;
 
-      let work = { name: "В работе", data: [] };
+      let work = { name: "В роботі", data: [] };
       let start = null;
       let stop = null;
 
@@ -157,7 +157,7 @@ export default {
       let startRepairs = null;
       let stopReairs = null;
 
-      let repaer = { name: "В ремонте", data: [] };
+      let repaer = { name: "У ремонті", data: [] };
       this.REPAIRS.forEach((elem) => {
         if (elem.MsgNr === 6 && !startRepairs) {
           startRepairs = new Date(elem.DateTime) - 0 + offset;
@@ -177,7 +177,7 @@ export default {
       });
       rezData.push(repaer);
 
-      let alarm = { name: "В авварии", data: [] };
+      let alarm = { name: "В аварії", data: [] };
       this.ERRORS.forEach((arr) => {
         let s = new Date(toISODate(arr.DateTime));
         let e = new Date(s.getTime() + 10 * 60000);
@@ -193,8 +193,8 @@ export default {
       return rezData;
     },
     openRout(id, Source, Recive) {
-      this.SET_TITLE("Маршруты");
-      this.SET_TEXT(`Маршруты > ${Source} --> ${Recive}`);
+      this.SET_TITLE("Маршрути");
+      this.SET_TEXT(`Маршрути > ${Source} --> ${Recive}`);
       this.$router.push({
         name: "rout",
         params: { id: id, rout: `${Source} --> ${Recive}` }

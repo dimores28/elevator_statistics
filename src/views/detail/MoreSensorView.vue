@@ -13,25 +13,25 @@
 
     <div class="sensor-info">
       <div class="sensor__events sensor-info__item">
-        <h3 class="h3">События датчика</h3>
+        <h3 class="h3">Події датчика</h3>
         <div class="sensor-info__events-wrap">
           <v-sens-log v-for="(log, i) in LOGS" :key="i" :log="log">
           </v-sens-log>
         </div>
       </div>
       <div class="sensor__alarms sensor-info__item">
-        <h3 class="h3">Количество аварий</h3>
+        <h3 class="h3">Кількість аварій</h3>
         <div class="sensor-info__number-breakdowns">
           <div class="number-row">
-            <span>Кол-во за выбраный период</span>
+            <span>К-сть за вибраний період</span>
             <span>{{ QUANTITY }}</span>
           </div>
           <div class="number-row">
-            <span>Кол-во за месяц</span>
+            <span>К-сть за місяць</span>
             <span>{{ CRASH_STATISTICS[0] }}</span>
           </div>
           <div class="number-row">
-            <span>Кол-во месяцем ранее</span>
+            <span>К-сть місяцем раніше</span>
             <span>{{ CRASH_STATISTICS[1] }}</span>
           </div>
         </div>
@@ -54,7 +54,7 @@ export default {
     return {
       series: [
         {
-          name: "Срабатываний",
+          name: "Спрацюваннь",
           data: []
         }
       ],

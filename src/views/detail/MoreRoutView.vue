@@ -15,7 +15,7 @@
 
     <div class="rout-info">
       <div class="rout-info__events rout-info__substrate">
-        <h3 class="h3">События в маршруте</h3>
+        <h3 class="h3">Події у маршруті</h3>
         <div class="rout-info__events_wrap">
           <v-route-log
             v-for="(log, i) in LOGS"
@@ -28,7 +28,7 @@
         </div>
       </div>
       <div class="rout-info__charts rout-info__substrate">
-        <h3 class="h3">Работа/простой</h3>
+        <h3 class="h3">Работа/Зупинено</h3>
         <div class="charts-wrap">
           <div class="charts">
             <apexchart
@@ -40,12 +40,12 @@
           </div>
           <div class="charts__legend">
             <v-legend
-              text="В работе"
+              text="В роботі"
               :precent="series[1]"
               :time="PERIOD_TIME"
             />
             <v-legend
-              text="В простое"
+              text="У простої"
               :precent="series[0]"
               :time="SIMPLE_ROUTE_TIME"
               activeColor="#2D4EC4"
@@ -55,7 +55,7 @@
         </div>
       </div>
       <div class="rout-info__device-list rout-info__substrate">
-        <h3 class="h3">Механизмы в маршруте</h3>
+        <h3 class="h3">Механізми у маршруті</h3>
         <div class="rout-info__device-list_wrap">
           <v-device
             v-for="(dev, i) in MECHANISMS"
@@ -129,8 +129,8 @@ export default {
     loadTimlineData() {
       let rezData = [];
 
-      let worked = { name: "В работе", data: [] };
-      let stopped = { name: "В простое", data: [] };
+      let worked = { name: "В роботі", data: [] };
+      let stopped = { name: "У простої", data: [] };
 
       let startTime = null;
       let stopTime = null;
@@ -185,8 +185,8 @@ export default {
       return rezData;
     },
     detailsMechanism(id, name) {
-      this.SET_TITLE("Механизмы");
-      this.SET_TEXT(`Механизмы > ${name}`);
+      this.SET_TITLE("Механізми");
+      this.SET_TEXT(`Механізми > ${name}`);
       this.$router.push({ name: "details", params: { id: id, name: name } });
     }
   },

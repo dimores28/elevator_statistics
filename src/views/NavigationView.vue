@@ -58,43 +58,56 @@
 export default {
   data: () => ({
     menu: [
-      { route: "routes", title: "Маршруты", icon: "Icon_Rouds.svg" },
+      { route: "routes", title: "Маршрути", icon: "Icon_Rouds.svg" },
       { route: "sensors", title: "Датчики", icon: "Icon_Sensors.svg" }
     ],
     deviceNavigation: [
       {
         route: "/card/",
-        title: "Конвейера скребковые",
+        title: "Конвеєра скребкові",
         icon: "Icon_Scraper.svg",
         type: "1"
       },
       {
         route: "/card/",
-        title: "Конвейера ленточные",
+        title: "Конвеєра стрічкові",
         icon: "Icon_Tape.svg",
         type: "2"
       },
       {
         route: "/card/",
-        title: "Перекедные клапана",
+        title: "Перекидні клапани",
         icon: "Icon_DiverterValve.svg",
         type: "7"
       },
       {
         route: "/card/",
-        title: "Шлюзовые зтворы",
+        title: "Шлюзові затвори",
         icon: "Icon_Gateway.svg",
         type: "8"
       },
-      { route: "/card/", title: "Нории", icon: "Icon_Noriya.svg", type: "9" },
+      { route: "/card/", title: "Норії", icon: "Icon_Noriya.svg", type: "9" },
       {
         route: "/card/",
-        title: "Вентиляторы",
+        title: "Вентилятори",
         icon: "Icon_Fan.svg",
         type: "21"
       }
     ]
-  })
+  }),
+  methods: {
+    active(e) {
+      const list = document.querySelectorAll(".list-group__item");
+      console.log(e.target.parentElement);
+      const linck = e.target.parentElement;
+
+      for (let elem of list) {
+        elem.classList.remove("active");
+      }
+
+      linck.parentElement.classList.add("active");
+    }
+  }
 };
 
 //Коды элементов
