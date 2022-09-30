@@ -9,23 +9,19 @@
       dataKey="id"
       @click="more"
     >
-      <Column field="Source" header="Начало маршрута" :sortable="true"></Column>
+      <Column
+        field="Source"
+        header="Початок маршруту"
+        :sortable="true"
+      ></Column>
       <Column
         field="Receiver"
-        header="Конец маршрута"
+        header="Кінець маршруту"
         :sortable="true"
       ></Column>
       <Column field="Culture" header="Культура" :sortable="true"></Column>
-      <Column
-        field="StartTime"
-        header="Время запуска"
-        :sortable="true"
-      ></Column>
-      <Column
-        field="StopTime"
-        header="Время останова"
-        :sortable="true"
-      ></Column>
+      <Column field="StartTime" header="Час запуску" :sortable="true"></Column>
+      <Column field="StopTime" header="Час зупинки" :sortable="true"></Column>
     </DataTable>
   </div>
 </template>
@@ -52,7 +48,7 @@ export default {
     more() {
       if (this.selected) {
         this.SET_TEXT(
-          "Маршруты  > " +
+          "Маршрути  > " +
             `${this.selected.Source} --> ${this.selected.Receiver}`
         );
         this.SET_TITLE("");
@@ -71,7 +67,7 @@ export default {
     }
   },
   mounted() {
-    this.SET_TITLE("Маршруты");
+    this.SET_TITLE("Маршрути");
     this.SET_TEXT("");
     this.LOAD_ROUTE_LIST_BY_TIMERANGE(this.TIME_RANGE);
 

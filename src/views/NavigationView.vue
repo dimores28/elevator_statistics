@@ -2,14 +2,22 @@
   <div class="v-navigations">
     <nav class="list-group" role="navigation">
       <router-link
-        v-for="item in menu"
+        v-for="(item, i) in menu"
         :key="item.route"
         :to="{ name: item.route }"
         v-slot="{ route, isExactActive, navigate }"
         :custom="true"
       >
-        <li class="list-group__item" :class="isExactActive ? 'active' : ''">
-          <span :class="isExactActive ? 'list-group__item_led' : ''"></span>
+        <li
+          class="list-group__item"
+          :class="isExactActive || linckActive === i ? 'active' : ''"
+          @click="active(i)"
+        >
+          <span
+            :class="
+              isExactActive || linckActive === i ? 'list-group__item_led' : ''
+            "
+          ></span>
           <a
             :href="route.fullPath"
             @click="navigate"
@@ -28,14 +36,24 @@
     <p class="separator">Механизмы</p>
     <nav class="list-group" role="navigation">
       <router-link
-        v-for="item in deviceNavigation"
+        v-for="(item, i) in deviceNavigation"
         :key="item.route"
         :to="{ path: item.route + item.type + '/' + item.title }"
         v-slot="{ route, isExactActive, navigate }"
         :custom="true"
       >
-        <li class="list-group__item" :class="isExactActive ? 'active' : ''">
-          <span :class="isExactActive ? 'list-group__item_led' : ''"></span>
+        <li
+          class="list-group__item"
+          :class="isExactActive || linckActive === i + 2 ? 'active' : ''"
+          @click="active(i + 2)"
+        >
+          <span
+            :class="
+              isExactActive || linckActive === i + 2
+                ? 'list-group__item_led'
+                : ''
+            "
+          ></span>
           <a
             :href="route.fullPath"
             @click="navigate"
@@ -58,43 +76,49 @@
 export default {
   data: () => ({
     menu: [
-      { route: "routes", title: "Маршруты", icon: "Icon_Rouds.svg" },
+      { route: "routes", title: "Маршрути", icon: "Icon_Rouds.svg" },
       { route: "sensors", title: "Датчики", icon: "Icon_Sensors.svg" }
     ],
     deviceNavigation: [
       {
         route: "/card/",
-        title: "Конвейера скребковые",
+        title: "Конвеєра скребкові",
         icon: "Icon_Scraper.svg",
         type: "1"
       },
       {
         route: "/card/",
-        title: "Конвейера ленточные",
+        title: "Конвеєра стрічкові",
         icon: "Icon_Tape.svg",
         type: "2"
       },
       {
         route: "/card/",
-        title: "Перекедные клапана",
+        title: "Перекидні клапани",
         icon: "Icon_DiverterValve.svg",
         type: "7"
       },
       {
         route: "/card/",
-        title: "Шлюзовые зтворы",
+        title: "Шлюзові затвори",
         icon: "Icon_Gateway.svg",
         type: "8"
       },
-      { route: "/card/", title: "Нории", icon: "Icon_Noriya.svg", type: "9" },
+      { route: "/card/", title: "Норії", icon: "Icon_Noriya.svg", type: "9" },
       {
         route: "/card/",
-        title: "Вентиляторы",
+        title: "Вентилятори",
         icon: "Icon_Fan.svg",
         type: "21"
       }
-    ]
-  })
+    ],
+    linckActive: 0
+  }),
+  methods: {
+    active(i) {
+      this.linckActive = i;
+    }
+  }
 };
 
 //Коды элементов
@@ -157,7 +181,8 @@ export default {
   }
 }
 
-.active {
+.active,
+.activ {
   background: var(--clr_bg);
 }
 

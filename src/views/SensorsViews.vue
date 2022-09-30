@@ -9,15 +9,15 @@
       @click="more"
     >
       <Column field="Text1" header="Датчик" :sortable="true"></Column>
-      <Column field="PText5" header="Механизм" :sortable="true"></Column>
-      <Column field="Quantity" header="Количество" :sortable="true">
+      <Column field="PText5" header="Механізм" :sortable="true"></Column>
+      <Column field="Quantity" header="Кількість" :sortable="true">
         <template #body="slotProps">
           <div class="center">
             {{ slotProps.data.Quantity }}
           </div>
         </template>
       </Column>
-      <Column field="dynamics" header="Динамика" :sortable="true"></Column>
+      <Column field="dynamics" header="Динаміка" :sortable="true"></Column>
     </DataTable>
   </div>
 </template>

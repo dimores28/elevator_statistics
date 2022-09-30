@@ -5,9 +5,9 @@
     <div class="card__content">
       <p class="card__lable">{{ mechanismData.UAName }}</p>
       <p class="card__subline" :style="{ opacity: Errors ? 1 : 0 }">
-        Ошибок: {{ Errors }}
+        Помилок: {{ Errors }}
       </p>
-      <p class="card__info">Моточасы: 230</p>
+      <p class="card__info">Мотогодинни: 230</p>
     </div>
   </div>
 </template>
