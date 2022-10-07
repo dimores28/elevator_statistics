@@ -7,7 +7,9 @@
       <p class="card__subline" :style="{ opacity: Errors ? 1 : 0 }">
         Помилок: {{ Errors }}
       </p>
-      <p class="card__info">Мотогодинни: 230</p>
+      <p :style="{ opacity: engineHours ? 1 : 0 }" class="card__info">
+        Мотогодинни: {{ engineHours }}
+      </p>
     </div>
   </div>
 </template>
@@ -20,6 +22,10 @@ export default {
       type: Object
     },
     Errors: {
+      type: Number,
+      default: 0
+    },
+    engineHours: {
       type: Number,
       default: 0
     }

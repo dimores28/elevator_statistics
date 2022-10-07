@@ -6,6 +6,7 @@ import routList from './routsList'
 import card from './card'
 import device from './device'
 import sensors from './sensors'
+import workingTime from './workingTime'
 
 export default createStore({
   modules: {
@@ -13,7 +14,8 @@ export default createStore({
     routList,
     card,
     device,
-    sensors
+    sensors,
+    workingTime
   },
   strict: process.env.NODE_ENV !== 'production',
 })

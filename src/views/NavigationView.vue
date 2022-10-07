@@ -80,6 +80,7 @@ export default {
       { route: "sensors", title: "Датчики", icon: "Icon_Sensors.svg" }
     ],
     deviceNavigation: [
+      { route: "/card/", title: "Норії", icon: "Icon_Noriya.svg", type: "9" },
       {
         route: "/card/",
         title: "Конвеєра скребкові",
@@ -94,6 +95,12 @@ export default {
       },
       {
         route: "/card/",
+        title: "Засувки",
+        icon: "Icon_Gate.svg",
+        type: "8"
+      },
+      {
+        route: "/card/",
         title: "Перекидні клапани",
         icon: "Icon_DiverterValve.svg",
         type: "7"
@@ -104,7 +111,6 @@ export default {
         icon: "Icon_Gateway.svg",
         type: "8"
       },
-      { route: "/card/", title: "Норії", icon: "Icon_Noriya.svg", type: "9" },
       {
         route: "/card/",
         title: "Вентилятори",

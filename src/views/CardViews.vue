@@ -6,6 +6,7 @@
         :key="card.UAIndex"
         :mechanismData="card"
         :Errors="NUMBER_WARNINGS_BY_ID(card.UAIndex)"
+        :engineHours="HOURS_WORKED_BY_EID(card.UAIndex)"
         @details="seeMore(card.UAIndex, card.ID)"
         class="col"
       >
@@ -32,6 +33,7 @@ export default {
       "NUMBER_WARNINGS_BY_ID"
     ]),
     ...mapGetters("navigationData", ["TIME_RANGE"]),
+    ...mapGetters("workingTime", ["HOURS_WORKED_BY_EID"]),
     chapter() {
       return this.$route.params.title;
     }
@@ -39,6 +41,7 @@ export default {
   methods: {
     ...mapActions("card", ["CARD_LOAD", "LOAD_NUMBER_WARNINGS"]),
     ...mapActions("navigationData", ["SET_TITLE", "SET_TEXT"]),
+    ...mapActions("workingTime", ["LOAD_HOURS_WORKED"]),
     seeMore(index, id) {
       this.SET_TEXT(this.chapter + " > " + this.CARD_BY_ID(id).UAName);
       this.SET_TITLE(this.$route.params.title);
@@ -58,8 +61,14 @@ export default {
   mounted() {
     this.SET_TITLE(this.$route.params.title);
     this.SET_TEXT("");
-    this.CARD_LOAD();
-    this.LOAD_NUMBER_WARNINGS(this.TIME_RANGE);
+
+    const _temp = () => {
+      this.CARD_LOAD();
+      this.LOAD_NUMBER_WARNINGS(this.TIME_RANGE);
+      this.LOAD_HOURS_WORKED();
+    };
+
+    setTimeout(_temp, 0);
 
     let context = this;
     this.emitter.on("select-datapicker", function (timerange) {
