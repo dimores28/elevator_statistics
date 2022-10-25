@@ -33,7 +33,7 @@
         </li>
       </router-link>
     </nav>
-    <p class="separator">Механизмы</p>
+    <p class="separator">Механізми</p>
     <nav class="list-group" role="navigation">
       <router-link
         v-for="(item, i) in deviceNavigation"

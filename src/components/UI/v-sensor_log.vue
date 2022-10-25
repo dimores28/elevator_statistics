@@ -37,7 +37,7 @@ export default {
   align-items: center;
   position: relative;
   border-bottom: 1px solid var(--clr_gray2);
-  padding: 10px 20px 16px 0;
+  padding: 10px 20px 16px 16px;
 
   &__led {
     position: absolute;

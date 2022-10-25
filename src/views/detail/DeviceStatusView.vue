@@ -237,10 +237,6 @@ export default {
 <style lang="less">
 .time-line {
   max-width: 1118px;
-  &-dev {
-    padding: 0 10px;
-  }
-
   h2 {
     margin-top: 0;
   }
@@ -254,7 +250,6 @@ export default {
   display: grid;
   grid-gap: 20px;
   grid-template-columns: 1fr 1fr;
-  padding: 0 10px;
 
   &__preset {
     background: var(--clr_gray3);
@@ -290,6 +285,16 @@ export default {
 .charts__legend {
   flex-grow: 1;
   padding-right: 10px;
+}
+
+@media (max-width: 1100px) {
+  .time-line {
+    padding: 0 10px 0 10px;
+  }
+
+  .info {
+    padding: 0 25px;
+  }
 }
 
 @media (max-width: 992px) {
