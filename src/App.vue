@@ -1,5 +1,6 @@
 <template>
   <header class="header" @onresize="resize">
+    <app-alerts></app-alerts>
     <div class="container header__content">
       <div class="burger">
         <burger-btn @open="showMenu"> </burger-btn>
@@ -59,7 +60,8 @@
 import vNav from "./views/NavigationView";
 import { uk } from "date-fns/locale";
 import { ref, onMounted } from "vue";
-import BurgerBtn from "@/components/UI/butger-btn.vue";
+import BurgerBtn from "@/components/UI/burger-btn.vue";
+import AppAlerts from "@/components/errors/Alerts";
 
 import { mapGetters, mapActions } from "vuex";
 export default {
@@ -93,7 +95,8 @@ export default {
   },
   components: {
     vNav,
-    BurgerBtn
+    BurgerBtn,
+    AppAlerts
   },
   data() {
     return {

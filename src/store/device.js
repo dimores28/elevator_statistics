@@ -1,6 +1,5 @@
-import axios from 'axios'
 import msToTimemsToTime from '@/api/convertMsToTime'
-import {API_URL} from '@/core/host'
+import * as cartApi from '@/api/device.js';
 
 export default {
 	namespaced: true,
@@ -85,54 +84,49 @@ export default {
       async LOAD({commit}, device){
          let start = device.range.StartDate.toISOString().slice(0, 10);
          let end = device.range.EndDate.toISOString().slice(0, 10);
-         await axios.get(API_URL + 'api/Alg/DeviceRenge', 
-         {
-            params:{
-               byID: device.id,
-               startTime: start,
-               endTime: end
-         }})
-         .then((response)=>{
-            response.data.forEach(function(item){
+
+         let { res, data } = await cartApi.load({id: device.id, start: start, end: end});
+
+         if(res) {
+            data.forEach(function(item){
                item.DateTime = new Date(item.DateTime).toLocaleString().replace(/,+/g, "");
                return item;
             });
-            commit('SET_MESSAGES', response.data);
-         });
+
+            commit('SET_MESSAGES', data);
+         }
       },
       async GET_LIST_OF_ROUTES({commit}, device){
          let start = device.range.StartDate.toISOString().slice(0, 10);
          let end = device.range.EndDate.toISOString().slice(0, 10);
 
-         await axios.get(API_URL + 'api/Alg/PresenceRoute',{
-            params:{
-               deviceID: device.id,
-               startTime: start,
-               endTime: end,
-            }
-         })
-         .then(response=>{
-            commit('SET_ROUTE_LIST', response.data);
-         });
+         let { res, data } = await cartApi.listOfRoutes({id: device.id, start: start, end: end});
+
+         if(res) {
+
+            commit('SET_ROUTE_LIST', data);
+         }
       },
       async LOAD_LAUNCHES({commit}, device){
          if(device?.id === undefined) {
             return;
          }
-         await axios.get(API_URL + `Statistics/Launches/${device?.id}/${device.start}/${device.end}`)
-         .then(response =>{
-            commit('SET_LAUNCHES', response.data)
-         });
 
+         let { res, data } = await cartApi.launches(device);
+
+         if(res) {
+            commit('SET_LAUNCHES', data);
+         }
       },
       async LOAD_REPAIRS({commit}, device){
          if(device?.id === undefined) {
             return;
          }
-         await axios.get(API_URL + `Statistics/Repairs/${device?.id}/${device.start}/${device.end}`)
-         .then(response =>{
-            commit('SET_REPAIRS', response.data)
-         });
+         let { res, data } = await cartApi.launches(device);
+
+         if(res) {
+            commit('SET_REPAIRS', data);
+         }
       },
       async LOAD_STATISTICALl_DATA(context, device){
          let dev = {};
@@ -148,16 +142,3 @@ export default {
 
    },
 }
-
-function msToTime(duration) {
-   let h,m,s;
-   h = Math.floor(duration/1000/60/60);
-   m = Math.floor((duration/1000/60/60 - h)*60);
-   s = Math.floor(((duration/1000/60/60 - h)*60 - m)*60);
-
-   s < 10 ? s = `0${s}`: s = `${s}`
-   m < 10 ? m = `0${m}`: m = `${m}`
-   h < 10 ? h = `0${h}`: h = `${h}`
-
-   return `${h}:${m}:${s}`;
- }

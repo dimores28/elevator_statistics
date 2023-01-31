@@ -1,5 +1,4 @@
-import axios from 'axios'
-import {API_URL} from '@/core/host'
+import * as cartApi from '@/api/card.js';
 
 
 export default {
@@ -39,23 +38,27 @@ export default {
    },
    actions: {
        async CARD_LOAD({commit}){
-        
-        await axios.get(API_URL + 'api/SettingsTable')
-        .then(response=>{
-            let arr = []
-            for(let i = 0; i < response.data.length; i++){
-                arr.push(response.data[i]);
+
+            let { res, data } = await cartApi.load();
+
+            if(res) {
+                let arr = []
+
+                for(let i = 0; i < data.length; i++){
+                    arr.push(data[i]);
+                }
+                commit('SET_CARDS', arr);
             }
-            commit('SET_CARDS', arr);
-        });
        },
        async LOAD_NUMBER_WARNINGS({commit}, timerange){
-        let start = timerange.StartDate.toISOString().slice(0, 10);
-        let end = timerange.EndDate.toISOString().slice(0, 10);
-        await axios.get(API_URL + `api/Alg/NumberWarnings?startTime=${start}&endTime=${end}`)
-        .then(resp => {
-            commit('SET_WARNINGS', resp.data);
-        });
+            let start = timerange.StartDate.toISOString().slice(0, 10);
+            let end = timerange.EndDate.toISOString().slice(0, 10);
+
+            let { res, data } = await cartApi.loadNumWarn(start, end);
+
+            if(res) {
+                commit('SET_WARNINGS', data);
+            }
        }
    },
 }
