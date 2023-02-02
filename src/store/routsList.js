@@ -1,7 +1,6 @@
-import axios from 'axios'
 import toISODate from '@/api/workWithDate'
 import msToTimemsToTime from '@/api/convertMsToTime'
-import {API_URL} from '@/core/host'
+import * as routsApi from '@/api/routs.js';
 
 
 export default {
@@ -109,83 +108,74 @@ export default {
    },
    actions: {
       async LOAD_ROUTE_LIST({commit}){
-         await axios.get(API_URL + "Route")
-         .then(response =>{
-               response.data.forEach(function(item){
-               item.StartTime = new Date(item.StartTime).toLocaleString().replace(/,+/g, "")
-               item.StopTime = new Date(item.StopTime).toLocaleString().replace(/,+/g, "")
+         let {res, data } = await routsApi.all();
+
+         if(res) {
+            data.forEach(function(item){
+               item.StartTime = new Date(item.StartTime).toLocaleString().replace(/,+/g, "");
+               item.StopTime = new Date(item.StopTime).toLocaleString().replace(/,+/g, "");
 
                return item;
             });
 
-            commit('SET_ROUTE_LIST', response.data)
-         });
+            commit('SET_ROUTE_LIST', data)
+         }
       },
       async LOAD_ROUTE_LIST_BY_TIMERANGE({commit}, timerange){
           let start = timerange.StartDate.toISOString().slice(0, 10);
           let end = timerange.EndDate.toISOString().slice(0, 10);
 
-         await axios.get(API_URL + "Route/Range", {params:{startTime: start, endTime: end}})
-         .then(response =>{
-               response.data.forEach(function(item){
+          let {res, data } = await routsApi.routsByTimeRange({startTime: start, endTime: end});
+
+          if(res) {
+            data.forEach(function(item){
                item.StartTime = new Date(item.StartTime).toLocaleString().replace(/,+/g, "")
                item.StopTime = new Date(item.StopTime).toLocaleString().replace(/,+/g, "")
 
                return item;
             });
 
-            commit('SET_ROUTE_LIST', response.data)
-         })
-         .catch(err => {
-            console.log(err.toJSON());
-        });
+            commit('SET_ROUTE_LIST', data);
+          }
       },
       async LOAD_MECHANISMS({commit}, routeID){
-         await axios.get(API_URL + 'api/Alg/RoutID', {params:{routID: routeID}})
-         .then(response =>{
-            commit('WRITE_MECHANISMS', response.data);
-         });
+         let {res, data } = await routsApi.mechanisms(routeID);
+
+         if(res) {
+            commit('WRITE_MECHANISMS', data);
+         }
       },
       async LOAD_ROUT_LOGS({commit}, routeID){
-         console.log(routeID);
-         await axios.get(API_URL + 'Route/Log',  {params:{MesIDRout: routeID}})
-         .then(response=>{
-            response.data.forEach(function(item){
+         let {res, data } = await routsApi.routLogs(routeID);
+
+         if(res) {
+            data.forEach(function(item){
                item.LastAccess = new Date(item.LastAccess).toLocaleString().replace(/,+/g, "");
                return item;
             });
 
-            commit('SET_ROUT_LOGS', response.data);
-         })
-         .catch( err => {
-            console.log(err);
-
-            if (err.response) { 
-                if(err.request.status === 404)
-                {
-                    console.log('Error 404');
-                }
-            }
-            
-            console.log(err.toJSON());
-        });
+            commit('SET_ROUT_LOGS', data);
+         }
       },
       async LOAD_ROUTE_ALARM({commit}, routeID){
-         await axios.get(API_URL + 'api/Alg/RouteAlarms',  {params:{routID: routeID}})
-         .then(response =>{
-            response.data.forEach(function(item){
-               item.DateTime = new Date(item.DateTime).toLocaleString().replace(/,+/g, "");
+         let {res, data } = await routsApi.routAlarm(routeID);
+
+         if(res) {
+            data.forEach(function(item){
+               item.LastAccess = new Date(item.LastAccess).toLocaleString().replace(/,+/g, "");
                return item;
             });
-            
-            //commit('COMPLETE_LOGS', response.data);
-         });
+
+            // commit('COMPLETE_LOGS', data);
+         }
+
       },
       async LOG_ROUTE_STOPS({commit}, routeID){
-         await axios.get(API_URL + `Statistics/SimpleRoute/${routeID}`)
-         .then(response =>{
-            commit('ROUTE_STOPS', response.data)
-         });
+         let {res, data } = await routsApi.routStops(routeID);
+
+         if(res) {
+            commit('ROUTE_STOPS', data);
+         }
       },
       SET_TIMERANGE({commit}, timerange){
           let renge = new Date(toISODate(timerange.StopTime)) - new Date(toISODate(timerange.StartTime));
