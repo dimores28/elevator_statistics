@@ -1,6 +1,7 @@
-//"http://localhost:30094/ElementsWorkingTime" 
 import axios from 'axios'
 import {API_URL} from '@/core/host'
+
+import * as workingTime from '@/api/workingTime';
 
 export default {
     namespaced: true,
@@ -26,22 +27,12 @@ export default {
     },
     actions: {
         async LOAD_HOURS_WORKED({commit}) {
-            await axios.get(API_URL + "ElementsWorkingTime")
-            .then(response => {
-                commit("SET_HOURS_WORKED", response.data)
-            })
-            .catch( err => {
-                console.log(err);
 
-                if (err.response) { 
-                    if(err.request.status === 404)
-                    {
-                        console.log('Error 404');
-                    }
-                }
-                
-                console.log(err.toJSON());
-            });
+            let { res, data } = await workingTime.load(); 
+
+            if(res) {
+                commit("SET_HOURS_WORKED", data);
+            }
         }
     }
 }

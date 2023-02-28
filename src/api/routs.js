@@ -8,10 +8,12 @@ export async function all() {
 	return data;
 }
 
+
 export async function routsByTimeRange(timerange) {
 	let { data } = await http.get('Route/Range', { 
 		params: { 
-            timerange
+            startTime: timerange.startTime, 
+			endTime: timerange.endTime
 		},
 		errorAlert: { 
 			text: 'при завантаженні списку маршрутів',
@@ -65,10 +67,7 @@ export async function routAlarm(routeID) {
 }
 
 export async function routStops(id) {
-	let { data } = await http.get('Statistics/SimpleRoute', { 
-		params: {
-			routID: id
-		},
+	let { data } = await http.get(`Statistics/SimpleRoute/${id}`, { 
 		errorAlert: { 
 			text: 'при завантаженні Stops маршруту',
 			critical: false

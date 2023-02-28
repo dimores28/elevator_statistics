@@ -33,12 +33,7 @@ export async function listOfRoutes(device) {
 }
 
 export async function launches(device) {
-    let { data } = await http.get('Statistics/Launches', { 
-		params: { 
-            byID: device.id,
-            startTime: device.start,
-            endTime: device.end
-         },
+    let { data } = await http.get(`Statistics/Launches/${device.id}/${device.start}/${device.end}`, { 
 		errorAlert: { 
 			text: 'при завантажені списку запусків механізму',
 			critical: false
@@ -49,14 +44,9 @@ export async function launches(device) {
 }
 
 export async function repairs(device) {
-    let { data } = await http.get('Statistics/Repairs', { 
-		params: { 
-            byID: device.id,
-            startTime: device.start,
-            endTime: device.end
-         },
+    let { data } = await http.get(`Statistics/Repairs/${device.id}/${device.start}/${device.end}`, { 
 		errorAlert: { 
-			text: 'при завантажені списку ркмонту механізму',
+			text: 'при завантажені списку ремонту механізму',
 			critical: false
 		}
 	});

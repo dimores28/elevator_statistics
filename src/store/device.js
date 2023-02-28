@@ -122,13 +122,13 @@ export default {
          if(device?.id === undefined) {
             return;
          }
-         let { res, data } = await cartApi.launches(device);
+         let { res, data } = await cartApi.repairs(device);
 
          if(res) {
             commit('SET_REPAIRS', data);
          }
       },
-      async LOAD_STATISTICALl_DATA(context, device){
+      async LOAD_STATISTICAL_DATA(context, device){
          let dev = {};
          dev.id = device.id;
          dev.start = device.range.StartDate.toISOString().slice(0, 10);
